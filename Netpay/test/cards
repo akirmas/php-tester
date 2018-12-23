@@ -1,0 +1,36 @@
+https://devcenter.netpay-intl.com/website/TestEnvironment.aspx
+Card Number Issuer
+4387751111111111  Visa (US)
+5442987111111111  MasterCard (US)
+371000911111111 American Express (US)
+4056850111111111  Visa (FR)
+5130113111111111  MasterCard (FR)
+36005131111111  Diners Club (GB)
+3535111111111111  JCB (JP)
+6221701111111111  LivaKash (JP)
+4580000000000000  VISA (IL)
+5326140000000000  MasterCard (IL)
+91000000  IsraCard (IL)
+* Use any future expiry date with these test cards.
+** For American Express, pass any four digits as CVV2.
+ For other credit card types, pass any three digits as CVV2.
+
+ CONTROLLING REPLY
+
+Use the following amounts to cause either approval or various declines:
+
+Amount  Response
+0.04  Error 1001: Soft Decline (Call)
+0.05  Error 1002: Insufficient Funds
+0.90  Approved with 5 second delay
+0.91  Approved with 10 second delay
+0.92  Approved with 20 second delay
+0.93  Approved with 30 second delay
+0.94  Approved with 40 second delay
+0.95  Approved with 50 second delay
+0.96  Approved with 60 second delay
+0.97  Approved with 70 second delay
+0.98  Approved with 80 second delay
+0.99  Approved with 90 second delay
+553 3D secure simulator - this will return 553 and redirect Url to complete transaction
+1.00 +  Approved

@@ -1,0 +1,12 @@
+{
+    "s": "r",
+    "payme_status": "success",
+    "payme_signature": "f2ae57ed47f3d025fa193fdcbcca61d4",
+    "payme_sale_id": "SALE1545-5749875H-NLDI79GK-SY8FUT9B",
+    "payme_transaction_id": "TRAN1545-575005RC-SHSKUTXW-IWWLHMSA",
+    "price": 100,
+    "currency": "USD",
+    "transaction_id": 1545574986,
+    "is_token_sale": 0,
+    "is_foreign_card": 1
+}
