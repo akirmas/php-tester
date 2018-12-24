@@ -1,0 +1,17 @@
+<html>
+<head>
+<script>
+  const url = "./dump2.php?amount=100&currency=USD&description=desc&id=100500&first_name=fn&last_name=ln&phone=123456789&email=my@mail.gbm";
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    console.log(
+      this.readyState,
+      this.status,
+      JSON.parse("[" + this.responseText + ']'),
+    );
+  };
+  xhttp.open("GET", url, true);
+  xhttp.send();  
+</script>
+</head>
+</html>
