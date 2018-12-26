@@ -1,8 +1,8 @@
 <?php
+declare(strict_types=1);
 /**
  * http://doctr.interspace.net/?type=1
  */
-declare(strict_types=1);
 require_once('./PSP.php');
 
 define('tranz_currencies', json_decode(file_get_contents('./currencies.json'), true));

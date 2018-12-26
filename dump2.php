@@ -14,15 +14,15 @@ $contact = new Contact($_REQUEST);
 $dealId = 'IC' . time();
 $deal->id = $dealId;
 
-$url = $psp->payUrl(
+$url = $psp->iframe(
   $deal,
   "https://payment.gobemark.info/php/psps/collector.php?fireid=$dealId&",
   $contact
 );
 header('HTTP/1.1 206 Partial Content');
-echo json_encode(array('url' => $url));
+echo json_encode(array('iframe' => $url));
 flush();
 ob_flush();
 $nodeJS = new SyncEvent($dealId);
 $nodeJS->wait();
-echo ','.file_get_contents("../responses/$dealId.json");
+echo ','.file_get_contents(__DIR__."../responses/$dealId.json");
