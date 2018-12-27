@@ -27,13 +27,15 @@ class Tranzila {
     return array_merge(
       ...array_map(
         function($el) use ($fields, $values) {
-          return Assoc::mapKeyValues(
-            Assoc::toAssoc($el),
-            array_merge(self::fields, Assoc::filterEmpty($fields)),
-            array_merge(self::values, Assoc::filterEmpty($fields)),
-            false,
-            true
-          );
+          return !in_array(gettype($el), ['array', 'object'])
+            ? []
+            : Assoc::mapKeyValues(
+              Assoc::toAssoc($el),
+              Assoc::filterEmpty($fields),
+              Assoc::filterEmpty($values),
+              false,
+              true
+            );
         },
         $args
       )
@@ -48,7 +50,13 @@ class Tranzila {
     CreditCard $creditCard
   ) :array {
     $env = (object) array_merge(
-      self::default_scheme,
+      array(
+        'defaults' => [],
+        'overrides' => [],
+        'values' => [],
+        'fields' => []
+      ),
+      TRANZILA_ENV,
       json_decode(file_get_contents(__DIR__."/envs/$envName.json"), true)
     );
     $query = $this->querify(
@@ -76,6 +84,7 @@ class Tranzila {
 
     return array_merge(
       array(
+        'query' => $query,
         'request' => $request,
         'success' => $code === '000',
         'response' => $response

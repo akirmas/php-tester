@@ -27,7 +27,7 @@ abstract class Assoc {
     $keepUnmet = false
   ) :array {
     $result = [];
-    forEach($assoc as $key => $value)
+    forEach($assoc as $key => $value) 
       if (
         array_key_exists($key, $valuesMap)
         && (gettype($valuesMap[$key]) !== 'array')
@@ -55,6 +55,47 @@ abstract class Assoc {
       $keysMap,
       $keepUnmetKeys
     );
+  }
+
+  static function filterEmpty(&$arg) {
+    $isObj = false;
+    switch(gettype($arg)) {
+      case 'array': break;
+      case 'object':
+        $isObj = true;
+        break;
+      default:
+        if (empty($arg)) return;
+        else return $arg;
+    }
+    forEach(
+      ($isObj ? get_object_vars($arg) : $arg)
+      as $key => $value
+    )
+      if (empty($value) && !in_array($value, [0, 0.0, '0'], true)) {
+        if ($isObj) unset($arg->{$key});
+        else unset($arg[$key]);
+      }
+    return $arg;
+  }
+
+  static function toAssoc($who) :array {
+    if (gettype($who) === 'array')
+      return $who;
+    
+    if (gettype($who) !== 'object')
+      return array($who => true);
+      
+    $assoc = get_object_vars($who);
+    $mangled = array_keys((array) $who);
+    if (!property_exists($who, 'prefix') || empty($who->prefix))
+      return $assoc;
+
+    $result = [];
+    forEach($assoc as $key => $value)
+      if (in_array($key, $mangled))
+        $result[$who->prefix."$key"] = $value;
+    return $result;
   }
 
   function __construct(array $assoc = [], object $who = null) {
@@ -86,32 +127,6 @@ abstract class Assoc {
     $keepUnmetValues
   );}
 
-  function filterEmpty(array $assoc = []) {
-    $useThis = sizeof($assoc) === 0;
-    forEach(
-      (!$useThis ? $assoc : get_object_vars($this))
-      as $key => $value
-    ) if (empty($value) && !in_array($value, [0, 0.0, '0'], true)) {
-      if ($useThis) unset($this->{$key});
-      else unset($assoc[$key]);
-    }
-    return $useThis ? $this : $assoc;
-  }
-
-  function toAssoc($who = null) :array {
-    if (gettype($who) === 'array')
-      return $who;
-      
-    if ($who === null) $who = $this;
-    $assoc = get_object_vars($who);
-    $mangled = array_keys((array) $who);
-    if (!property_exists($who, 'prefix') || empty($who->prefix))
-      return $assoc;
-
-    $result = [];
-    forEach($assoc as $key => $value)
-      if (in_array($key, $mangled))
-        $result[$who->prefix."$key"] = $value;
-    return $result;
-  }
+  function myFilterEmpty() { return self::filterEmpty($this); }
+  function assoc() :array { return self::toAssoc($this); }
 }
