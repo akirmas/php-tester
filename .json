@@ -1,0 +1,20 @@
+{
+  "gateway": "",
+  "fields": {
+    "address": "",
+    "email": "",
+    "full_name": "",
+    "cc_expire": "",
+    "cc_number": "",
+    "cc_cvv": "",
+    "amount": "",
+    "currency": "",
+    "description": "",
+    "account": "",
+    "installments": "",
+    "verify": ""
+  },
+  "values": {},
+  "defaults": {},
+  "overrides": {}
+}

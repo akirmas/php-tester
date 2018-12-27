@@ -8,7 +8,7 @@ class Deal extends Assoc {
   public $currency;
   public $description;
   public $id;
-  function __construct(array $assoc, bool $filterEmpty = true) {
-    parent::__construct($assoc, $filterEmpty, $this);
+  function __construct($assoc) {
+    parent::__construct($assoc, $this);
   }
 }

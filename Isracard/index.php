@@ -1,13 +1,11 @@
 <?php 
 declare(strict_types=1);
-
-require_once(__DIR__.'/../PSP/Contact.php');
-require_once(__DIR__.'/../PSP/Deal.php');
-
 /**
  * https://www1.isracard-global.com/system/documentation#/introduction/api-capabilities-and-structure
  */
- 
+require_once(__DIR__.'/../PSP/Contact.php');
+require_once(__DIR__.'/../PSP/Deal.php');
+
 class Isracard {
   private $creds;
   private $fields;

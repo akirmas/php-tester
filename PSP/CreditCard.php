@@ -1,17 +1,14 @@
 <?php
-class CreditCard {
+declare(strict_types=1);
+require_once(__DIR__.'/Assoc.php');
+
+class CreditCard extends Assoc {
+  protected $prefix = 'cc_';
   public $number;
   public $cvv;
-  public $month;
-  public $year;
+  public $expire;
 
-  /**
-   * @param array $assoc Consist string $number, int $month, int $year, string $cvv
-   */
   function __construct($assoc) {
-    $this->number = (string) $assoc['number'];
-    $this->month = (int) $assoc['month'];
-    $this->year = (int) $assoc['year'];
-    $this->cvv = (string) $assoc['cvv'];
+    parent::__construct($assoc, $this);
   }
 }

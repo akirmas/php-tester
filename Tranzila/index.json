@@ -1,0 +1,34 @@
+{
+  "gateway": "https://secure5.tranzila.com/cgi-bin/tranzila71u.cgi",
+  "fields": {
+    "address": "address",
+    "email": "email",
+    "full_name": "contact",
+    "cc_expire": "expdate",
+    "cc_number": "ccno",
+    "cc_cvv": "mycvv",
+    "amount": "sum",
+    "currency": "currency",
+    "description": "pdesc",
+    "account": "supplier",
+    "installments": "cred_type",
+    "verify": "tranmode"
+  },
+  "values": {
+    "currency": {
+      "NIS": 1,
+      "USD": 2,
+      "EUR": 978,
+      "GBP": 826
+    },
+    "verify": {
+      "0": "V",
+      "1": "A"
+    }
+  },
+  "defaults": {
+    "verify": "1",
+    "installments": "1"
+  },
+  "overrides": {}
+}
