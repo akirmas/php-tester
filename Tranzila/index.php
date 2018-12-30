@@ -3,42 +3,21 @@ declare(strict_types=1);
 /**
  * http://doctr.interspace.net/?type=1
  */
-require_once(__DIR__.'/../PSP/Assoc.php');
 
 require_once(__DIR__.'/../PSP/Contact.php');
 require_once(__DIR__.'/../PSP/CreditCard.php');
 require_once(__DIR__.'/../PSP/Deal.php');
 require_once(__DIR__.'/../PSP/Transaction.php');
 
+require_once(__DIR__.'/../PSP/PSP.php');
+
 define('TRANZILA_ENV', json_decode(file_get_contents(__DIR__.'/index.json'), true));
 define('TRANZILA_RESPONSES', json_decode(file_get_contents(__DIR__.'/responses.json'), true));
-class Tranzila {
+
+class Tranzila extends PSP {
   private const gateway = TRANZILA_ENV['gateway'];
   private const env = TRANZILA_ENV;
   private const responses = TRANZILA_RESPONSES;
-
-  //function __construct() {}
-  
-  private function querify($args, array $fields = [], array $values = []) :array {
-    $fields = Assoc::filterEmpty($fields);
-    $values = Assoc::filterEmpty($values);
-    return array_merge(
-      ...array_map(
-        function($el) use ($fields, $values) {
-          return !in_array(gettype($el), ['array', 'object'])
-            ? []
-            : Assoc::mapKeyValues(
-              Assoc::toAssoc(Assoc::filterEmpty($el)),
-              $fields,
-              $values,
-              false,
-              true
-            );
-        },
-        $args
-      )
-    );
-  }
 
   public function instant(
     string $envName,
@@ -51,14 +30,9 @@ class Tranzila {
       self::env,
       json_decode(file_get_contents(__DIR__."/envs/$envName.json"), true)
     );
-    
-    $query = $this->querify(
-      [
-        $env->defaults,
-        $transaction, $deal, $contact, $creditCard,
-        $env->overrides
-      ],
-      $env->fields, $env->values
+    $query = self::querify(
+      [$transaction, $deal, $contact, $creditCard],
+      $env
     );
     $request = self::gateway.'?'.http_build_query($query);
     parse_str(
