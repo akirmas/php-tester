@@ -34,6 +34,8 @@ class Tranzila extends PSP {
       [$transaction, $deal, $contact, $creditCard],
       $env
     );
+    $url = self::gateway;
+    $data = http_build_query($query);
     $request = self::gateway.'?'.http_build_query($query);
     parse_str(
       file_get_contents($request),
@@ -52,7 +54,7 @@ class Tranzila extends PSP {
     return array_merge(
       array(
         'query' => $query,
-        'request' => $request,
+        'request' => "$url?$data",
         'success' => $code === '000',
         'response' => $response
       ),
