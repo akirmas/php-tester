@@ -37,9 +37,7 @@ class Isracard extends PSP {
       empty($nextUrl) ? [] : array('sale_return_url' => $nextUrl),
       empty($callBackUrl) ? [] : array('sale_callback_url' => $callBackUrl)
     );
-    print_r(array('query' => $query));
     $data  = json_encode($query);
-
     $ch = curl_init("$env->gateway$method");
     curl_setopt($ch, CURLOPT_POST, 1);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -50,15 +48,16 @@ class Isracard extends PSP {
     curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
     $response = curl_exec($ch);
     $response = json_decode($response, true);
-    $env->defaults = [];
-    $env->overrides = [];
     $result = $response['sale_url']
       . (
         empty($contact)
         ? ''
         : (
           '?' . http_build_query(
-            self::querify([$contact], $env)
+            self::querify([$contact], (object) array(
+              'fields' => $env->fields,
+              'defaults' => [], 'overrides' => [], 'values' => []
+            ))
           )
         )
       );
