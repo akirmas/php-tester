@@ -14,6 +14,7 @@ $request = array(
   'currency' => 'NIS',
   'description' => 'Marketscap.+Single+Page+App.+Payment.+149+pounds.+Nov+2018+DF0F31AA2988C0ABD3CC34E249477438',
   'verify' => 0,
+  'full_name' => 'Gbm Test',
   'id' => '100500',
   'account' => 'x'
 );

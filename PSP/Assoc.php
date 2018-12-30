@@ -27,7 +27,7 @@ abstract class Assoc {
     $keepUnmet = false
   ) :array {
     $result = [];
-    forEach($assoc as $key => $value) 
+    forEach($assoc as $key => $value)
       if (
         array_key_exists($key, $valuesMap)
         && (gettype($valuesMap[$key]) !== 'array')
@@ -39,7 +39,7 @@ abstract class Assoc {
         )
           $result[$key] = $valuesMap[$key][$value];
         elseif ($keepUnmet)
-        $result[$key] = $value;
+          $result[$key] = $value;
     return $result;
   }
 
@@ -82,12 +82,12 @@ abstract class Assoc {
   static function toAssoc($who) :array {
     if (gettype($who) === 'array')
       return $who;
-    
     if (gettype($who) !== 'object')
       return array($who => true);
       
     $assoc = get_object_vars($who);
     $mangled = array_keys((array) $who);
+    // TODO without mangling?
     if (!property_exists($who, 'prefix') || empty($who->prefix))
       return $assoc;
 
