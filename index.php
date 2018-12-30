@@ -1,6 +1,6 @@
 <?php
 require_once(__DIR__.'/Tranzila/index.php');
-
+require_once(__DIR__.'/Isracard/index.php');
 $request = sizeof($_REQUEST) !== 0 ? $_REQUEST
 : json_decode(file_get_contents('php://input'), true);
 
@@ -11,7 +11,7 @@ $request = array(
   'cc_expire' => '0820',
   'cc_cvv' => '662',
   'amount' => '149',
-  'currency' => 'NIS',
+  'currency' => 'USD',
   'description' => 'Marketscap.+Single+Page+App.+Payment.+149+pounds.+Nov+2018+DF0F31AA2988C0ABD3CC34E249477438',
   'verify' => 0,
   'full_name' => 'Gbm Test',
@@ -20,10 +20,11 @@ $request = array(
 );
 
 $tr = new Tranzila;
+$ic = new Isracard;
 $contact = new Contact($request);
 $creditCard = new CreditCard($request);
 $deal = new Deal($request);
 $transaction = new Transaction($request);
 
-echo "\n---\n";
-print_r($tr->instant('test', $transaction, $deal, $contact, $creditCard));
+print_r(["\n---\n", $ic->iframe('test', $transaction, $deal, '', '', $contact)]);
+//print_r($tr->instant('test', $transaction, $deal, $contact, $creditCard));

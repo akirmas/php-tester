@@ -1,0 +1,25 @@
+{
+  "fields": {
+    "email": "email",
+    "first_name": "first_name",
+    "last_name": "last_name",
+    "phone": "phone",
+    "social_id": "social_id",
+    "amount": "sale_price",
+    "currency": "currency",
+    "description": "product_name",
+    "id": "transaction_id",
+    "account": "seller_payme_id",
+    "fee": "market_fee",
+    "installments": "installments",
+    "language": "language"
+  },
+  "values": {},
+  "defaults": {
+    "installments": 1,
+    "fee": 0,
+    "sale_send_notification": false,
+    "language": "en"
+  },
+  "overrides": {}
+}

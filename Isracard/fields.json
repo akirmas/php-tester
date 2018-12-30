@@ -1,7 +1,0 @@
-{
-  "deal": {
-    "description": "product_name",
-    "amount": "sale_price",
-    "id": "transaction_id"
-  }
-}

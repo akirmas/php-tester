@@ -1,0 +1,6 @@
+{
+  "gateway": "https://ng.paymeservice.com/api/",
+  "overrides": {
+    "account": "MPL15332-04207TVK-RSVD2UBC-SLZXGMJT"
+  }
+}
