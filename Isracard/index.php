@@ -49,14 +49,17 @@ class Isracard extends PSP {
     ));
     curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
     $response = curl_exec($ch);
-    print_r($response);
     $response = json_decode($response, true);
+    $env->defaults = [];
+    $env->overrides = [];
     $result = $response['sale_url']
       . (
         empty($contact)
         ? ''
         : (
-          '?' . http_build_query($contact->assoc())
+          '?' . http_build_query(
+            self::querify([$contact], $env)
+          )
         )
       );
     return $result;
