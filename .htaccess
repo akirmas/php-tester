@@ -1,5 +1,5 @@
 Require all denied
 
-<FilesMatch "^(.*\.php)?$">
+<FilesMatch "^index\.[a-z]{,4}?$">
     Require all granted
 </FilesMatch>
