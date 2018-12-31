@@ -28,12 +28,13 @@ class Isracard extends PSP {
       self::env,
       json_decode(file_get_contents(__DIR__."/envs/$envName.json"), true)
     );
-    $query = self::querify(
-      [$transaction, $deal],
-      $env
-    );    
+    $deal->amount *= 100;
+
     $query = array_merge(
-      $query,
+      self::querify(
+        [$transaction, $deal],
+        $env
+      ),
       empty($nextUrl) ? [] : array('sale_return_url' => $nextUrl),
       empty($callBackUrl) ? [] : array('sale_callback_url' => $callBackUrl)
     );
