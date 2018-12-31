@@ -32,7 +32,7 @@ class Isracard extends PSP {
       [$transaction, $deal],
       $env
     );    
-    array_merge(
+    $query = array_merge(
       $query,
       empty($nextUrl) ? [] : array('sale_return_url' => $nextUrl),
       empty($callBackUrl) ? [] : array('sale_callback_url' => $callBackUrl)

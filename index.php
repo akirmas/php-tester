@@ -1,9 +1,5 @@
 <?php
-ini_set("implicit_flush", 1);
 ini_set('error_reporting', E_ALL & ~E_NOTICE & ~E_STRICT & ~E_DEPRECATED);
-ini_set('max_execution_time', 0);
-while (@ob_end_flush());
-ob_implicit_flush(true);
 
 require_once(__DIR__.'/Tranzila/index.php');
 require_once(__DIR__.'/Isracard/index.php');
@@ -47,11 +43,13 @@ $collector = new Collector("tric$transaction->id");
   "---IC---",
   $ic->iframe('test', $transaction, $dealUSD, '', '', $contact)
 ]);*/
-$result = $ic->iframe('test', $transaction, $dealUSD, '', $collector->callbackUrl, $contact);
+$result = $ic->iframe('test', $transaction, $dealUSD, $collector->callbackUrl, $collector->callbackUrl, $contact);
 if ($result['success']) {
-  echo json_encode(array('iframe' => $result['iframe']));
+  echo json_encode(array('cbUrl' => $collector->callbackUrl, 'iframe' => $result['iframe']));
   $content = $collector->wait();
-  echo ','.json_encode(array('result' => $content));
+  echo ',';
+  echo json_encode(array('result' => $content));
+  exit;
 }
 
 
