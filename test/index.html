@@ -1,7 +1,18 @@
 <html>
 <head>
 <script>
-  const url = "../?amount=100&currency=USD&description=desc&id=100500&first_name=fn&last_name=ln&phone=123456789&email=my@mail.gbm";
+  const data = {
+    env: 'testframe',
+    amount: '100',
+    currency: 'USD',
+    description: 'desc',
+    id: '100500',
+    first_name: 'fn',
+    last_name: 'ln',
+    phone: '123456789',
+    email: 'my@mail.gbm'
+  };
+  const url = "../";
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
     console.log(
@@ -10,8 +21,8 @@
       JSON.parse("[" + this.responseText + ']'),
     );
   };
-  xhttp.open("GET", url, true);
-  xhttp.send();  
+  xhttp.open("POST", url, true);
+  xhttp.send(JSON.stringify(data));  
 </script>
 </head>
 </html>
