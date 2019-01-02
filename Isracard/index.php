@@ -36,7 +36,7 @@ class Isracard extends PSP {
         $env
       ),
       empty($nextUrl) ? [] : array('sale_return_url' => $nextUrl),
-      empty($callBackUrl) ? [] : array('sale_callback_url' => $callBackUrl)
+      empty($callbackUrl) ? [] : array('sale_callback_url' => $callbackUrl)
     );
     $data  = json_encode($query);
     $url = "$env->gateway$method";
