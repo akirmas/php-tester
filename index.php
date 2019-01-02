@@ -8,18 +8,14 @@ require_once(__DIR__.'/collector/Collector.php');
 $request = sizeof($_REQUEST) !== 0 ? $_REQUEST
 : json_decode(file_get_contents('php://input'), true);
 
-if (!array_key_exists('env', $request)) {
-  echo 'No env';
-  exit(1);
-}
+if (!array_key_exists('env', $request))
+  exitBadData('No env', 1);
 
 $envPath = __DIR__.'/envs/'.$request['env'].'.json';
-if (!file_exists($envPath)) {
-  echo 'No env config';
-  exit(2);
-}
+if (!file_exists($envPath))
+  exitBadData('No env config', 2);
 
-$env = json_decode(file_get_contents($envPath), "true");
+$env = json_decode(file_get_contents($envPath), true);
 forEach($env as $step) {
   $pspName = $step['psp'];
   switch ($pspName) {
@@ -30,8 +26,7 @@ forEach($env as $step) {
       $psp = new Isracard;
       break;
     default:
-      echo "Not implemented: '$pspName'";
-      exit(3);
+      exitNotImplemented($pspName, 3);
   }
 
   $method = $step['method'];
@@ -49,6 +44,7 @@ forEach($env as $step) {
     case 'iframeContinued':
       $collector = new Collector("tr_$_$transaction->id");
       $result = $psp->iframe($env, $transaction, $deal, '', $collector->callbackUrl, $contact);
+      header("HTTP/1.0 206 Partial Content", TRUE, 206);
       echo json_encode(array('iframe' => $result['iframe']));
       $result = $collector->wait();
       echo ',';    
@@ -64,8 +60,25 @@ forEach($env as $step) {
       $result = $tr->instant($env, $transaction, $dealNIS, $contact, $creditCard);
       break;
     default:
-      echo "Not implemented: '$pspName->$method'";
-      exit(4);
+      exitNotImplemented("$pspName->$method", 4);
   }    
 }
 echo json_encode(array('result' => $result));
+
+function exitBadData($message = '', $id = -1) {
+  $errorFamily = "Not Acceptable";
+  header("HTTP/1.0 406 $errorFamily", TRUE, 406);
+  exit(json_encode(array(
+    'error' => $id,
+    'message' => $message
+  )));
+}
+
+function exitNotImplemented($message = '', $id = -2) {
+  $errorFamily = "Not Implemented";
+  header("HTTP/1.0 501 $errorFamily", TRUE, 501);
+  exit(json_encode(array(
+    'error' => $id,
+    'message' => $message
+  )));
+}
