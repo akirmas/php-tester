@@ -59,7 +59,7 @@ class Isracard extends PSP {
     return array_merge(
       array(
         'query' => $query,
-        'request' => "$url:$data",
+         'request' => json_encode(array($url => $data)), 
         'success' => !$response['status_code'],
         'response' => \assoc\mapKeyValuesVV(
           $response,
