@@ -39,6 +39,9 @@ forEach($env as $step) {
   $transaction = new Transaction($request);
   $deal = new Deal($request);
   $result;
+
+  $multipart = false;
+
   switch($method) {
     case 'iframe':
       $result = $psp->iframe($env, $transaction, $deal, '', '', $contact);
@@ -50,12 +53,11 @@ forEach($env as $step) {
       echo json_encode(array_merge(
         !$result['success'] ? [] : array('iframe' => $result['iframe']),
         array(
-          'callback' => $collector->callbackUrl,
           'result' => $result
         )
       ));
       $result = $collector->wait();
-      echo ',';    
+      $multipart = true;
       break;
     case 'instant':
       $transaction->verify = 1;
@@ -71,7 +73,8 @@ forEach($env as $step) {
       exitNotImplemented("$pspName->$method", 4);
   }    
 }
-echo json_encode(array('result' => $result));
+echo ($multipart ? ',' : '')
+.json_encode(array('result' => $result));
 
 function exitBadData($message = '', $id = -1) {
   $errorFamily = "Not Acceptable";
