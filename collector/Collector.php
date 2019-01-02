@@ -29,7 +29,7 @@ class Collector {
     ob_flush();
     flush();  
     $this->nodeJS->wait();
-    $content = file_get_contents(self::contentPath($this->fireId));
+    $content = json_decode(file_get_contents(self::contentPath($this->fireId)), true);
     return $content;
   }
 }
