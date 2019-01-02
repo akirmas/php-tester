@@ -5,6 +5,9 @@ require_once(__DIR__.'/Tranzila/index.php');
 require_once(__DIR__.'/Isracard/index.php');
 require_once(__DIR__.'/collector/Collector.php');
 
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: GET, POST');
+
 $request = sizeof($_REQUEST) !== 0 ? $_REQUEST
 : json_decode(file_get_contents('php://input'), true);
 
