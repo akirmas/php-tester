@@ -12,9 +12,16 @@
     "account": "seller_payme_id",
     "fee": "market_fee",
     "installments": "installments",
-    "language": "language"
+    "language": "language",
+    "cc_number": "buyer_card_mask",
+    "cc_expire": "buyer_card_exp",
+    "success": "payme_status"
   },
-  "values": {},
+  "values": {
+    "success": {
+      "1": "success"
+    }
+  },
   "defaults": {
     "installments": 1,
     "fee": 0,

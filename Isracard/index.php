@@ -56,7 +56,13 @@ class Isracard extends PSP {
         'query' => $query,
         'request' => "$url:$data",
         'success' => !$response['status_code'],
-        'response' => $response
+        'response' => \assoc\mapKeyValuesVV(
+          $response,
+          $env['fields'],
+          $env['values'],
+          true,
+          true
+        )
       ),
       !array_key_exists('sale_url', $response)
       ? []

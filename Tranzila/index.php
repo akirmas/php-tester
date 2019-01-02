@@ -56,7 +56,13 @@ class Tranzila extends PSP {
         'query' => $query,
         'request' => "$url?$data",
         'success' => $code === '000',
-        'response' => $response
+        'response' => \assoc\mapKeyValuesVV(
+          $response,
+          $env['fields'],
+          $env['values'],
+          true,
+          true
+        )
       ),
       !array_key_exists($code, self::responses)
       ? []
