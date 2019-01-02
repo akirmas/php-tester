@@ -15,7 +15,8 @@
     "language": "language",
     "cc_number": "buyer_card_mask",
     "cc_expire": "buyer_card_exp",
-    "success": "payme_status"
+    "success": "payme_status",
+    "iframe": "sale_url"
   },
   "values": {
     "success": {

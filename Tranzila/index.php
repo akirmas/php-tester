@@ -11,6 +11,8 @@ require_once(__DIR__.'/../PSP/Transaction.php');
 
 require_once(__DIR__.'/../PSP/PSP.php');
 
+require_once(__DIR__.'/../PSP/assoc_functions.php');
+
 define('TRANZILA_ENV', json_decode(file_get_contents(__DIR__.'/index.json'), true));
 define('TRANZILA_RESPONSES', json_decode(file_get_contents(__DIR__.'/responses.json'), true));
 

@@ -1,6 +1,6 @@
 <?php
 declare(strict_types=1);
-require_once(__DIR__.'/assoc_functions.php');
+require_once(__DIR__.'/../PSP/assoc_functions.php');
 abstract class Assoc {
   protected /*static*/ $prefix;
 

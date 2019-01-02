@@ -6,6 +6,11 @@ declare(strict_types=1);
 require_once(__DIR__.'/../PSP/Contact.php');
 require_once(__DIR__.'/../PSP/Deal.php');
 require_once(__DIR__.'/../PSP/Transaction.php');
+
+require_once(__DIR__.'/../PSP/PSP.php');
+
+require_once(__DIR__.'/../PSP/assoc_functions.php');
+
 define('ISRACARD_ENV', json_decode(file_get_contents(__DIR__.'/index.json'), true));
 
 class Isracard extends PSP {
@@ -58,8 +63,8 @@ class Isracard extends PSP {
         'success' => !$response['status_code'],
         'response' => \assoc\mapKeyValuesVV(
           $response,
-          $env['fields'],
-          $env['values'],
+          $env->fields,
+          $env->values,
           true,
           true
         )

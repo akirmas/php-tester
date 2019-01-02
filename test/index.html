@@ -2,23 +2,28 @@
 <head>
 <script>
   const data = {
-    env: 'testframe',
-    amount: '100',
-    currency: 'USD',
-    description: 'desc',
-    id: '100500',
-    first_name: 'fn',
-    last_name: 'ln',
-    phone: '123456789',
-    email: 'my@mail.gbm'
+    amount: "15",
+    cc_cvv: "123",
+    cc_expire: "0120",
+    cc_number: "12312312312",
+    cc_system: "None",
+    company: "792952",
+    currency: "GBP",
+    description: "Special Price - Limited time offer - Registration for Family,",
+    email: "andrii@gobe-mark.com",
+    entity: "lead",
+    env: "testframe",
+    full_name: "andrii test",
+    leadId: "1426917"
   };
+  //const url = "https://payment.gobemark.info/php/psps/";
   const url = "../";
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
     console.log(
       this.readyState,
       this.status,
-      JSON.parse("[" + this.responseText + ']'),
+      this.responseText,
     );
   };
   xhttp.open("POST", url, true);
