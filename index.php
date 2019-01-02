@@ -1,5 +1,5 @@
 <?php
-ini_set('error_reporting', E_ALL & ~E_NOTICE & ~E_STRICT & ~E_DEPRECATED);
+ini_set('error_reporting', 0);
 
 require_once(__DIR__.'/Tranzila/index.php');
 require_once(__DIR__.'/Isracard/index.php');
@@ -48,7 +48,10 @@ forEach($env as $step) {
       $collector = new Collector("tr_$_$transaction->id");
       $result = $psp->iframe($env, $transaction, $deal, '', $collector->callbackUrl, $contact);
       header("HTTP/1.0 206 Partial Content", TRUE, 206);
-      echo json_encode(array('iframe' => $result['iframe']));
+      echo json_encode(array_merge(
+        array('result' => $result),
+        !$result['success'] ? [] : array('iframe' => $result['iframe'])
+      ));
       $result = $collector->wait();
       echo ',';    
       break;
