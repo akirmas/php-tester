@@ -12,6 +12,7 @@
     "description": "pdesc",
     "account": "supplier",
     "installments": "cred_type",
+    "company": "company",
     "verify": "tranmode"
   },
   "values": {
