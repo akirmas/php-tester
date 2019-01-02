@@ -38,16 +38,15 @@ forEach($env as $step) {
   $creditCard = new CreditCard($request);
   $transaction = new Transaction($request);
   $deal = new Deal($request);
-
   $result;
   switch($method) {
     case 'iframe':
       $result = $psp->iframe($env, $transaction, $deal, '', '', $contact);
       break;
     case 'iframeContinued':
-      $collector = new Collector("tr_$_$transaction->id");
-      $result = $psp->iframe($env, $transaction, $deal, '', $collector->callbackUrl, $contact);
       header("HTTP/1.0 206 Partial Content", TRUE, 206);
+      $collector = new Collector("tr_$transaction->id");
+      $result = $psp->iframe($env, $transaction, $deal, '', $collector->callbackUrl, $contact);
       echo json_encode(array_merge(
         !$result['success'] ? [] : array('iframe' => $result['iframe']),
         array(
