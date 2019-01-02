@@ -1,6 +1,7 @@
 {
   "gateway": "https://preprod.paymeservice.com/api/",
   "overrides": {
-    "account": "MPL15421-07939ATV-KSOBZ0VM-V4TFWHH2"
+    "account": "MPL15421-07939ATV-KSOBZ0VM-V4TFWHH2",
+    "currency": "USD"
   }
 }
