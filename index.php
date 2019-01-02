@@ -42,15 +42,18 @@ forEach($env as $step) {
   $result;
   switch($method) {
     case 'iframe':
-      $result = $psp->iframe($env, $transaction, $deal, '', $collector->callbackUrl, $contact);
+      $result = $psp->iframe($env, $transaction, $deal, '', '', $contact);
       break;
     case 'iframeContinued':
       $collector = new Collector("tr_$_$transaction->id");
       $result = $psp->iframe($env, $transaction, $deal, '', $collector->callbackUrl, $contact);
       header("HTTP/1.0 206 Partial Content", TRUE, 206);
       echo json_encode(array_merge(
-        array('result' => $result),
-        !$result['success'] ? [] : array('iframe' => $result['iframe'])
+        !$result['success'] ? [] : array('iframe' => $result['iframe']),
+        array(
+          'callback' => $collector->callbackUrl,
+          'result' => $result
+        )
       ));
       $result = $collector->wait();
       echo ',';    
