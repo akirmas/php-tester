@@ -1,95 +1,102 @@
 <?php
-ini_set('error_reporting', 0);
+$runEnv = 'test';
+require_once(__DIR__.'/assoc.php');
 
-require_once(__DIR__.'/Tranzila/index.php');
-require_once(__DIR__.'/Isracard/index.php');
-require_once(__DIR__.'/collector/Collector.php');
+//$input = json_decode(file_get_contents(__DIR__.'/index.test.json'))->isra_frame_good[0];
+$input = (object) (sizeof($_REQUEST) !== 0
+? $_REQUEST
+: (array_key_exists('argv', $_SERVER)
+? json_decode(preg_replace('/(^"|"$)/i', '', $_SERVER['argv'][1]))
+:  json_decode(file_get_contents('php://data'))
+));
 
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: GET, POST');
+const ConfigDir = __DIR__.'/configs';
+$step = json_decode(file_get_contents(ConfigDir."/envs/$input->env.json"));
+$instance = json_decode(file_get_contents(ConfigDir."/$step->instance/index.json"));
 
-$request = sizeof($_REQUEST) !== 0 ? $_REQUEST
-: json_decode(file_get_contents('php://input'), true);
-
-if (!array_key_exists('env', $request))
-  exitBadData('No env', 1);
-
-$envPath = __DIR__.'/envs/'.$request['env'].'.json';
-if (!file_exists($envPath))
-  exitBadData('No env config', 2);
-
-$env = json_decode(file_get_contents($envPath), true);
-forEach($env as $step) {
-  $pspName = $step['psp'];
-  switch ($pspName) {
-    case 'Tranzila':
-      $psp = new Tranzila;
-      break;
-    case 'Isracard':
-      $psp = new Isracard;
-      break;
-    default:
-      exitNotImplemented($pspName, 3);
-  }
-
-  $method = $step['method'];
-  $env = $step['env'];
-  $contact = new Contact($request);
-  $creditCard = new CreditCard($request);
-  $transaction = new Transaction($request);
-  $deal = new Deal($request);
-  $result;
-
-  $multipart = false;
-
-  switch($method) {
-    case 'iframe':
-      $result = $psp->iframe($env, $transaction, $deal, '', '', $contact);
-      break;
-    case 'iframeContinued':
-      header("HTTP/1.0 206 Partial Content", TRUE, 206);
-      $collector = new Collector("tr_$transaction->id");
-      $result = $psp->iframe($env, $transaction, $deal, '', $collector->callbackUrl, $contact);
-      echo json_encode(array_merge(
-        !$result['success'] ? [] : array('iframe' => $result['iframe']),
-        array(
-          'result' => $result
-        )
-      ));
-      $result = $collector->wait();
-      $multipart = true;
-      break;
-    case 'instant':
-      $transaction->verify = 1;
-      $result = $tr->instant($env, $transaction, $dealNIS, $contact, $creditCard);
-      if (!$result['success']) {
-        echo $result['message'];
-        exit();
-      }
-      $transaction->verify = 0;
-      $result = $tr->instant($env, $transaction, $dealNIS, $contact, $creditCard);
-      break;
-    default:
-      exitNotImplemented("$pspName->$method", 4);
-  }    
-}
-echo ($multipart ? ',' : '')
-.json_encode(array('result' => $result));
-
-function exitBadData($message = '', $id = -1) {
-  $errorFamily = "Not Acceptable";
-  header("HTTP/1.0 406 $errorFamily", TRUE, 406);
-  exit(json_encode(array(
-    'error' => $id,
-    'message' => $message
-  )));
+$handler = $step->instance;
+$handlerPath = ConfigDir."/$handler/handler.php";
+if (file_exists($handlerPath))
+  require_once($handlerPath);
+else {
+  $handler = 'CycleHandler';
+  require_once(__DIR__."/$handler.php");
 }
 
-function exitNotImplemented($message = '', $id = -2) {
-  $errorFamily = "Not Implemented";
-  header("HTTP/1.0 501 $errorFamily", TRUE, 501);
-  exit(json_encode(array(
-    'error' => $id,
-    'message' => $message
-  )));
+$instanceEnv = json_decode(file_get_contents(ConfigDir."/$step->instance/envs/$step->env.json"));
+
+$request = \assoc\merge(1, 1, $instance->request, $instanceEnv->request);
+$response = \assoc\merge(1, 1, $instance->response, $instanceEnv->response);
+
+$url = ((object) $request->engine)->gateway;
+
+$event = 'Request';
+$phase = 'Raw';
+$requestData = fireEvent($input);
+
+$requestData = \assoc\merge(1, 0,
+  $request->defaults,
+  $requestData,
+  $request->overrides
+);
+
+$requestData = \assoc\mapKeys(
+  \assoc\mapValues(
+    $requestData,
+    (object) $request->values,
+    true
+  ),
+  $request->fields,
+  false
+);
+
+$event = 'Request';
+$phase = 'Formed';
+$requestData = fireEvent($requestData);
+$request->engine = (object) $request->engine;
+switch($request->engine->method) {
+  case 'POST':
+    $ch = curl_init($request->engine->gateway);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_COOKIE,"XDEBUG_SESSION=VSCODE");
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $request->engine->method);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, [   
+      'Content-Type: application/json'                                                              
+    ]);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($requestData));
+    $responseData = json_decode(curl_exec($ch));
+    curl_close($ch);
+    break;
+  case 'GET':
+    parse_str(
+      file_get_contents($url.'?'.http_build_query($requestData)),
+      $responseData
+    );
+    $responseData = (object) $responseData; 
+    break;
+  default: exit('not impelemented');
+}
+$event = 'Response';
+$phase = 'Raw';
+$output = fireEvent($responseData, $requestData);
+
+$output = \assoc\mapValues(
+  \assoc\mapKeys(
+    $output,    
+    \assoc\flip($response->fields),
+    true
+  ),
+  (object) $response->values,
+  true
+);
+
+$event = 'Response';
+$phase = 'Formed';
+$output = fireEvent($output, $input);
+
+echo json_encode($output);
+
+function fireEvent(...$data) :object {
+  global $event, $phase, $handler;
+  return \assoc\merge(1, 0, $data[0], call_user_func(["\\$handler", "on$event$phase"], ...$data));
 }

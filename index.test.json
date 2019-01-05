@@ -1,0 +1,69 @@
+{
+  "isra_frame_good": [
+    {
+      "amount": 10,
+      "cc:cvv": "123",
+      "cc:expire": "0120",
+      "cc:number": "12312312312",
+      "cc:system": "None",
+      "company": "company",
+      "currency": "USD",
+      "description": "test",
+      "email": "andrii@gobe-mark.com",
+      "entity": "lead",
+      "env": "test_isra_frame",
+      "id": "test1",
+      "full_name": "andrii test",
+      "phone": "987654321",
+      "leadId": "1426917"
+    },
+    {
+      "return:code": "0",
+      "amountInt": 1000
+    }    
+  ],
+  "isra_frame_bad": [
+    {
+      "amount": 10,
+      "cc:cvv": "123",
+      "cc:expire": "0120",
+      "cc:number": "12312312312",
+      "cc:system": "None",
+      "company": "company",
+      "currency": "USD",
+      "description": "test",
+      "email": "andrii@gobe-mark.com",
+      "entity": "lead",
+      "env": "test_isra_frame",
+      "full_name": "andrii test",
+      "phone": "987654321",
+      "leadId": "1426917"
+    },    
+    {
+      "error:message:0": "Invalid price, out of min-max bounds",
+      "error:message:1": "10"
+    }
+  ],
+  "tranz_instant": [
+    {
+      "amount": "10",
+      "verify": 0,
+      "cc:cvv": "123",
+      "cc:expire": "0120",
+      "cc:number": "12312312",
+      "cc:system": "None",
+      "company": "company",
+      "currency": "NIS",
+      "description": "test",
+      "email": "andrii@gobe-mark.com",
+      "entity": "lead",
+      "env": "test_tranz_instant",
+      "full_name": "andrii test",
+      "phone": "987654321",
+      "leadId": "1426917"
+    },    
+    {
+      "return:code": "000"
+    }
+  ]
+}

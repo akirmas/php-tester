@@ -1,0 +1,48 @@
+{
+  "request": {
+    "engine": {
+      "method": "POST"
+    },
+  
+    "fields": {
+      "email": "email",
+      "first_name": "first_name",
+      "last_name": "last_name",
+      "phone": "phone",
+      "social_id": "social_id",
+      "amountInt": "sale_price",
+      "currency": "currency",
+      "description": "product_name",
+      "id": "transaction_id",
+      "account": "seller_payme_id",
+      "fee": "market_fee",
+      "installments": "installments",
+      "language": "language",
+      "cc_number": "buyer_card_mask",
+      "cc_expire": "buyer_card_exp",
+      "success": "payme_status",
+      "iframe": "sale_url"
+    },
+    "values": {},
+    "defaults": {
+      "installments": 1,
+      "fee": 0,
+      "sale_send_notification": false,
+      "language": "en"
+    },
+    "overrides": {}
+  },
+  "response": {
+    "enigine": {},
+    "fields": {
+      "iframeUrl": "sale_url",
+      "amountInt": "price",
+      "return:message:0": "status_error_details",
+      "return:message:1": "status_additional_info",
+      "return:code": "status_code"
+    },
+    "values": {},
+    "defaults": {},
+    "overrides": {}
+  }
+}
