@@ -11,7 +11,6 @@
       "phone": "phone",
       "social_id": "social_id",
       "amountInt": "sale_price",
-      "currency": "currency:start",
       "currency:final": "currency",
       "description": "product_name",
       "id": "transaction_id",

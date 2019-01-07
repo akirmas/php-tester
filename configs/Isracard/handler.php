@@ -8,7 +8,7 @@ class Isracard extends CycleHandler {
       : array(
         'amount' => ((int) $r->amountInt) / 100,
         'iframeUrl' => "$r->iframeUrl?".http_build_query(
-          array_reduce(['first_name', 'last_name', 'email', 'phone'],
+          array_reduce(['name:first', 'name:last', 'email', 'phone'],
             function($acc, $field) use ($i) {
               if (property_exists($i, $field) && !empty($i->{$field}))
                 $acc[$field] = $i->{$field};

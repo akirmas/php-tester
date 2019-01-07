@@ -9,8 +9,6 @@
       "email": "email",
       "name:full": "contact",
       "cc:expire:date": "expdate",
-      "cc:expire:month": "expmonth",
-      "cc:expire:year": "expyear",
       "cc:number": "ccno",
       "cc:cvv": "mycvv",
       "amount:final": "sum",

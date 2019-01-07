@@ -8,13 +8,16 @@ class CommonHandler extends CycleHandler {
     : substr('00'.$input->{'cc:expire:month'}, -2)
     . substr('00'.$input->{'cc:expire:year'}, -2);
 
+    // TODO: Fee 
     $amount = $input->amount;
-    if (property_exists($input, 'currency:final') && ($input->currency != $input->{'currency:final'})) {
-      $pair = $input->currency.'_'.$input->{'currency:final'};
+    $currency = $input->currency;
+    if (property_exists($input, 'currency:final') && ($currency != $input->{'currency:final'})) {
+      $pair = $currency.'_'.$input->{'currency:final'};
       $rate = json_decode(file_get_contents(
         "https://free.currencyconverterapi.com/api/v5/convert?q=$pair&compact=y"
       ))->pair->val;
       $amount = $input->amount * $rate;
+      $currency = $input->{'currency:final'};
     }
 
     $name_full = (property_exists($input, 'name:full'))
@@ -29,6 +32,7 @@ class CommonHandler extends CycleHandler {
       'cc:expire:date' => $date,
       'amount:final' => $amount,
       'amountInt' => 100 * (float) $amount,
+      'currency:final' => $currency,
       'name:full' => $name_full
     );
   }
