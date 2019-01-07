@@ -7,12 +7,14 @@
     "fields": {
       "address": "address",
       "email": "email",
-      "full_name": "contact",
-      "cc:expire": "expdate",
+      "name:full": "contact",
+      "cc:expire:date": "expdate",
+      "cc:expire:month": "expmonth",
+      "cc:expire:year": "expyear",
       "cc:number": "ccno",
       "cc:cvv": "mycvv",
-      "amount": "sum",
-      "currency": "currency",
+      "amount:final": "sum",
+      "currency:final": "currency",
       "description": "pdesc",
       "account": "supplier",
       "installments": "cred_type",
@@ -20,8 +22,8 @@
       "verify": "tranmode"
     },
     "values": {
-      "currency": {
-        "NIS": 1,
+      "currency:final": {
+        "ILS": 1,
         "USD": 2,
         "EUR": 978,
         "GBP": 826
@@ -35,11 +37,15 @@
       "verify": "1",
       "installments": "1"
     },
-    "overrides": {}
+    "overrides": {
+      "currency:final": "ILS"
+    }
   },
   "response": {
     "engine": {},
     "fields": {
+      "cc:expire:month": "expmonth",
+      "cc:expire:year": "expyear",
       "return:message": "ResponseClone",      
       "return:code": "Response"
     },
@@ -47,6 +53,12 @@
     "defaults": {},
     "overrides": {},
     "values": {
+      "currency:final": {
+        "ILS": 1,
+        "USD": 2,
+        "EUR": 978,
+        "GBP": 826
+      },  
       "return:message" : {
         "000":"Transaction approved",
         "001":"Blocked confiscate card",

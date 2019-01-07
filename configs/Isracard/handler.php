@@ -2,9 +2,6 @@
 require_once(__DIR__.'/../../CycleHandler.php');
 
 class Isracard extends CycleHandler {
-  static function onRequestRaw(object $r): object {
-    return (object) array('amountInt' => 100 * (float) $r->amount);
-  }
   static function onResponseFormed(object $r, object $i): object {
     return (object) (
       $r->{'return:code'} != 0 ? []
