@@ -9,6 +9,7 @@ require_once(__DIR__.'/handler.php');
 $commonHandler = 'CommonHandler';
 $tmstmp = date('Ymd_His-').rand();
 
+//$input = json_decode(file_get_contents(__DIR__.'/index.test.json'))->netpay[0];
 //$input = json_decode(file_get_contents(__DIR__.'/index.test.json'))->isra_frame_good[0];
 $input = (object) (sizeof($_REQUEST) !== 0
 ? $_REQUEST
@@ -53,6 +54,9 @@ $requestData = \assoc\merge(1, 0,
   $request->overrides
 );
 
+$event = 'Request';
+$phase = 'Formed';
+$requestData = fireEvent($requestData);
 $requestData = \assoc\mapKeys(
   \assoc\mapValues(
     $requestData,
@@ -63,9 +67,6 @@ $requestData = \assoc\mapKeys(
   false
 );
 
-$event = 'Request';
-$phase = 'Formed';
-$requestData = fireEvent($requestData);
 $request->engine = (object) $request->engine;
 switch($request->engine->method) {
   case 'POST':

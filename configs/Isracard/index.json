@@ -3,7 +3,6 @@
     "engine": {
       "method": "POST"
     },
-  
     "fields": {
       "email": "email",
       "name:first": "first_name",
@@ -20,7 +19,6 @@
       "language": "language",
       "cc:number": "buyer_card_mask",
       "cc:expire:date": "buyer_card_exp",
-      "success": "payme_status",
       "iframe": "sale_url"
     },
     "values": {},
@@ -39,7 +37,8 @@
       "amountInt": "price",
       "return:message:0": "status_error_details",
       "return:message:1": "status_additional_info",
-      "return:code": "status_code"
+      "return:code": "status_code",
+      "success": "payme_status"
     },
     "values": {},
     "defaults": {},

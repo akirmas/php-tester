@@ -65,5 +65,27 @@
     {
       "return:code": "000"
     }
+  ],
+  "netpay" : [
+    {
+      "env": "test_dave",
+      "verify": 1,
+      "amount": 1,
+      "currency": "USD",
+      "cc:number": "",
+      "cc:expire:month": "01",
+      "cc:expire:year": 2020,
+      "cc:cvv": 123,
+      "phone": 123123123,
+      "email": "andrii@gobe-mark.com",
+      "name:full": "Andrii Kirmas",
+      "address:0": "shfjlsgh",
+      "address:city": "Bat Yam",
+      "address:zip": 5910000,
+      "address:country:ISO": "IL"
+    },
+    {
+      "return:code": "504"
+    } 
   ]
 }
