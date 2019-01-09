@@ -66,7 +66,7 @@
     "fields": {
       "return:message:0": "ReplyDesc",
       "return:code": "Reply",
-      "iframe": "D3Redirect"
+      "iframeUrl": "D3Redirect"
     },
     "values": {},
     "defaults": {},
