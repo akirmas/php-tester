@@ -1,0 +1,5 @@
+Require all denied
+
+<FilesMatch "\.json$">
+    Require all granted
+</FilesMatch>

@@ -1,0 +1,102 @@
+{
+  "action": "https://payment.gobemark.info/php/psps/",
+  "method": "POST",
+  "inputs": {
+    "title": {
+      "label": "Payment form"
+    },
+    "entityId": {
+      "label": "Entity Id",
+      "type": "number",
+      "required": true    
+    },
+    "name:first": {
+      "label": "First name",
+      "type": "text",
+      "required": true
+    },
+    "name:last": {
+      "label": "Last name",
+      "type": "text",
+      "required": true
+    },
+    "address": {
+      "label": "Address",
+      "type": "textarea",
+      "required": true
+    },
+    "email": {
+      "label": "Email",
+      "type": "email",
+      "required": true
+    },
+    "phone": {
+      "label": "Phone",
+      "type": "tel",
+      "required": true
+    },
+    "cc": {
+      "label": "Credit Card"
+    },
+    "cc:number": {
+      "label": "Number",
+      "type": "text",
+      "required": true
+    },  
+    "cc:expire:month": {
+      "label": "Expire month",
+      "type": "month",
+      "required": true
+    },  
+    "cc:expire:year": {
+      "label": "Expire year",
+      "type": "year",
+      "required": true
+    },
+    "cc:cvv": {
+      "label": "CVV2",
+      "type": "number",
+      "required": true
+    },
+    "deal": {
+      "label": "Deal"
+    },
+    "id": {
+      "label": "Deal Id",
+      "type": "text"
+    },
+    "description": {
+      "label": "Products",
+      "type": "textarea",
+      "rows": 4,
+      "required": true
+    },
+    "amount": {
+      "label": "Sum",
+      "type": "number",
+      "required": true,
+      "step": 0.01
+    },
+    "currency": {
+      "label": "Currency",
+      "type": "list",
+      "items": [
+        {"value": "GBP"}
+      ],
+      "required": true
+    },
+    "env": {
+      "label": "Processor",
+      "type": "list",
+      "items": [
+        {"value": "test_tranz_instant", "label": "Tranzila"},
+        {"value": "test_isra_frame", "label": "Isracard"},
+        {"value": "immigration_netpay", "label": "Netpay"}
+      ]
+    },
+    "submit": {
+      "label": "Process",
+      "type": "submit"
+    }
+  }
+}
