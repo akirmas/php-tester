@@ -20,11 +20,11 @@ if (array_key_exists(Collector::fireField, $_REQUEST)) {
         'name' => !array_key_exists('REMOTE_HOST', $_SERVER) ? null : $_SERVER['REMOTE_HOST'],
         'referer' => !array_key_exists('HTTP_REFERER', $_SERVER) ? null : $_SERVER['HTTP_REFERER'] 
       ],
-      'data' => (sizeof($_REQUEST) !== 0)
-        ? $_REQUEST
-        : (array_key_exists('argv', $_SERVER)
-        ? $_SERVER['argv']
-        : file_get_contents('php://input'))
+      'data' => [
+        'req' => $_REQUEST,
+        'arg' => !array_key_exists('argv', $_SERVER) ? null : $_SERVER['argv'],
+        'post' => file_get_contents('php://input')
+      ]
     ],
     JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT)
   );
