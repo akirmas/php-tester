@@ -2,7 +2,7 @@
 require_once(__DIR__.'/../../CycleHandler.php');
 
 class Isracard extends CycleHandler {
-  static function onResponseFormed(object $r, object $i): object {
+  static function onResponseFormed(object $env, object $r, object $i): object {
     return (object) (
       $r->{'return:code'} != 0 ? []
       : array(

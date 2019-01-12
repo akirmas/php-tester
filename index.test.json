@@ -24,7 +24,7 @@
   ],
   "isra_frame_bad": [
     {
-      "amount": 10,
+      "amount": 0.1,
       "cc:cvv": "123",
       "cc:expire:date": "0120",
       "cc:number": "12312312312",
@@ -68,8 +68,8 @@
   ],
   "netpay" : [
     {
-      "env": "test_dave",
-      "verify": 1,
+      "env": "immigration_netpay",
+      "verify": 0,
       "amount": 1,
       "currency": "USD",
       "cc:number": "",

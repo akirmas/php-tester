@@ -21,7 +21,8 @@ if (!property_exists($input, 'id')) $input->id = '';
 
 const ConfigDir = __DIR__.'/configs';
 $step = json_decode(file_get_contents(ConfigDir."/envs/$input->env.json"));
-$instance = json_decode(file_get_contents(ConfigDir."/$step->instance/index.json"));
+$handler = $step->instance;
+$instance = json_decode(file_get_contents(ConfigDir."/$handler/index.json"));
 
 const ProcDir = __DIR__.'/processes';
 if (!file_exists(ProcDir)) mkdir(ProcDir);
@@ -29,7 +30,6 @@ if (!file_exists(ProcDir."/$input->env")) mkdir(ProcDir."/$input->env");
 $logDir = ProcDir."/$input->env/$input->id-$tmstmp";
 mkdir($logDir);
 
-$handler = $step->instance;
 $handlerPath = ConfigDir."/$handler/handler.php";
 if (file_exists($handlerPath)) require_once($handlerPath);
 else {
@@ -113,9 +113,9 @@ $output = fireEvent($output, $input);
 echo json_encode($output);
 
 function fireEvent(...$data) :object {
-  global $event, $phase, $handler, $logDir, $commonHandler;
-  $data[0] = \assoc\merge(1, 0, $data[0], call_user_func(["\\$commonHandler", "on$event$phase"], ...$data));
-  $data[0] = \assoc\merge(1, 0, $data[0], call_user_func(["\\$handler", "on$event$phase"], ...$data));
+  global $event, $phase, $handler, $logDir, $commonHandler, $step;
+  $data[0] = \assoc\merge(1, 0, $data[0], call_user_func(["\\$commonHandler", "on$event$phase"], ...array_merge([$step], $data)));
+  $data[0] = \assoc\merge(1, 0, $data[0], call_user_func(["\\$handler", "on$event$phase"], ...array_merge([$step], $data)));
   file_put_contents(
     "$logDir/$handler-$event$phase.json",
     json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES)

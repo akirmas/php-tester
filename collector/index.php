@@ -9,23 +9,19 @@ if (array_key_exists(Collector::fireField, $_REQUEST)) {
   $nodeJS = new SyncEvent($fireId);
   $nodeJS->fire();
 } else {
-  $unsortedDir = __DIR__.'/unsorted';
-  if (!file_exists($unsortedDir)) mkdir($unsortedDir);
+  $request = array_merge($_REQUEST, ['ip' => $_SERVER['REMOTE_ADDR']]);
 
-  file_put_contents(
-    "$unsortedDir/".date('YmdHis').'.json',
-    json_encode([
-      'from' => [
-        'ip' => $_SERVER['REMOTE_ADDR'],
-        'name' => !array_key_exists('REMOTE_HOST', $_SERVER) ? null : $_SERVER['REMOTE_HOST'],
-        'referer' => !array_key_exists('HTTP_REFERER', $_SERVER) ? null : $_SERVER['HTTP_REFERER'] 
-      ],
-      'data' => [
-        'req' => $_REQUEST,
-        'arg' => !array_key_exists('argv', $_SERVER) ? null : $_SERVER['argv'],
-        'post' => file_get_contents('php://input')
-      ]
-    ],
-    JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT)
-  );
+  $instance = !array_key_exists('instance', $request) ? 'unknown' : $request['instance'];
+  $instanceDir = __DIR__."/collected/$instance";
+  if (!file_exists($instanceDir)) mkdir($instanceDir);
+
+  $eventId = $instance === 'Netpay' ? $request['reference'] : 'unknown-'.date('Ymd-His');
+  $eventDir = "$instanceDir/$eventId";
+  if (!file_exists($eventDir)) mkdir($eventDir); 
+
+  file_put_contents("$eventDir/index.json", json_encode($request, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+  file_put_contents("$eventDir/".rand().".json", json_encode($request, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+
+  $event = new SyncEvent("$instance/$eventId");
+  $event->fire();
 }

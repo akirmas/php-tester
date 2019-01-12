@@ -2,7 +2,7 @@
 require_once(__DIR__.'/CycleHandler.php');
 
 class CommonHandler extends CycleHandler {
-  static function onRequestRaw(object $input): object {
+  static function onRequestRaw(object $env, object $input): object {
     $date = (property_exists($input, 'cc:expire:date'))
     ? $input->{'cc:expire:date'}
     : substr('00'.$input->{'cc:expire:month'}, -2)
@@ -28,13 +28,19 @@ class CommonHandler extends CycleHandler {
       .(!(property_exists($input, 'name:last')) ? '' : $input->{'name:last'})
     );
     
-    return (object) array(
+    return (object) [
       'cc:expire:date' => $date,
       'amount:final' => $amount,
       'amountInt' => 100 * (float) $amount,
       'currency:final' => $currency,
       'name:full' => $name_full
-    );
+    ];
+  }
+  static function onResponseFormed(object $env, object $output, object $input) : object {
+    $transactionId = !property_exists($output, 'transaction:id') ? '' : $output->{'transaction:id'}; 
+    return [
+      'event' => "$env->instance/$transactionId"
+    ];
   }
 }
 

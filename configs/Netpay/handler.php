@@ -6,7 +6,7 @@
 require_once(__DIR__.'/../../CycleHandler.php');
 
 class Netpay extends CycleHandler {
-  static function onRequestFormed(object $request): object {  
+  static function onRequestFormed(object $env, object $request): object {  
     return (object) ['Signature' => base64_encode(hash("sha256",
       join('', [
         $request->account,
