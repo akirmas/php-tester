@@ -19,7 +19,8 @@
       "language": "language",
       "cc:number": "buyer_card_mask",
       "cc:expire:date": "buyer_card_exp",
-      "iframe": "sale_url"
+      "iframeUrl": "sale_url",
+      "callbackUrl": "sale_callback_url"
     },
     "values": {},
     "defaults": {
@@ -28,7 +29,9 @@
       "sale_send_notification": false,
       "language": "en"
     },
-    "overrides": {}
+    "overrides": {
+      "callbackUrl": "https://payment.gobemark.info/php/psps/collector/?instance=Isracard"
+    }
   },
   "response": {
     "enigine": {},
