@@ -67,7 +67,7 @@
       "return:message:0": "ReplyDesc",
       "return:code": "Reply",
       "iframeUrl": "D3Redirect",
-      "transaction:id": "TransID"
+      "transactionId": "TransID"
     },
     "values": {},
     "defaults": {},

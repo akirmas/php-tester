@@ -41,7 +41,8 @@
       "return:message:0": "status_error_details",
       "return:message:1": "status_additional_info",
       "return:code": "status_code",
-      "success": "payme_status"
+      "success": "payme_status",
+      "transactionId": "payme_sale_id"
     },
     "values": {},
     "defaults": {},
