@@ -2,6 +2,8 @@
   "isra_frame_good": [
     {
       "amount": 10,
+      "name:first": "First",
+      "name:last": "Lastman",
       "cc:cvv": "123",
       "cc:expire:date": "0120",
       "cc:number": "12312312312",
