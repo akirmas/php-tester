@@ -1,10 +1,16 @@
 Require all denied
 
+<FilesMatch "^(index\.php)?$">
+    Require all granted
+</FilesMatch>
+
 <FilesMatch "\.json$">
     Require all granted
-    Content-Type: "application/json; charset=utf-8"
-    Access-Control-Allow-Origin: "*"
-    Access-Control-Allow-Methods: "POST, GET"
-    Header set Custom1 "custom1"
-    Custom2: "custom2"
+# doesn't work
+<ifModule mod_headers.c>
+    Header unset ETag
+    Header add Access-Control-Allow-Origin: "*"
+    Header add Access-Control-Allow-Methods: "GET,POST"
+    Header add Access-Control-Allow-Headers: "Content-Type"
+</ifModule>
 </FilesMatch>
