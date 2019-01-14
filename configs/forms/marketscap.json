@@ -1,6 +1,7 @@
 {
   "action": "https://payment.gobemark.info/php/psps/",
   "method": "POST",
+  "subscribeUrl": "https://payment.gobemark.info/php/psps/await/",
   "inputs": {
     "title": {
       "label": "Vade"
