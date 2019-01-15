@@ -95,6 +95,10 @@
         {"value": "immigration_netpay", "label": "Netpay"}
       ]
     },
+    "save": {
+      "label": "Save",
+      "type": "button"
+    },
     "submit": {
       "label": "Process",
       "type": "submit"
