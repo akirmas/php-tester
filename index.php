@@ -10,34 +10,35 @@ $commonHandler = 'CommonHandler';
 $tmstmp = date('Ymd_His-').rand();
 
 //$input = json_decode(file_get_contents(__DIR__.'/index.test.json'))->netpay[0];
-//$input = json_decode(file_get_contents(__DIR__.'/index.test.json'))->isra_frame_good[0];
-$input = (object) (sizeof($_REQUEST) !== 0
+$input = json_decode(file_get_contents(__DIR__.'/index.test.json'))->isra_frame_good[0];
+/*$input = (object) (sizeof($_REQUEST) !== 0
 ? $_REQUEST
 : (array_key_exists('argv', $_SERVER)
 ? json_decode(preg_replace('/(^"|"$)/i', '', $_SERVER['argv'][1]))
 :  json_decode(file_get_contents('php://input'))
 ));
-if (!property_exists($input, 'id')) $input->id = '';
+if (!property_exists($input, 'id')) $input->id = '';*/
 
 const ConfigDir = __DIR__.'/configs';
-$step = json_decode(file_get_contents(ConfigDir."/envs/$input->env.json"));
+$step = json_decode(file_get_contents(ConfigDir."/processes/$input->process.json"));
 $handler = $step->instance;
-$instance = json_decode(file_get_contents(ConfigDir."/$handler/index.json"));
+$instance = json_decode(file_get_contents(ConfigDir."/instances/$handler/index.json"));
 
 const ProcDir = __DIR__.'/processes';
 if (!file_exists(ProcDir)) mkdir(ProcDir);
-if (!file_exists(ProcDir."/$input->env")) mkdir(ProcDir."/$input->env");
-$logDir = ProcDir."/$input->env/$input->id-$tmstmp";
+if (!file_exists(ProcDir."/$input->process")) mkdir(ProcDir."/$input->process");
+
+$logDir = ProcDir."/$input->process/$input->id-$tmstmp";
 mkdir($logDir);
 
-$handlerPath = ConfigDir."/$handler/handler.php";
+$handlerPath = ConfigDir."/inctances/$handler/handler.php";
 if (file_exists($handlerPath)) require_once($handlerPath);
 else {
   $handler = 'CycleHandler';
   require_once(__DIR__."/$handler.php");
 }
 
-$instanceEnv = json_decode(file_get_contents(ConfigDir."/$step->instance/envs/$step->env.json"));
+$instanceEnv = json_decode(file_get_contents(ConfigDir."/instances/$step->instance/accounts/$step->account.json"));
 
 $request = \assoc\merge(1, 1, $instance->request, $instanceEnv->request);
 $response = \assoc\merge(1, 1, $instance->response, $instanceEnv->response);
