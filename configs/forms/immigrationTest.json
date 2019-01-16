@@ -86,13 +86,13 @@
       ],
       "required": true
     },
-    "env": {
+    "process": {
       "label": "Processor",
       "type": "list",
       "items": [
-        {"value": "test_tranz_instant", "label": "Tranzila"},
-        {"value": "test_isra_frame", "label": "Isracard"},
-        {"value": "immigration_netpay", "label": "Netpay"}
+        {"value": "test_Tranzila", "label": "Tranzila"},
+        {"value": "test_Isracard", "label": "Isracard"},
+        {"value": "immigration_Netpay", "label": "Netpay"}
       ]
     },
     "save": {

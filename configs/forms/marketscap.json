@@ -342,11 +342,11 @@
         {"value": "EUR"}
       ]
     },
-    "env": {
+    "process": {
       "label": "Processor",
       "type": "list",
       "items": [
-        {"value": "marketscap", "label": "Netpay"}
+        {"value": "marketscap_Netpay", "label": "Netpay"}
       ]
     },
     "submit": {
