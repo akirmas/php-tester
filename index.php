@@ -5,12 +5,13 @@ header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: POST, GET');
 
 require_once(__DIR__.'/assoc.php');
+require_once(__DIR__.'/utils.php');
 require_once(__DIR__.'/handler.php');
 $commonHandler = 'CommonHandler';
 $tmstmp = date('Ymd_His-').rand();
 
-/*$input = json_decode(file_get_contents(__DIR__.'/index.test.json'))->netpay[0];
-$input = json_decode(file_get_contents(__DIR__.'/index.test.json'))->isra_frame_good[0];*/
+//$input = json_decode(file_get_contents(__DIR__.'/index.test.json'))->netpay[0];
+//$input = json_decode(file_get_contents(__DIR__.'/index.test.json'))->isra_frame_good[0];
 $input = (object) (sizeof($_REQUEST) !== 0
 ? $_REQUEST
 : (array_key_exists('argv', $_SERVER)
@@ -19,26 +20,21 @@ $input = (object) (sizeof($_REQUEST) !== 0
 ));
 if (!property_exists($input, 'id')) $input->id = '';
 
-const ConfigDir = __DIR__.'/configs';
-$step = json_decode(file_get_contents(ConfigDir."/processes/$input->process.json"));
+$ConfigDir = mkdir2(__DIR__, 'configs');
+$step = json_decode(file_get_contents($ConfigDir."/processes/$input->process.json"));
 $handler = $step->instance;
-$instance = json_decode(file_get_contents(ConfigDir."/instances/$handler/index.json"));
+$instance = json_decode(file_get_contents($ConfigDir."/instances/$handler/index.json"));
 
-const ProcDir = __DIR__.'/processes';
-if (!file_exists(ProcDir)) mkdir(ProcDir);
-if (!file_exists(ProcDir."/$input->process")) mkdir(ProcDir."/$input->process");
+$logDir = mkdir2(__DIR__, 'processes', $input->process, $input->id, $tmstmp);
 
-$logDir = ProcDir."/$input->process/$input->id-$tmstmp";
-mkdir($logDir);
-
-$handlerPath = ConfigDir."/inctances/$handler/handler.php";
+$handlerPath = $ConfigDir."/inctances/$handler/handler.php";
 if (file_exists($handlerPath)) require_once($handlerPath);
 else {
   $handler = 'CycleHandler';
   require_once(__DIR__."/$handler.php");
 }
 
-$instanceEnv = json_decode(file_get_contents(ConfigDir."/instances/$step->instance/accounts/$step->account.json"));
+$instanceEnv = json_decode(file_get_contents($ConfigDir."/instances/$step->instance/accounts/$step->account.json"));
 
 $request = \assoc\merge(1, 1, $instance->request, $instanceEnv->request);
 $response = \assoc\merge(1, 1, $instance->response, $instanceEnv->response);
