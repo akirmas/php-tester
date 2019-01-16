@@ -14,7 +14,7 @@ $eventsFolder = mkdir2(__DIR__, "..", "events");
 $eventFolder = mkdir2($eventsFolder, $eventName);
 
 // check is it injection to path for data grab
-if (strpos($eventFolder, $eventsFolder) !== 0) exit;
+if (!isSubfolder($eventsFolder, $eventFolder)) exit;
 
 $eventFile = __DIR__."/../events/$eventName/index.json";
 if (!file_exists($eventFile)) {
