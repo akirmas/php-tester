@@ -9,15 +9,15 @@ require_once(__DIR__.'/handler.php');
 $commonHandler = 'CommonHandler';
 $tmstmp = date('Ymd_His-').rand();
 
-//$input = json_decode(file_get_contents(__DIR__.'/index.test.json'))->netpay[0];
-$input = json_decode(file_get_contents(__DIR__.'/index.test.json'))->isra_frame_good[0];
-/*$input = (object) (sizeof($_REQUEST) !== 0
+/*$input = json_decode(file_get_contents(__DIR__.'/index.test.json'))->netpay[0];
+$input = json_decode(file_get_contents(__DIR__.'/index.test.json'))->isra_frame_good[0];*/
+$input = (object) (sizeof($_REQUEST) !== 0
 ? $_REQUEST
 : (array_key_exists('argv', $_SERVER)
 ? json_decode(preg_replace('/(^"|"$)/i', '', $_SERVER['argv'][1]))
 :  json_decode(file_get_contents('php://input'))
 ));
-if (!property_exists($input, 'id')) $input->id = '';*/
+if (!property_exists($input, 'id')) $input->id = '';
 
 const ConfigDir = __DIR__.'/configs';
 $step = json_decode(file_get_contents(ConfigDir."/processes/$input->process.json"));
