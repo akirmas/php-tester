@@ -25,7 +25,9 @@ $step = json_decode(file_get_contents($ConfigDir."/processes/$input->process.jso
 $handler = $step->instance;
 $instance = json_decode(file_get_contents($ConfigDir."/instances/$handler/index.json"));
 
-$logDir = mkdir2(__DIR__, 'processes', $input->process, $input->id, $tmstmp);
+$processDir = mkdir2(__DIR__, 'processes', $input->process, $input->id);
+$logDir = mkdir2($processDir, $tmstmp);
+$processDir = mkDir2($processDir, 'index');
 
 $handlerPath = $ConfigDir."/inctances/$handler/handler.php";
 if (file_exists($handlerPath)) require_once($handlerPath);
@@ -110,12 +112,15 @@ $output = fireEvent($output, $input);
 echo json_encode($output);
 
 function fireEvent(...$data) :object {
-  global $event, $phase, $handler, $logDir, $commonHandler, $step;
+  global $event, $phase, $handler, $logDir, $processDir, $commonHandler, $step;
   $data[0] = \assoc\merge(1, 0, $data[0], call_user_func(["\\$commonHandler", "on$event$phase"], ...array_merge([$step], $data)));
   $data[0] = \assoc\merge(1, 0, $data[0], call_user_func(["\\$handler", "on$event$phase"], ...array_merge([$step], $data)));
-  file_put_contents(
-    "$logDir/$handler-$event$phase.json",
-    json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES)
-  );
+  $dirs = [$logDir, $processDir];
+  foreach ($dirs as $dir) {
+    file_put_contents(
+      "$dir/$handler-$event$phase.json",
+      json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES)
+    );
+  }
   return $data[0];
 }
