@@ -39,7 +39,7 @@ class CommonHandler extends CycleHandler {
   static function onResponseFormed(object $env, object $output, object $input) : object {
     if (!property_exists($output, 'event:id')) return new \stdClass;
     return (object) [
-      'event' => "$env->instance/$output->{'event:id'}"
+      'event' => "$env->instance/".$output->{'event:id'}
     ];
   }
 }
