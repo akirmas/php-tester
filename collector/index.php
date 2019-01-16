@@ -1,4 +1,6 @@
 <?php
+require_once(__DIR__.'/../utils.php');
+
 require_once(__DIR__.'/Collector.php');
 
 if (array_key_exists(Collector::fireField, $_REQUEST)) {
@@ -12,7 +14,7 @@ if (array_key_exists(Collector::fireField, $_REQUEST)) {
   $request = array_merge($_REQUEST, ['ip' => !array_key_exists('REMOTE_ADDR', $_SERVER) ? '' : $_SERVER['REMOTE_ADDR']]);
 
   $instance = !array_key_exists('instance', $request) ? 'unknown' : $request['instance'];
-  $instanceDir = mkdir2(__DIR__, '..' ,'collected', $instance);
+  $instanceDir = mkdir2(__DIR__, '..' ,'events', $instance);
 
   $eventId;
   switch($instance) {
@@ -21,6 +23,9 @@ if (array_key_exists(Collector::fireField, $_REQUEST)) {
       break;
     case 'Isracard': 
       $eventId = $request['payme_sale_id'];
+      break;
+    case 'Tranzila': 
+      $eventId = $request['Tempref'];
       break;
     default: $eventId = 'unknown-'.date('Ymd-His');
   }
@@ -31,10 +36,4 @@ if (array_key_exists(Collector::fireField, $_REQUEST)) {
 
   $event = new SyncEvent("$instance/$eventId");
   $event->fire();
-}
-
-function mkdir2(...$folders) {
-  $dir = join(DIRECTORY_SEPARATOR, $folders);
-  if (!file_exists($dir)) mkdir($dir, 0777, true);
-  return $dir;
 }
