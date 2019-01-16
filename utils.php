@@ -10,3 +10,7 @@ function inFolder($root, $sub) {
   if (!file_exists($root) || !file_exists($sub)) return 0;
   return strpos(realpath($sub), realpath($root)) === 0;
 }
+
+function tmstmp() {
+  return date('Ymd-His_').rand();
+}

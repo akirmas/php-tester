@@ -8,7 +8,6 @@ require_once(__DIR__.'/assoc.php');
 require_once(__DIR__.'/utils.php');
 require_once(__DIR__.'/handler.php');
 $commonHandler = 'CommonHandler';
-$tmstmp = date('Ymd_His-').rand();
 
 //$input = json_decode(file_get_contents(__DIR__.'/index.test.json'))->netpay[0];
 //$input = json_decode(file_get_contents(__DIR__.'/index.test.json'))->isra_frame_good[0];
@@ -26,7 +25,7 @@ $handler = $step->instance;
 $instance = json_decode(file_get_contents($ConfigDir."/instances/$handler/index.json"));
 
 $processDir = mkdir2(__DIR__, 'processes', $input->process, $input->id);
-$logDir = mkdir2($processDir, $tmstmp);
+$logDir = mkdir2($processDir, tmstmp());
 $processDir = mkDir2($processDir, 'index');
 
 $handlerPath = $ConfigDir."/inctances/$handler/handler.php";
