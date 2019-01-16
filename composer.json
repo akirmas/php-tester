@@ -1,0 +1,8 @@
+{
+    "name": "andrii/psps",
+    "type": "library",
+    "require": {
+        "opis/json-schema": "^1.0",
+        "opis/string": "^1.5"
+    }
+}
