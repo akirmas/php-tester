@@ -1,0 +1,166 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "http://api.example.com/profile.json#",
+    "type": "object",
+    "properties": {
+        "request": {
+            "type": "object",
+            "properties": {
+                "engine": {
+                    "type": "object",
+                    "properties": {
+                        "gateway": {
+                            "type": "string"
+                        },
+                        "method": {
+                            "enum": ["GET", "POST"]
+                        }
+                    },
+                    "additionalProperties": false
+                },
+                "fields": {
+                    "type": "object",
+                    "properties": {
+                        "installments": {
+                            "type": "string"
+                        },
+                          "account": {
+                            "type": "string"
+                        },
+                          "verify": {
+                            "type": "string"
+                        },
+                          "amount": {
+                            "type": "string"
+                        },
+                          "currency:final": {
+                            "type": "string"
+                        },
+                          "cc:number": {
+                            "type": "string"
+                        },
+                          "cc:expire:month": {
+                            "type": "string"
+                        },
+                          "cc:expire:year": {
+                            "type": "string"
+                        },
+                          "cc:cvv": {
+                            "type": "string"
+                        },
+                          "phone": {
+                            "type": "string"
+                        },
+                          "email": {
+                            "type": "string"
+                        },
+                          "name:full": {
+                            "type": "string"
+                        },
+                          "address:country:ISO": {
+                            "type": "string"
+                        },
+                          "address:zip": {
+                            "type": "string"
+                        }, 
+                          "address:city": {
+                            "type": "string"
+                        },
+                          "address:0": {
+                            "type": "string"
+                        },
+                          "address:1": {
+                            "type": "string"
+                        },
+                          "nextUrl": {
+                            "type": "string"
+                        }
+                    },
+                    "required": ["email", "amount", "currency:final"],
+                    "additionalProperties": false
+                },
+                "values": {
+                    "type": "object",
+                    "properties": {
+                        "installments": {
+                            "type": "object"
+                        },
+                          "account": {
+                            "type": "object"
+                        },
+                          "verify": {
+                            "type": "object"
+                        },
+                          "amount": {
+                            "type": "object"
+                        },
+                          "currency:final": {
+                            "type": "object"
+                        },
+                          "cc:number": {
+                            "type": "object"
+                        },
+                          "cc:expire:month": {
+                            "type": "object"
+                        },
+                          "cc:expire:year": {
+                            "type": "object"
+                        },
+                          "cc:cvv": {
+                            "type": "object"
+                        },
+                          "phone": {
+                            "type": "object"
+                        },
+                          "email": {
+                            "type": "object"
+                        },
+                          "name:full": {
+                            "type": "object"
+                        },
+                          "address:country:ISO": {
+                            "type": "object"
+                        },
+                          "address:zip": {
+                            "type": "object"
+                        }, 
+                          "address:city": {
+                            "type": "object"
+                        },
+                          "address:0": {
+                            "type": "object"
+                        },
+                          "address:1": {
+                            "type": "object"
+                        },
+                          "nextUrl": {
+                            "type": "object"
+                        }
+
+                    },
+                    "additionalProperties": false
+                },
+                "defaults": {
+                    "type": "object"
+                },
+                "overrides": {
+                    "type": "object"
+                }
+        },
+        "additionalProperties": false
+    },
+    "response": {
+        "type": "object",
+        "properties": {
+            "return:code": {
+                "type": "string"
+            }
+        }
+    }
+    
+},
+"additionalProperties": false
+
+}
+
+
