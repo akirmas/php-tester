@@ -42,7 +42,7 @@
       "return:message:1": "status_additional_info",
       "return:code": "status_code",
       "success": "payme_status",
-      "transactionId": "payme_sale_id"
+      "transaction:id": "payme_sale_id"
     },
     "values": {},
     "defaults": {},

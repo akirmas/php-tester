@@ -45,7 +45,8 @@
       "cc:expire:month": "expmonth",
       "cc:expire:year": "expyear",
       "return:message": "ResponseClone",      
-      "return:code": "Response"
+      "return:code": "Response",
+      "transaction:id": "Tempref"
     },
     "verify": {},
     "defaults": {},
