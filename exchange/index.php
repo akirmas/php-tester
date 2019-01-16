@@ -16,11 +16,26 @@ $method = sizeof($_GET) !== 0
 
 if ($method === '') exit('unknown method');
 
-$input === 'GET' ? $_GET : json_decode($post, true);
+$input = $method === 'GET' ? $_GET : json_decode($post, true);
+
+if ('process')
 
 $dir = mkdir2(__DIR__, 'content');
-$procDir = mkdir2($dir, $input['process']);
-$nodePath = "$procDir/$id.json";
-if (inFolder($dir, $nodePath) === false) exit;
+$procDir = mkdir2($dir, $input['account']);
+$nodeDir = mkdir2($procDir, $input['id']);
+if (inFolder($dir, $nodeDir) === false) exit;
 
-echo $method === 'GET' ? file_get_contents($nodePath) : file_put_contents($nodePath);
+$nodePath = "$nodeDir/index.json";
+
+switch ($method) {
+  case 'GET':
+    echo file_get_contents($nodePath);
+    break;
+  case 'POST':
+    $content = json_encode($input, JSON_UNESCAPED_SLASHES);
+    echo file_put_contents($nodePath, $content);
+    file_put_contents($nodeDir.'/'.tmstmp().'.json', $content);
+    break;
+  default:
+}
+exit;
