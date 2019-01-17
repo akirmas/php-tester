@@ -32,7 +32,7 @@
       }
     },
     "defaults": {
-      "verify": "1",
+      "verify": "0",
       "installments": "1"
     },
     "overrides": {
