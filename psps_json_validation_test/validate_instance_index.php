@@ -13,6 +13,21 @@ class MatchFilter implements IFilter
     }
 }
 
+class JsonValidationException extends Exception
+{
+	protected $_validationErrorData = null;
+	
+    public function setValidationErrorData($errorData)
+    {
+    	$this->_validationErrorData = $errorData;
+    }
+
+    public function getValidationErrorData()
+    {
+    	return $this->_validationErrorData;
+    }
+}
+
 $filters = new FilterContainer();
 $filters->add("object", "match", new MatchFilter());
 
@@ -27,16 +42,40 @@ try {
 	foreach ($indexFilesCollection as $fileName) {
 		
 		$currentResult = validateSingleIndex($fileName, $schemaFileName, $filters);
-		echo '<pre>';
-		echo "<h6>$fileName</h6>";
-		var_dump($currentResult);
-		echo '</pre>';
-
+		if ( !$currentResult['isValid'] ){
+			$jsonValidationException = new JsonValidationException($currentResult['errorData']['errorMessage']);
+			$jsonValidationException->setValidationErrorData($currentResult['errorData']);
+			throw $jsonValidationException;
+		} else {
+			throw new JsonValidationException('JSON is valid.');
+		}
 	}
 } catch(Exception $e){
+	
+	$exceptionFullClassName = get_class($e);
+	if(strpos($exceptionFullClassName, "\\") !== false){
+		$exceptionClassName = trim(strrchr($exceptionFullClassName, "\\"), "\\");
+	} else {
+		$exceptionClassName = $exceptionFullClassName;
+	}
 	$message = $e->getMessage();
-	$keyPresentInValuesButMissingInFields = trim(strrchr($message, '/'), '/');
-	echo "This key is present in 'values' but is missing in 'fields': " . $keyPresentInValuesButMissingInFields;
+	
+	switch($exceptionClassName){
+		case 'InvalidJsonPointerException':
+			$keyPresentInValuesButMissingInFields = trim(strrchr($message, '/'), '/');
+			$message = "This key is present in 'values' but is missing in 'fields': " . $keyPresentInValuesButMissingInFields;		
+		break;
+		case 'JsonValidationException':
+			$errorData = $e->getValidationErrorData();
+			if ($errorData !== null){
+				$message = $errorData['errorMessage'] . " in: " . implode("/", $errorData['pathToTheDataThatCausedTheError']);
+			}
+		break;
+		default:
+		break;
+	}
+
+	echo htmlentities($message);
 	exit;
 }
 
