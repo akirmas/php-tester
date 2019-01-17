@@ -34,13 +34,15 @@ $filters->add("object", "match", new MatchFilter());
 $schemaFileName = "instance_index_validation_schema.json";
 $indexFilesCollection = [
 	"./instances_index_files/netpay_index.json",
-	//"./instances_index_files/tranzilla_index.json",
-	//"./instances_index_files/isracard_index.json" 
+	"./instances_index_files/tranzilla_index.json",
+	"./instances_index_files/isracard_index.json" 
 	];
+$validationResults = [];
 
-try {
-	foreach ($indexFilesCollection as $fileName) {
-		
+foreach ($indexFilesCollection as $fileName) {
+
+	try {
+			
 		$currentResult = validateSingleIndex($fileName, $schemaFileName, $filters);
 		if ( !$currentResult['isValid'] ){
 			$jsonValidationException = new JsonValidationException($currentResult['errorData']['errorMessage']);
@@ -49,34 +51,42 @@ try {
 		} else {
 			throw new JsonValidationException('JSON is valid.');
 		}
-	}
-} catch(Exception $e){
-	
-	$exceptionFullClassName = get_class($e);
-	if(strpos($exceptionFullClassName, "\\") !== false){
-		$exceptionClassName = trim(strrchr($exceptionFullClassName, "\\"), "\\");
-	} else {
-		$exceptionClassName = $exceptionFullClassName;
-	}
-	$message = $e->getMessage();
-	
-	switch($exceptionClassName){
-		case 'InvalidJsonPointerException':
-			$keyPresentInValuesButMissingInFields = trim(strrchr($message, '/'), '/');
-			$message = "This key is present in 'values' but is missing in 'fields': " . $keyPresentInValuesButMissingInFields;		
-		break;
-		case 'JsonValidationException':
-			$errorData = $e->getValidationErrorData();
-			if ($errorData !== null){
-				$message = $errorData['errorMessage'] . " in: " . implode("/", $errorData['pathToTheDataThatCausedTheError']);
-			}
-		break;
-		default:
-		break;
+
+	} catch(Exception $e){
+		
+		$exceptionFullClassName = get_class($e);
+		if(strpos($exceptionFullClassName, "\\") !== false){
+			$exceptionClassName = trim(strrchr($exceptionFullClassName, "\\"), "\\");
+		} else {
+			$exceptionClassName = $exceptionFullClassName;
+		}
+		$message = $e->getMessage();
+		
+		switch($exceptionClassName){
+			case 'InvalidJsonPointerException':
+				$keyPresentInValuesButMissingInFields = trim(strrchr($message, '/'), '/');
+				$message = "This key is present in 'values' but is missing in 'fields': " . $keyPresentInValuesButMissingInFields;		
+			break;
+			case 'JsonValidationException':
+				$errorData = $e->getValidationErrorData();
+				if ($errorData !== null){
+					$message = $errorData['errorMessage'] . " in: " . implode("/", $errorData['pathToTheDataThatCausedTheError']);
+				}
+			break;
+			default:
+			break;
+		}
+
+		$validationResults[$fileName] = $message;
 	}
 
-	echo htmlentities($message);
-	exit;
+}//foreach
+
+
+foreach($validationResults as $fileName => $message){
+	$html = $fileName . ' : ' . $message;
+	echo htmlentities($html);
+	echo '<br />';
 }
 
 function validateSingleIndex($indexFileName, $schemaFileName, $filters = false)
