@@ -10,12 +10,14 @@
                     "type": "object",
                     "properties": {
                         "gateway": {
-                            "type": "string"
+                            "type": "string",
+                            "format": "uri"
                         },
                         "method": {
                             "enum": ["GET", "POST"]
                         }
                     },
+                    "required": ["gateway", "method"],
                     "additionalProperties": false
                 },
                 "fields": {
@@ -255,6 +257,7 @@
                     "type": "object"
                 }
         },
+        "required": ["engine", "fields", "values", "defaults", "overrides"],
         "additionalProperties": false
     },
     "response": {

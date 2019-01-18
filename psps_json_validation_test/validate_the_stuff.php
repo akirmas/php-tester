@@ -32,10 +32,16 @@ class JsonValidationException extends Exception
 
 class JsonValidator {
 
-
+	/*
+	* Used to detarmine if we will validate "test" or "real" data.
+	*/
 	protected $_isLocalTest = false;
 
+	/*
+	* Will contain validation results for each JSON-file.
+	*/
 	protected $_validationResults = null;
+	
 	/*
 	* The directory where we will get JSONs to validate.
 	* Is set in init() method. Will be different for "real"
@@ -124,7 +130,7 @@ class JsonValidator {
 				try {
 			
 					$fileName = $this->_dataSourceDirPrefix . $fileName;
-					$currentResult = $this->_validateSingleIndex($fileName, $schemaFileName, $filters);
+					$currentResult = $this->_validateSingleFile($fileName, $schemaFileName, $filters);
 					if ( !$currentResult['isValid'] ){
 						$jsonValidationException = new JsonValidationException($currentResult['errorData']['errorMessage']);
 						$jsonValidationException->setValidationErrorData($currentResult['errorData']);
@@ -169,7 +175,7 @@ class JsonValidator {
 
 	}
 
-	protected function _validateSingleIndex($indexFileName, $schemaFileName, $filters = false)
+	protected function _validateSingleFile($indexFileName, $schemaFileName, $filters = false)
 	{
 		$data = file_get_contents($indexFileName);
 		$data = json_decode($data);
