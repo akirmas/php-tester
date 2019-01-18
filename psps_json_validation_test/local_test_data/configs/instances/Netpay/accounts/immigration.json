@@ -1,0 +1,13 @@
+{
+  "request": {
+    "engine": {},
+    "overrides": {
+      "account": 2289155,
+      "verify": 0,
+      "salt": "W4HEAQ89SU",
+      "nextUrl": "https://theimmigrationenterprise.com/"
+    },
+    "defaults": {}
+  },
+  "response": {}
+}
