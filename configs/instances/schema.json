@@ -10,7 +10,8 @@
           "type": "object",
           "properties": {
             "gateway": {
-              "type": "string"
+              "type": "string",
+              "format": "uri"
             },
             "method": {
               "enum": ["GET", "POST"]
@@ -21,62 +22,101 @@
         "fields": {
           "type": "object",
           "properties": {
+            "id": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
             "installments": {
               "type": "string"
             },
-              "account": {
+            "account": {
               "type": "string"
             },
-              "verify": {
+            "verify": {
               "type": "string"
             },
-              "amount": {
+            "amount:final": {
               "type": "string"
             },
-              "currency:final": {
+            "amountInt:final": {
               "type": "string"
             },
-              "cc:number": {
+            "currency:final": {
               "type": "string"
             },
-              "cc:expire:month": {
+            "fee": {
               "type": "string"
             },
-              "cc:expire:year": {
+            "cc:number": {
               "type": "string"
             },
-              "cc:cvv": {
+            "cc:expire:date": {
               "type": "string"
             },
-              "phone": {
+            "cc:expire:month": {
               "type": "string"
             },
-              "email": {
+            "cc:expire:year": {
               "type": "string"
             },
-              "name:full": {
+            "cc:cvv": {
               "type": "string"
             },
-              "address:country:ISO": {
+            "phone": {
               "type": "string"
             },
-              "address:zip": {
+            "email": {
+              "type": "string"
+            },
+            "company": {
+              "type": "string"
+            },
+            "name:first": {
+              "type": "string"
+            },
+            "name:last": {
+              "type": "string"
+            },
+            "name:full": {
+              "type": "string"
+            },
+            "social_id": {
+              "type": "string"
+            },
+            "address": {
+              "type": "string"
+            },
+            "address:country:ISO": {
+              "type": "string"
+            },
+            "address:zip": {
               "type": "string"
             }, 
-              "address:city": {
+            "address:city": {
               "type": "string"
             },
-              "address:0": {
+            "address:0": {
               "type": "string"
             },
-              "address:1": {
+            "address:1": {
               "type": "string"
             },
-              "nextUrl": {
+            "nextUrl": {
+              "type": "string"
+            },
+            "iframeUrl": {
+              "type": "string"
+            },
+            "callbackUrl": {
+              "type": "string"
+            },
+            "language": {
               "type": "string"
             }
           },
-          "required": ["email", "amount", "currency:final"],
+          "required": ["email", "currency:final"],
           "additionalProperties": false
         },
         "values": {

@@ -34,7 +34,7 @@ class CommonHandler extends CycleHandler {
     return (object) [
       'cc:expire:date' => $date,
       'amount:final' => $amount,
-      'amountInt' => 100 * (float) $amount,
+      'amountInt:final' => 100 * (float) $amount,
       'currency:final' => $currency,
       'name:full' => $name_full
     ];
