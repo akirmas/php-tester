@@ -1,5 +1,5 @@
 <?php
-require '../vendor/autoload.php';
+require_once(__DIR__.'../../vendor/autoload.php');
 
 use Opis\JsonSchema\{
     Validator, ValidationResult, ValidationError, 
@@ -79,26 +79,23 @@ class JsonValidator {
 	{
 		switch($this->_isLocalTest){
 			case true:
-				$this->_dataSourceDirPrefix = './local_test_data/';
+				$this->_dataSourceDirPrefix = 'local_test_data';
 			break;
 			case false:
-				$this->_dataSourceDirPrefix = '../';
+				$this->_dataSourceDirPrefix = '..';
 			break;
 		}
 	}
 
-	public function setIsLocalTest($isLocalTest)
-	{
+	public function setIsLocalTest($isLocalTest) {
 		$this->_isLocalTest = $isLocalTest;
 	}
 
-	public function getValidationResults()
-	{
+	public function getValidationResults() {
 		return $this->_validationResults;
 	}
 
-	public function validate()
-	{
+	public function validate() {
 
 		$validationResults = [];
 		/*
@@ -119,28 +116,22 @@ class JsonValidator {
 				$filters->add($filterTarget, $filterName, new $filterClassName());	
 			}
 
-			foreach($jsonFilesCollection as $fileName){
-
+			foreach($jsonFilesCollection as $fileName) {
 				try {
-			
-					$fileName = $this->_dataSourceDirPrefix . $fileName;
+					$fileName = "$this->_dataSourceDirPrefix/$fileName";
 					$currentResult = $this->_validateSingleIndex($fileName, $schemaFileName, $filters);
 					if ( !$currentResult['isValid'] ){
 						$jsonValidationException = new JsonValidationException($currentResult['errorData']['errorMessage']);
 						$jsonValidationException->setValidationErrorData($currentResult['errorData']);
 						throw $jsonValidationException;
-					} else {
+					} else
 						throw new JsonValidationException('JSON is valid.');
-					}
-
-				} catch(Exception $e){
-		
+				} catch(Exception $e) {
 					$exceptionFullClassName = get_class($e);
-					if(strpos($exceptionFullClassName, "\\") !== false){
+					if(strpos($exceptionFullClassName, "\\") !== false)
 						$exceptionClassName = trim(strrchr($exceptionFullClassName, "\\"), "\\");
-					} else {
+					else 
 						$exceptionClassName = $exceptionFullClassName;
-					}
 					$message = $e->getMessage();
 					
 					switch($exceptionClassName){
@@ -169,12 +160,11 @@ class JsonValidator {
 
 	}
 
-	protected function _validateSingleIndex($indexFileName, $schemaFileName, $filters = false)
-	{
-		$data = file_get_contents($indexFileName);
+	protected function _validateSingleIndex($indexFileName, $schemaFileName, $filters = false) {
+		$data = file_get_contents(__DIR__."/$indexFileName");
 		$data = json_decode($data);
 
-		$schema = Schema::fromJsonString(file_get_contents($schemaFileName));
+		$schema = Schema::fromJsonString(file_get_contents(__DIR__."/$schemaFileName"));
 
 		$validator = new Validator();
 		if ($filters !== false){
