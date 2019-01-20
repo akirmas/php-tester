@@ -7,17 +7,17 @@
     "fields": {
       "address": "address",
       "email": "email",
+      "currency:final": "currency",
+      "verify": "tranmode",
       "name:full": "contact",
       "cc:expire:date": "expdate",
       "cc:number": "ccno",
       "cc:cvv": "mycvv",
       "amount:final": "sum",
-      "currency:final": "currency",
       "description": "pdesc",
       "account": "supplier",
       "installments": "cred_type",
-      "company": "company",
-      "verify": "tranmode"
+      "company": "company"      
     },
     "values": {
       "currency:final": {

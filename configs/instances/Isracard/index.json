@@ -5,22 +5,7 @@
     },
     "fields": {
       "email": "email",
-      "name:first": "first_name",
-      "name:last": "last_name",
-      "phone": "phone",
-      "social_id": "social_id",
-      "amountInt": "sale_price",
-      "currency:final": "currency",
-      "description": "product_name",
-      "id": "transaction_id",
-      "account": "seller_payme_id",
-      "fee": "market_fee",
-      "installments": "installments",
-      "language": "language",
-      "cc:number": "buyer_card_mask",
-      "cc:expire:date": "buyer_card_exp",
-      "iframeUrl": "sale_url",
-      "callbackUrl": "sale_callback_url"
+      "currency:final": "currency"
     },
     "values": {},
     "defaults": {

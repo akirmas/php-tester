@@ -8,7 +8,7 @@
       "installments": "TypeCredit",
       "account": "CompanyNum",
       "verify": "TransType",
-      "amount": "Amount",
+      "amount:final": "Amount",
       "currency:final": "Currency",
       "cc:number": "CardNum",
       "cc:expire:month": "ExpMonth",
