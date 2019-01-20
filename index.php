@@ -9,15 +9,14 @@ require_once(__DIR__.'/utils.php');
 require_once(__DIR__.'/handler.php');
 $commonHandler = 'CommonHandler';
 
-//$input = json_decode(file_get_contents(__DIR__.'/index.test.json'))->netpay[0];
-//$input = json_decode(file_get_contents(__DIR__.'/index.test.json'))->isra_frame_good[0];
+//$input = json_decode(file_get_contents(__DIR__.'/index.test.json'))->tranz_instant[0];
 $input = (object) (sizeof($_REQUEST) !== 0
 ? $_REQUEST
 : (array_key_exists('argv', $_SERVER)
 ? json_decode(preg_replace('/(^"|"$)/i', '', $_SERVER['argv'][1]))
 :  json_decode(file_get_contents('php://input'))
 ));
-if (!property_exists($input, 'id')) $input->id = '';
+if (!property_exists($input, 'id')) $input->id = tmstmp();
 
 $ConfigDir = mkdir2(__DIR__, 'configs');
 $step = json_decode(file_get_contents($ConfigDir."/processes/$input->process.json"));
@@ -28,8 +27,9 @@ $processDir = mkdir2(__DIR__, 'processes', $input->process, $input->id);
 $logDir = mkdir2($processDir, tmstmp());
 $processDir = mkDir2($processDir, 'index');
 
-$handlerPath = $ConfigDir."/inctances/$handler/handler.php";
-if (file_exists($handlerPath)) require_once($handlerPath);
+$handlerPath = $ConfigDir."/instances/$handler/handler.php";
+if (file_exists($handlerPath))
+  require_once($handlerPath);
 else {
   $handler = 'CycleHandler';
   require_once(__DIR__."/$handler.php");
@@ -76,7 +76,13 @@ switch($request->engine->method) {
       'Content-Type: application/json'                                                              
     ]);
     curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($requestData));
-    $responseData = json_decode(curl_exec($ch));
+    $responseText = curl_exec($ch);
+    if ($responseText === false) 
+      throw new Exception(curl_error($ch), curl_errno($ch));
+    $responseData = json_decode($responseText);
+    $htmlResp = '<!doctype html>';
+    if ($htmlResp === strtolower(substr($responseText, 0, strlen($htmlResp))))
+      file_put_contents("$processDir/error.html", $responseText);
     curl_close($ch);
     break;
   case 'GET':
