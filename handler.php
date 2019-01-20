@@ -5,8 +5,11 @@ class CommonHandler extends CycleHandler {
   static function onRequestRaw(object $env, object $input): object {
     $date = (property_exists($input, 'cc:expire:date'))
     ? $input->{'cc:expire:date'}
-    : substr('00'.$input->{'cc:expire:month'}, -2)
-    . substr('00'.$input->{'cc:expire:year'}, -2);
+    : (property_exists($input, 'cc:expire:month') && property_exists($input, 'cc:expire:year')
+    ? substr('00'.$input->{'cc:expire:month'}, -2)
+    . substr('00'.$input->{'cc:expire:year'}, -2)
+    : ''
+    );
 
     // TODO: Fee 
     $amount = $input->amount;
