@@ -25,5 +25,3 @@ if ($result->isValid()) {
     echo "Error: ", $error->keyword(), PHP_EOL;
     echo json_encode($error->keywordArgs(), JSON_PRETTY_PRINT), PHP_EOL;
 }
-
-?>

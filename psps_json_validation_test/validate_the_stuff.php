@@ -279,5 +279,3 @@ function validateSingleIndex($indexFileName, $schemaFileName, $filters = false)
 }
 
 */
-
-?>
