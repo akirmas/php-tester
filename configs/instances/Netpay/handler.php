@@ -3,7 +3,7 @@
  * https://devcenter.netpay-intl.com/website/SilentPost_Cc.aspx
  */
 
-require_once(__DIR__.'/../../CycleHandler.php');
+require_once(__DIR__.'/../../../CycleHandler.php');
 
 class Netpay extends CycleHandler {
   static function onRequestFormed(object $env, object $request): object {  

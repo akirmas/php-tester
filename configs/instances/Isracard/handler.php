@@ -1,5 +1,5 @@
 <?php
-require_once(__DIR__.'/../../CycleHandler.php');
+require_once(__DIR__.'/../../../CycleHandler.php');
 
 class Isracard extends CycleHandler {
   static function onResponseFormed(object $env, object $r, object $i): object {

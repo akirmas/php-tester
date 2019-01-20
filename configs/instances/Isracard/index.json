@@ -25,7 +25,6 @@
     "values": {},
     "defaults": {
       "installments": 1,
-      "fee": 0,
       "sale_send_notification": false,
       "language": "en"
     },
