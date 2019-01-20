@@ -181,7 +181,7 @@ class JsonValidator {
 		$data = json_decode($data);
 
 		$schema = Schema::fromJsonString(file_get_contents($schemaFileName));
-
+		
 		$validator = new Validator();
 		if ($filters !== false){
 			$validator->setFilters($filters);
@@ -208,92 +208,5 @@ echo '<pre>';
 print_r($jsonValidator->getValidationResults());
 echo '</pre>';
 exit;
-
-/*
-$filters = new FilterContainer();
-$filters->add("object", "match", new MatchFilter());
-
-$schemaFileName = "./validation_schemas/instance_index_validation_schema.json";
-$indexFilesCollection = [
-	"./instances_index_files/netpay_index.json",
-	"./instances_index_files/tranzilla_index.json",
-	"./instances_index_files/isracard_index.json" 
-	];
-$validationResults = [];
-
-foreach ($indexFilesCollection as $fileName) {
-
-	try {
-			
-		$currentResult = validateSingleIndex($fileName, $schemaFileName, $filters);
-		if ( !$currentResult['isValid'] ){
-			$jsonValidationException = new JsonValidationException($currentResult['errorData']['errorMessage']);
-			$jsonValidationException->setValidationErrorData($currentResult['errorData']);
-			throw $jsonValidationException;
-		} else {
-			throw new JsonValidationException('JSON is valid.');
-		}
-
-	} catch(Exception $e){
-		
-		$exceptionFullClassName = get_class($e);
-		if(strpos($exceptionFullClassName, "\\") !== false){
-			$exceptionClassName = trim(strrchr($exceptionFullClassName, "\\"), "\\");
-		} else {
-			$exceptionClassName = $exceptionFullClassName;
-		}
-		$message = $e->getMessage();
-		
-		switch($exceptionClassName){
-			case 'InvalidJsonPointerException':
-				$keyPresentInValuesButMissingInFields = trim(strrchr($message, '/'), '/');
-				$message = "This key is present in 'values' but is missing in 'fields': " . $keyPresentInValuesButMissingInFields;		
-			break;
-			case 'JsonValidationException':
-				$errorData = $e->getValidationErrorData();
-				if ($errorData !== null){
-					$message = $errorData['errorMessage'] . " in: " . implode("/", $errorData['pathToTheDataThatCausedTheError']);
-				}
-			break;
-			default:
-			break;
-		}
-
-		$validationResults[$fileName] = $message;
-	}
-
-}//foreach
-
-
-foreach($validationResults as $fileName => $message){
-	$html = $fileName . ' : ' . $message;
-	echo htmlentities($html);
-	echo '<br />';
-}
-
-function validateSingleIndex($indexFileName, $schemaFileName, $filters = false)
-{
-	$data = file_get_contents($indexFileName);
-	$data = json_decode($data);
-
-	$schema = Schema::fromJsonString(file_get_contents($schemaFileName));
-
-	$validator = new Validator();
-	if ($filters !== false){
-		$validator->setFilters($filters);
-	}
-
-	$result = $validator->schemaValidation($data, $schema);
-
-	if ($result->isValid()) {
-	    return ["isValid" => true];
-	} else {
-	    $error = $result->getFirstError();
-	    return [ "isValid" => false, "errorData" => ["errorMessage" => $error->keyword(), 
-	    	"dataThatCausedTheError" => $error->data(), "pathToTheDataThatCausedTheError" => $error->dataPointer()] ];
-	}
-}
-
-*/
 
 ?>
