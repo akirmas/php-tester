@@ -9,8 +9,8 @@ $json = <<<JSON
 ]
 JSON;
 $test = json_decode($json, true);
-$result = (array) \assoc\merge(0, 1, $test[0], $test[1]);
+$result = (array) \assoc\merge($test[0], $test[1]);
 $output = $result == $test[2];
 echo "$output";
-//.json_encode($result, JSON_UNESCAPED_SLASHES)."\n".json_encode($test[2], JSON_UNESCAPED_SLASHES);
+
 

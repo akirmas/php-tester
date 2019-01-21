@@ -38,18 +38,25 @@ function mapValues(
   return $result;
 }
 
-function merge($doMerge, $doRecursive, ...$objects) :object {
-  return (object) call_user_func(
-    'array_'
-    .['replace', 'merge'][(int) $doMerge]
-    .['', '_recursive'][(int) $doRecursive],
-    ...array_map(
-      function($obj) {return (array) $obj;},
-      $objects
-    )
-  );
+function merge(...$objects) {
+  $base = (array) array_shift($objects);
+  forEach($objects as $obj)
+    forEach((array) $obj as $key => $value) {
+      $base[$key] = (
+        !array_key_exists($key, $base)
+        || !isESObject($value)
+        || !isESObject($base[$key])
+      )
+      ? $value
+      : merge($base[$key], $value);
+    }
+  return $base;
 }
 
 function flip($obj) :object {
   return (object) array_flip((array) $obj);
+}
+
+function isESObject($var) {
+  return in_array(gettype($var), ['array', 'object']);
 }

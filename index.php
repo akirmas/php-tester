@@ -16,6 +16,7 @@ $input = (object) (sizeof($_REQUEST) !== 0
 ? json_decode(preg_replace('/(^"|"$)/i', '', $_SERVER['argv'][1]))
 :  json_decode(file_get_contents('php://input'))
 ));
+
 if (!property_exists($input, 'id')) $input->id = tmstmp();
 
 $ConfigDir = mkdir2(__DIR__, 'configs');
@@ -37,8 +38,8 @@ else {
 
 $instanceEnv = json_decode(file_get_contents($ConfigDir."/instances/$step->instance/accounts/$step->account.json"));
 
-$request = \assoc\merge(1, 1, $instance->request, $instanceEnv->request);
-$response = \assoc\merge(1, 1, $instance->response, $instanceEnv->response);
+$request = (object) \assoc\merge($instance->request, $instanceEnv->request);
+$response = (object) \assoc\merge($instance->response, $instanceEnv->response);
 
 $url = ((object) $request->engine)->gateway;
 
@@ -46,7 +47,7 @@ $event = 'Request';
 $phase = 'Raw';
 $requestData = fireEvent($input);
 
-$requestData = \assoc\merge(1, 0,
+$requestData = (object) \assoc\merge(
   $request->defaults,
   $requestData,
   $request->overrides
@@ -118,8 +119,20 @@ echo json_encode($output);
 
 function fireEvent(...$data) :object {
   global $event, $phase, $handler, $logDir, $processDir, $commonHandler, $step;
-  $data[0] = \assoc\merge(1, 0, $data[0], call_user_func(["\\$commonHandler", "on$event$phase"], ...array_merge([$step], $data)));
-  $data[0] = \assoc\merge(1, 0, $data[0], call_user_func(["\\$handler", "on$event$phase"], ...array_merge([$step], $data)));
+  $data[0] = (object) \assoc\merge(
+    call_user_func(
+      ["\\$commonHandler", "on$event$phase"],
+      ...array_merge([$step], $data)
+    ),
+    $data[0]
+  );
+  $data[0] = (object) \assoc\merge(
+    call_user_func(
+      ["\\$handler", "on$event$phase"],
+      ...array_merge([$step], $data)
+    ),
+    $data[0]
+  );
   $dirs = [$logDir, $processDir];
   foreach ($dirs as $dir) {
     file_put_contents(
