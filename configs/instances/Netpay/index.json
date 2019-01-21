@@ -9,10 +9,11 @@
       "account": "CompanyNum",
       "verify": "TransType",
       "amount:final": "Amount",
+      "currency:final": "Currency",
       "cc:number": "CardNum",
       "cc:expire:month": "ExpMonth",
       "cc:expire:year": "ExpYear",
-      
+      "cc:cvv": "CVV2",
       "phone": "PhoneNumber",
       "email": "Email",
       "name:full": "Member",
@@ -52,8 +53,7 @@
         "BSD": 24,
         "RSD": 25,
         "BRL": 26
-      },
-      "cc:cvv": "566"
+      }
     },
     "defaults": {
       "installments": 1,
