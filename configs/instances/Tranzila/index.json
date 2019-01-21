@@ -44,12 +44,15 @@
     "fields": {
       "cc:expire:month": "expmonth",
       "cc:expire:year": "expyear",
-      "return:message": "ResponseClone",      
       "return:code": "Response",
+      "return:message": "ResponseClone",
+      "success": "ResponseClone2",
       "event:id": "Tempref"
     },
     "verify": {},
-    "defaults": {},
+    "defaults": {
+      "success": 0
+    },
     "overrides": {},
     "values": {
       "currency:final": {
@@ -57,7 +60,10 @@
         "USD": 2,
         "EUR": 978,
         "GBP": 826
-      },  
+      },
+      "success": {
+        "000": 1
+      },
       "return:message" : {
         "000":"Transaction approved",
         "001":"Blocked confiscate card",
