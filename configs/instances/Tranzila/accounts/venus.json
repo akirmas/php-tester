@@ -2,7 +2,7 @@
   "request": {
     "overrides": {
       "account": "venus",
-      "currency:final": "ILS"
+      "currency:exchange": "ILS"
     }
   },
   "response": {}

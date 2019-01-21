@@ -46,6 +46,9 @@
             "amountInt:final": {
               "type": "string"
             },
+            "currency:exchange": {
+              "type": "string"
+            },
             "currency:final": {
               "type": "string"
             },

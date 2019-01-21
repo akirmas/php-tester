@@ -34,9 +34,6 @@
     "defaults": {
       "verify": "0",
       "installments": "1"
-    },
-    "overrides": {
-      "currency:final": "ILS"
     }
   },
   "response": {

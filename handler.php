@@ -31,15 +31,15 @@ class CommonHandler extends CycleHandler {
     ];
   }
   static function onRequestFormed(object $env, object $request): object {
-    $amount = $request->amount;
+    $amount = (float) $request->amount;
     $currency = $request->currency;
     $currencyFinal = $currency;
     $fee = !property_exists($request, 'fee') ? 0 : (float) $request->fee;
     if (
-      property_exists($request, 'currency:final')
-      && ($currency != $request->{'currency:final'})
+      property_exists($request, 'currency:exchange')
+      && ($currency != $request->{'currency:exchange'})
     ) {
-      $pair = $currency.'_'.$request->{'currency:final'};
+      $pair = $currency.'_'.$request->{'currency:exchange'};
       //TODO: Other information sources, maybe cache
       $ch = curl_init(
         "https://free.currencyconverterapi.com/api/v5/convert?q=$pair&compact=y"
@@ -51,7 +51,7 @@ class CommonHandler extends CycleHandler {
         if ($resp !== null && array_key_exists($pair, $resp) && array_key_exists('val', $resp[$pair])) {
           $rate = $resp[$pair]['val'];
           $amount = $request->amount * $rate * (1 + $fee);
-          $currencyFinal = $request->{'currency:final'};
+          $currencyFinal = $request->{'currency:exchange'};
         }
       }
     }
