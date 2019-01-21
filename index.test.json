@@ -2,8 +2,7 @@
   "isra_frame_good": [
     {
       "amount": 10,
-      "name:first": "First",
-      "name:last": "Lastman",
+      "name:full": "First Lastname",
       "cc:cvv": "123",
       "cc:expire:date": "0120",
       "cc:number": "12312312312",
@@ -15,7 +14,6 @@
       "entity": "lead",
       "process": "test_Isracard",
       "id": "test1",
-      "full_name": "andrii test",
       "phone": "987654321",
       "leadId": "1426917"
     },
@@ -37,13 +35,13 @@
       "email": "andrii@gobe-mark.com",
       "entity": "lead",
       "process": "test_Isracard",
-      "full_name": "andrii test",
+      "name:full": "andrii test",
       "phone": "987654321",
       "leadId": "1426917"
     },    
     {
-      "error:message:0": "Invalid price, out of min-max bounds",
-      "error:message:1": "10"
+      "return:message:0": "Invalid price, out of min-max bounds",
+      "return:message:1": 10
     }
   ],
   "tranz_instant": [
@@ -55,7 +53,7 @@
       "cc:number": "12312312",
       "cc:system": "None",
       "company": "company",
-      "currency": "ILS",
+      "currency": "GBP",
       "description": "test",
       "email": "andrii@gobe-mark.com",
       "entity": "lead",
@@ -87,7 +85,7 @@
       "address:country:ISO": "IL"
     },
     {
-      "return:code": "504"
+      "return:code": "503"
     } 
   ]
 }
