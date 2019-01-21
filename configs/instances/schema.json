@@ -20,13 +20,114 @@
           "additionalProperties": false
         },
         "fields": {
-          "$ref": "hello:instances/fields_schema.json#"
+          "type": "object",
+          "properties": {
+            "success": {
+              "type": "string"
+            },
+            "id": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "installments": {
+              "type": "string"
+            },
+            "account": {
+              "type": "string"
+            },
+            "verify": {
+              "type": "string"
+            },
+            "amount:final": {
+              "type": "string"
+            },
+            "amountInt:final": {
+              "type": "string"
+            },
+            "currency:final": {
+              "type": "string"
+            },
+            "fee": {
+              "type": "string"
+            },
+            "cc:number": {
+              "type": "string"
+            },
+            "cc:expire:date": {
+              "type": "string"
+            },
+            "cc:expire:month": {
+              "type": "string"
+            },
+            "cc:expire:year": {
+              "type": "string"
+            },
+            "cc:cvv": {
+              "type": "string"
+            },
+            "phone": {
+              "type": "string"
+            },
+            "email": {
+              "type": "string"
+            },
+            "company": {
+              "type": "string"
+            },
+            "name:first": {
+              "type": "string"
+            },
+            "name:last": {
+              "type": "string"
+            },
+            "name:full": {
+              "type": "string"
+            },
+            "social_id": {
+              "type": "string"
+            },
+            "address": {
+              "type": "string"
+            },
+            "address:country:ISO": {
+              "type": "string"
+            },
+            "address:zip": {
+              "type": "string"
+            }, 
+            "address:city": {
+              "type": "string"
+            },
+            "address:0": {
+              "type": "string"
+            },
+            "address:1": {
+              "type": "string"
+            },
+            "nextUrl": {
+              "type": "string"
+            },
+            "iframeUrl": {
+              "type": "string"
+            },
+            "callbackUrl": {
+              "type": "string"
+            },
+            "language": {
+              "type": "string"
+            }
+          },
+          "required": ["email", "currency:final"],
+          "additionalProperties": false
         },
         "values": {
           "type": "object",
           "properties": {
             
             "installments": {
+<<<<<<< HEAD
                         "type": "object",
                         "$filters": {
                           "$func": "match",
@@ -191,6 +292,169 @@
 
               },
               "additionalProperties": false
+=======
+              "type": "object",
+              "$filters": {
+                "$func": "match",
+                "$vars": {
+                  "value": { "$ref": "2/fields/installments" }
+                }
+              }
+            },
+            "account": {
+              "type": "object",
+              "$filters": {
+                "$func": "match",
+                "$vars": {
+                  "value": { "$ref": "2/fields/account" }
+                }
+              }
+            },
+            "verify": {
+              "type": "object",
+              "$filters": {
+                "$func": "match",
+                "$vars": {
+                  "value": { "$ref": "2/fields/verify" }
+                }
+              }
+            },
+            "amount": {
+              "type": "object",
+              "$filters": {
+                "$func": "match",
+                "$vars": {
+                  "value": { "$ref": "2/fields/amount" }
+                }
+              }
+            },
+            "currency:final": {
+              "type": "object",
+              "$filters": {
+                "$func": "match",
+                "$vars": {
+                  "value": { "$ref": "2/fields/currency:final" }
+                }
+              }
+            },
+            "cc:number": {
+              "type": "object",
+              "$filters": {
+                "$func": "match",
+                "$vars": {
+                  "value": { "$ref": "2/fields/cc:number" }
+                }
+              }
+            },
+            "cc:expire:month": {
+              "type": "object",
+              "$filters": {
+                "$func": "match",
+                "$vars": {
+                  "value": { "$ref": "2/fields/cc:expire:month" }
+                }
+              }
+            },
+            "cc:expire:year": {
+              "type": "object",
+              "$filters": {
+                "$func": "match",
+                "$vars": {
+                  "value": { "$ref": "2/fields/cc:expire:year" }
+                }
+              }
+            },
+            "cc:cvv": {
+              "type": "object",
+              "$filters": {
+                "$func": "match",
+                "$vars": {
+                  "value": { "$ref": "2/fields/cc:cvv" }
+                }
+              }
+            },
+            "phone": {
+              "type": "object",
+              "$filters": {
+                "$func": "match",
+                "$vars": {
+                  "value": { "$ref": "2/fields/phone" }
+                }
+              }
+            },
+            "email": {
+              "type": "object",
+              "$filters": {
+                "$func": "match",
+                "$vars": {
+                  "value": { "$ref": "2/fields/email" }
+                }
+              }
+            },
+            "name:full": {
+              "type": "object",
+              "$filters": {
+                "$func": "match",
+                "$vars": {
+                  "value": { "$ref": "2/fields/name:full" }
+                }
+              }
+            },
+            "address:country:ISO": {
+              "type": "object",
+              "$filters": {
+                "$func": "match",
+                "$vars": {
+                  "value": { "$ref": "2/fields/address:country:ISO" }
+                }
+              }
+            },
+            "address:zip": {
+              "type": "object",
+              "$filters": {
+                "$func": "match",
+                "$vars": {
+                  "value": { "$ref": "2/fields/address:zip" }
+                }
+              }
+            }, 
+            "address:city": {
+              "type": "object",
+              "$filters": {
+                "$func": "match",
+                "$vars": {
+                  "value": { "$ref": "2/fields/address:city" }
+                }
+              }
+            },
+            "address:0": {
+              "type": "object",
+              "$filters": {
+                "$func": "match",
+                "$vars": {
+                  "value": { "$ref": "2/fields/address:0" }
+                }
+              }
+            },
+            "address:1": {
+              "type": "object",
+              "$filters": {
+                "$func": "match",
+                "$vars": {
+                  "value": { "$ref": "2/fields/address:1" }
+                }
+              }
+            },
+            "nextUrl": {
+              "type": "object",
+              "$filters": {
+                "$func": "match",
+                "$vars": {
+                  "value": { "$ref": "2/fields/nextUrl" }
+                }
+              }
+            }
+>>>>>>> Fix indentations in json
 
         },
         "defaults": {
