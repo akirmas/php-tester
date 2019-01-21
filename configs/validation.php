@@ -3,7 +3,7 @@ require_once(__DIR__.'../../vendor/autoload.php');
 
 use Opis\JsonSchema\{
 	Validator, ValidationResult, ValidationError, 
-	Schema, IFilter, FilterContainer 
+	Schema, IFilter, FilterContainer, Loaders
 };
 
 class MatchFilter implements IFilter {
@@ -129,7 +129,7 @@ class JsonValidator {
 
 		$schema = Schema::fromJsonString(file_get_contents(__DIR__."/$schemaFileName"));
 
-		$validator = new Validator();
+		$validator = new Validator(null,  new \Opis\JsonSchema\Loaders\File('hello:', ['.']));
 		if ($filters !== false)
 			$validator->setFilters($filters);
 
