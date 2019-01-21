@@ -10,33 +10,27 @@
     },
     "entityId": {
       "label": "Entity Id",
-      "type": "number",
-      "required": true    
+      "type": "number"
     },
     "name:first": {
       "label": "First name",
-      "type": "text",
-      "required": true
+      "type": "text"
     },
     "name:last": {
       "label": "Last name",
-      "type": "text",
-      "required": true
+      "type": "text"
     },
     "address": {
       "label": "Address",
-      "type": "textarea",
-      "required": true
+      "type": "textarea"
     },
     "email": {
       "label": "Email",
-      "type": "email",
-      "required": true
+      "type": "email"
     },
     "phone": {
       "label": "Phone",
-      "type": "tel",
-      "required": true
+      "type": "tel"
     },
     "cc": {
       "label": "Credit Card"
