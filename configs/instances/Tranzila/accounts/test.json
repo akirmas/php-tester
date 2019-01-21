@@ -1,7 +1,9 @@
 {
   "request": {
     "overrides": {
-      "account": "testgoodad"
+      "account": "testgoodad",
+      "currency:final": "ILS",
+      "fee": "0.5"
     }
   },
   "response": {}
