@@ -20,7 +20,104 @@
           "additionalProperties": false
         },
         "fields": {
-          "file": "fields_schema.json#"
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "installments": {
+              "type": "string"
+            },
+            "account": {
+              "type": "string"
+            },
+            "verify": {
+              "type": "string"
+            },
+            "amount:final": {
+              "type": "string"
+            },
+            "amountInt:final": {
+              "type": "string"
+            },
+            "currency:final": {
+              "type": "string"
+            },
+            "fee": {
+              "type": "string"
+            },
+            "cc:number": {
+              "type": "string"
+            },
+            "cc:expire:date": {
+              "type": "string"
+            },
+            "cc:expire:month": {
+              "type": "string"
+            },
+            "cc:expire:year": {
+              "type": "string"
+            },
+            "cc:cvv": {
+              "type": "string"
+            },
+            "phone": {
+              "type": "string"
+            },
+            "email": {
+              "type": "string"
+            },
+            "company": {
+              "type": "string"
+            },
+            "name:first": {
+              "type": "string"
+            },
+            "name:last": {
+              "type": "string"
+            },
+            "name:full": {
+              "type": "string"
+            },
+            "social_id": {
+              "type": "string"
+            },
+            "address": {
+              "type": "string"
+            },
+            "address:country:ISO": {
+              "type": "string"
+            },
+            "address:zip": {
+              "type": "string"
+            }, 
+            "address:city": {
+              "type": "string"
+            },
+            "address:0": {
+              "type": "string"
+            },
+            "address:1": {
+              "type": "string"
+            },
+            "nextUrl": {
+              "type": "string"
+            },
+            "iframeUrl": {
+              "type": "string"
+            },
+            "callbackUrl": {
+              "type": "string"
+            },
+            "language": {
+              "type": "string"
+            }
+          },
+          "required": ["email", "currency:final"],
+          "additionalProperties": false
         },
         "values": {
           "type": "object",
