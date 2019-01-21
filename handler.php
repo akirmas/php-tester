@@ -33,22 +33,32 @@ class CommonHandler extends CycleHandler {
   static function onRequestFormed(object $env, object $request): object {
     $amount = $request->amount;
     $currency = $request->currency;
+    $currencyFinal = $currency;
     $fee = !property_exists($request, 'fee') ? 0 : (float) $request->fee;
     if (
       property_exists($request, 'currency:final')
       && ($currency != $request->{'currency:final'})
     ) {
       $pair = $currency.'_'.$request->{'currency:final'};
-      $rate = json_decode(file_get_contents(
+      //TODO: Other information sources, maybe cache
+      $ch = curl_init(
         "https://free.currencyconverterapi.com/api/v5/convert?q=$pair&compact=y"
-      ))->{$pair}->val;
-      $amount = $request->amount * $rate * (1 + $fee);
-      $currency = $request->{'currency:final'};
+      );
+      curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);   
+      $resp = curl_exec($ch);
+      if ($resp !== false) {
+        $resp = json_decode($resp, true);
+        if ($resp !== null && array_key_exists($pair, $resp) && array_key_exists('val', $resp[$pair])) {
+          $rate = $resp[$pair]['val'];
+          $amount = $request->amount * $rate * (1 + $fee);
+          $currencyFinal = $request->{'currency:final'};
+        }
+      }
     }
     return (object) [
       'amount:final' => $amount,
       'amountInt:final' => 100 * (float) $amount,
-      'currency:final' => $currency,
+      'currency:final' => $currencyFinal,
       'fee:final' => 0
     ];
   }
