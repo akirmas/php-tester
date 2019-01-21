@@ -1,5 +1,5 @@
 {
-    "name": "andrii/psps",
+    "name": "ieo/psps",
     "type": "library",
     "require": {
         "opis/json-schema": "^1.0",
