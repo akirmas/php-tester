@@ -31,10 +31,10 @@ class CommonHandler extends CycleHandler {
     ];
   }
   static function onRequestFormed(object $env, object $request): object {
-    $amount = (float) $request->amount;
     $currency = $request->currency;
     $currencyFinal = $currency;
     $fee = !property_exists($request, 'fee') ? 0 : (float) $request->fee;
+    $amount = (1 + $fee) * (float) $request->amount;
     if (
       property_exists($request, 'currency:exchange')
       && ($currency != $request->{'currency:exchange'})
@@ -50,7 +50,7 @@ class CommonHandler extends CycleHandler {
         $resp = json_decode($resp, true);
         if ($resp !== null && array_key_exists($pair, $resp) && array_key_exists('val', $resp[$pair])) {
           $rate = $resp[$pair]['val'];
-          $amount = $request->amount * $rate * (1 + $fee);
+          $amount *= $rate;
           $currencyFinal = $request->{'currency:exchange'};
         }
       }
