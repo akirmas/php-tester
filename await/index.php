@@ -21,4 +21,19 @@ if (!file_exists($eventFile)) {
   $event = new SyncEvent($eventName);
   $event->wait();
 }
-echo file_get_contents($eventFile);
+$eventContent = json_decode(file_get_contents($eventFile), true);
+switch($eventContent['instance']) {
+  case 'Isracard':
+/*  "payme_status": "success" vs "error"
+  "status_error_code": "0" vs $code
+  "status_code": "0" vs "1"
+  "payme_sale_status": "completed" vs "failed"
+  "sale_status": "completed" vs "failed"
+  "status_error_details": null vs message
+  "notify_type":  "sale-complete"  vs "sale-failure"
+*/
+    $eventContent['success'] = (int) ($eventContent['payme_status'] === 'success');
+  break;
+  default:
+}
+echo $eventContent;
