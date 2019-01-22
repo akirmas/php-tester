@@ -33,6 +33,7 @@ switch($eventContent['instance']) {
   "notify_type":  "sale-complete"  vs "sale-failure"
 */
     $eventContent['success'] = (int) ($eventContent['payme_status'] === 'success');
+    $eventContent['return:code'] = $eventContent['status_error_code'];
   break;
   default:
 }
