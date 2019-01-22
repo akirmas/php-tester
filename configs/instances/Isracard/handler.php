@@ -6,7 +6,7 @@ class Isracard extends CycleHandler {
     return (object) (
       $r->{'return:code'} != 0 ? []
       : array(
-        'iframeUrl' => "$r->iframeUrl?".http_build_query(
+        'quizUrl' => "$r->quizUrl?".http_build_query(
           array_reduce(
             [
               ['name:first' => 'first_name'],

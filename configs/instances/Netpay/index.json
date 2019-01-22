@@ -22,7 +22,7 @@
       "address:city": "BillingCity",
       "address:0": "BillingAddress1",
       "address:1": "BillingAddress2",
-      "nextUrl": "RetURL"
+      "quizUrl:next": "RetURL"
     },
     "values": {
       "currency:final": {
@@ -66,7 +66,7 @@
     "fields": {
       "return:message:0": "ReplyDesc",
       "return:code": "Reply",
-      "iframeUrl": "D3Redirect",
+      "quizUrl": "D3Redirect",
       "event:id": "TransID"
     },
     "values": {},

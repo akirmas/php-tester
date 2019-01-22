@@ -23,36 +23,47 @@
           "type": "object",
           "properties": {
             "success": {
+              "description": "Result of whole transaction, that could consist of several actions",
               "type": "string"
             },
             "id": {
+              "description": "Identifier of transaction",
               "type": "string"
             },
             "description": {
-              "type": "string"
-            },
-            "installments": {
+              "description": "Description of transaction",
               "type": "string"
             },
             "account": {
+              "description": "Account at instance that will provide transaction",
+              "type": "string"
+            },
+            "installments": {
+              "description": "Count of pays",
               "type": "string"
             },
             "verify": {
-              "type": "string"
-            },
-            "amount:final": {
-              "type": "string"
-            },
-            "amountInt:final": {
+              "description": "Charge, check insufficient funds, etc",
               "type": "string"
             },
             "currency:exchange": {
+              "description": "Request of recalculation",
               "type": "string"
             },
             "currency:final": {
+              "description": "If request was satisfied will be equel to :exchange, otherwise to original 'currency'",
               "type": "string"
             },
             "fee": {
+              "description": "Amount multiplier (1+fee) on this side. For pushing fee to API use fee:final",
+              "type": "string"
+            },
+            "amount:final": {
+              "description": "Result of all payment amount recalculations",
+              "type": "string"
+            },
+            "amountInt:final": {
+              "description": "Result amount multiplied by 100 to avoid decimals",
               "type": "string"
             },
             "cc:number": {
@@ -109,13 +120,20 @@
             "address:1": {
               "type": "string"
             },
-            "nextUrl": {
+            "quizUrl": {
+              "description": "API could request own form to client",
               "type": "string"
             },
-            "iframeUrl": {
+            "quizUrl:next": {
+              "description": "After submiting API's form/iframe user will forward here",
               "type": "string"
             },
-            "callbackUrl": {
+            "quizUrl:notify": {
+              "description": "API's form/iframe data will be sent here",
+              "type": "string"
+            },
+            "quizUrl:subscribe": {
+              "description": "Await for API's form/iframe data",
               "type": "string"
             },
             "language": {
@@ -282,12 +300,12 @@
                 }
               }
             },
-            "nextUrl": {
+            "quizUrl:next": {
               "type": "object",
               "$filters": {
                 "$func": "match",
                 "$vars": {
-                  "value": { "$ref": "2/fields/nextUrl" }
+                  "value": { "$ref": "2/fields/quizUrl:next" }
                 }
               }
             }

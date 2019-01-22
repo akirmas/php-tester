@@ -83,13 +83,13 @@
     "address:1": {
       "type": "string"
     },
-    "nextUrl": {
+    "quizUrl:next": {
       "type": "string"
     },
-    "iframeUrl": {
+    "quizUrl": {
       "type": "string"
     },
-    "callbackUrl": {
+    "quizUrl:notify": {
       "type": "string"
     },
     "language": {
