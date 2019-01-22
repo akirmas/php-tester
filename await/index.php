@@ -36,4 +36,4 @@ switch($eventContent['instance']) {
   break;
   default:
 }
-echo $eventContent;
+echo json_encode($eventContent);
