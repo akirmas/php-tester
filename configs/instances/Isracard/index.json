@@ -16,7 +16,6 @@
       "account": "seller_payme_id",
       "installments": "installments",
       "language": "language",
-      "quizUrl": "sale_url",
       "callbackUrl": "sale_callback_url"
 
     },
@@ -33,7 +32,7 @@
   "response": {
     "enigine": {},
     "fields": {
-      "quizUrl": "sale_url",
+      "quizUrl:raw": "sale_url",
       "amountInt": "price",
       "return:message:0": "status_error_details",
       "return:message:1": "status_additional_info",

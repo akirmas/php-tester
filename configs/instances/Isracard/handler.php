@@ -6,7 +6,7 @@ class Isracard extends CycleHandler {
     return (object) (
       $r->{'return:code'} != 0 ? []
       : array(
-        'quizUrl' => "$r->quizUrl?".http_build_query(
+        'quizUrl' => $r->{'quizUrl:raw'}.'?'.http_build_query(
           array_reduce(
             //TODO: should be picked up from Isracard/index.json
             [
