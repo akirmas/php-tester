@@ -88,13 +88,17 @@
       ],
       "required": true
     },
+    "account": {
+      "type": "hidden",
+      "value": "immigration"
+    },    
     "process": {
       "label": "Processor",
       "type": "list",
       "items": [
-        {"value": "immigration/Tranzila", "label": "Tranzila"},
-        {"value": "immigration/Isracard", "label": "Isracard"},
-        {"value": "immigration/Netpay", "label": "Netpay"}
+        {"value": "Tranzila", "label": "Tranzila"},
+        {"value": "Isracard", "label": "Isracard"},
+        {"value": "Netpay", "label": "Netpay"}
       ]
     },
     "save": {

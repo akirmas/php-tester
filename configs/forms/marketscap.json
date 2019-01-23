@@ -342,11 +342,15 @@
         {"value": "EUR"}
       ]
     },
+    "account": {
+      "type": "hidden",
+      "value": "marketscap"
+    },
     "process": {
       "label": "Processor",
       "type": "list",
       "items": [
-        {"value": "marketscap/Netpay", "label": "Netpay"}
+        {"value": "Netpay", "label": "Netpay"}
       ]
     },
     "submit": {

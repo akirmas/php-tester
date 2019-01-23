@@ -12,7 +12,8 @@
       "description": "test",
       "email": "andrii@gobe-mark.com",
       "entity": "lead",
-      "process": "test/Isracard",
+      "account": "test",
+      "process": "Isracard",
       "id": "test1",
       "phone": "987654321",
       "leadId": "1426917"
@@ -34,7 +35,8 @@
       "description": "test",
       "email": "andrii@gobe-mark.com",
       "entity": "lead",
-      "process": "test/Isracard",
+      "account": "test",
+      "process": "Isracard",
       "name:full": "andrii test",
       "phone": "987654321",
       "leadId": "1426917"
@@ -57,7 +59,8 @@
       "description": "test",
       "email": "andrii@gobe-mark.com",
       "entity": "lead",
-      "process": "test/Tranzila",
+      "account": "test",
+      "process": "Tranzila",
       "full_name": "andrii test",
       "phone": "987654321",
       "leadId": "1426917"
@@ -68,7 +71,8 @@
   ],
   "netpay" : [
     {
-      "process": "immigration/Netpay",
+      "account": "immigration",
+      "process": "Netpay",
       "verify": 0,
       "amount": 1,
       "currency": "USD",

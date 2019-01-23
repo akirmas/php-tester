@@ -23,16 +23,11 @@ $phase = 'Raw';
 if (!property_exists($input, 'id')) $input->id = tmstmp();
 
 $ConfigDir = mkdir2(__DIR__, 'configs');
-$step = json_decode(file_get_contents($ConfigDir."/processes/$input->process.json"));
+$step = json_decode(file_get_contents($ConfigDir."/processes/$input->account/$input->process.json"));
 $handler = $step->instance;
 $instance = json_decode(file_get_contents($ConfigDir."/instances/$handler/index.json"));
 
-// Consider $input->process == "$account/$instance"
-$relativeProcessPath = explode('/', $input->process);
-// will be "$input->process:account/$id/$input->process:instance"
-array_splice($relativeProcessPath, 1, 0, $input->id);
-array_unshift($relativeProcessPath, ...[__DIR__, 'processes']);
-$processDir = mkdir2(...$relativeProcessPath);
+$processDir = mkdir2(__DIR__, 'processes', $input->account, $input->id, $input->process);
 $logDir = mkdir2($processDir, tmstmp());
 $processDir = mkDir2($processDir, 'index');
 

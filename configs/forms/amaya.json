@@ -81,11 +81,15 @@
       ],
       "required": true
     },
+    "account": {
+      "type": "hidden",
+      "value": "amaya"
+    },        
     "process": {
       "label": "Processor",
       "type": "list",
       "items": [
-        {"value": "venus/Tranzila", "label": "Tranzila"}
+        {"value": "Tranzila", "label": "Tranzila"}
       ]
     },
     "submit": {

@@ -1,9 +1,9 @@
 {
-  "name": "immigrationTest",
-  "action": "https://payment.gobemark.info/php/psps/",
+  "name": "localTest",
+  "action": "http://lcoalhost/psps/",
   "method": "POST",
-  "subscribeUrl": "https://payment.gobemark.info/php/psps/await/",
-  "saveUrl": "https://payment.gobemark.info/php/psps/exchange/",
+  "subscribeUrl": "http://lcoalhost/psps/await/",
+  "saveUrl": "http://lcoalhost/psps/exchange/",
   "inputs": {
     "title": {
       "label": "Payment form"
