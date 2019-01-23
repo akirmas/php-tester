@@ -24,8 +24,6 @@ if ($method === '') exit('unknown method');
 
 $input = $method === 'GET' ? $_GET : json_decode($post, true);
 
-if ('process')
-
 $dir = mkdir2(__DIR__, 'content');
 $procDir = mkdir2($dir, $input['account']);
 $nodeDir = mkdir2($procDir, $input['id']);
@@ -43,5 +41,6 @@ switch ($method) {
     file_put_contents($nodeDir.'/'.tmstmp().'.json', $content);
     break;
   default:
+    exit('not implemented http method');
 }
 exit;
