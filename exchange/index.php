@@ -6,6 +6,12 @@ header('Content-Type: application/json; charset=utf-8');
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: POST, GET');
 
+header('Expires: Sun, 01 Jan 2014 00:00:00 GMT');
+header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
+
 $post = file_get_contents('php://input');
 $method = sizeof($_GET) !== 0
   ? 'GET' : (
