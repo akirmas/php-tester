@@ -23,6 +23,18 @@ if (array_key_exists(Collector::fireField, $_REQUEST)) {
       break;
     case 'Isracard': 
       $eventId = $request['payme_sale_id'];
+      /*  "payme_status": "success" vs "error"
+        "status_error_code": "0" vs $code
+        "status_code": "0" vs "1"
+        "payme_sale_status": "completed" vs "failed"
+        "sale_status": "completed" vs "failed"
+        "notify_type":  "sale-complete"  vs "sale-failure"
+        "status_error_details": null vs message
+      */
+      $request['success'] = (int) ($request['payme_status'] === 'success');
+      $request['return:code'] = $request['status_error_code'];
+      if (array_key_exists('status_error_details', $request))
+        $request['return:message'] = $request['status_error_details'];
       break;
     case 'Tranzila': 
       $eventId = $request['Tempref'];
