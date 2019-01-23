@@ -1,6 +1,6 @@
 {
   "name": "immigrationTest",
-  "action": "http://localhost/psps/",
+  "action": "https://payment.gobemark.info/php/psps/",
   "method": "POST",
   "subscribeUrl": "https://payment.gobemark.info/php/psps/await/",
   "saveUrl": "https://payment.gobemark.info/php/psps/exchange/",
