@@ -21,5 +21,5 @@ if (!file_exists($eventFile)) {
   $event = new SyncEvent($eventName);
   $event->wait();
 }
-$eventContent = json_decode(file_get_contents($eventFile), true);
-echo json_encode($eventContent);
+
+echo file_get_contents($eventFile);
