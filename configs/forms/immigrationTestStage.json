@@ -93,7 +93,8 @@
       "type": "list",
       "items": [
         {"value": "Tranzila", "label": "Tranzila"},
-        {"value": "Isracard", "label": "Isracard"}
+        {"value": "Isracard", "label": "Isracard"},
+        {"value": "Netpay", "label": "Netpay"}
       ]
     },
     "save": {
