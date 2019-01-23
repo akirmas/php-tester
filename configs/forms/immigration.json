@@ -3,7 +3,7 @@
   "action": "https://payment.gobemark.info/php/psps/",
   "method": "POST",
   "subscribeUrl": "https://payment.gobemark.info/php/psps/await/",
-  "saveUrl": "http://localhost/psps/exchange/",
+  "saveUrl": "https://payment.gobemark.info/php/psps/exchange/",
   "inputs": {
     "title": {
       "label": "Payment form"
@@ -92,9 +92,9 @@
       "label": "Processor",
       "type": "list",
       "items": [
-        {"value": "test_Tranzila", "label": "Tranzila"},
-        {"value": "test_Isracard", "label": "Isracard"},
-        {"value": "immigration_Netpay", "label": "Netpay"}
+        {"value": "immigration/Tranzila", "label": "Tranzila"},
+        {"value": "immigration/Isracard", "label": "Isracard"},
+        {"value": "immigration/Netpay", "label": "Netpay"}
       ]
     },
     "save": {

@@ -346,7 +346,7 @@
       "label": "Processor",
       "type": "list",
       "items": [
-        {"value": "marketscap_Netpay", "label": "Netpay"}
+        {"value": "marketscap/Netpay", "label": "Netpay"}
       ]
     },
     "submit": {

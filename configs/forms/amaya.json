@@ -3,7 +3,7 @@
   "action": "https://payment.gobemark.info/php/psps/",
   "method": "POST",
   "subscribeUrl": "https://payment.gobemark.info/php/psps/await/",
-  "saveUrl": "http://localhost/psps/exchange/",
+  "saveUrl": "https://payment.gobemark.info/php/psps/exchange/",
   "inputs": {
     "title": {
       "label": "Payment form"
@@ -85,7 +85,7 @@
       "label": "Processor",
       "type": "list",
       "items": [
-        {"value": "venus_Tranzila", "label": "Tranzila"}
+        {"value": "venus/Tranzila", "label": "Tranzila"}
       ]
     },
     "submit": {
