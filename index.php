@@ -115,7 +115,7 @@ $output = \assoc\mapValues(
   \assoc\mapKeys(
     $output,    
     \assoc\flip($response->fields),
-    true
+    false
   ),
   (object) $response->values,
   true
