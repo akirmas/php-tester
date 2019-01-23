@@ -2,7 +2,7 @@
 require_once(__DIR__.'/CycleHandler.php');
 require_once(__DIR__.'/utils.php');
 class CommonHandler extends CycleHandler {
-  static function onRequestRaw(object $env, object $input): object {
+  static function onRequestFilled(object $env, object $input): object {
     $date = (property_exists($input, 'cc:expire:date'))
     ? $input->{'cc:expire:date'}
     : (property_exists($input, 'cc:expire:month') && property_exists($input, 'cc:expire:year')

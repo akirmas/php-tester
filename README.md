@@ -16,6 +16,18 @@ One request-response called <u>operation</u>. API might require several requests
 
 ## Details
 
+### Phases
+
+| #    | Direction | Phase  | Description                                       | Key vocabulary |
+| ---- | --------- | ------ | ------------------------------------------------- | -------------- |
+| 0    | Request   | Raw    | Data is client's input                            | Unified        |
+| 1    | Request   | Filled | Data is filled with config defines                | Unified        |
+| 2    | Request   | Calced | Added additional portion from script calculations | Unified        |
+| 3    | Request   | Formed | Data is translated for API                        | API's          |
+| 4    | Response  | Raw    |                                                   | API's          |
+| 5    | Response  | Formed |                                                   | Unified        |
+| 6    | Response  | Filled |                                                   | Unified        |
+
 ### `quizUrl` processing
 
 Mid is sync, Exchange is async

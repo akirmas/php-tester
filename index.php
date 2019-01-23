@@ -17,6 +17,9 @@ $input = (object) (sizeof($_REQUEST) !== 0
 :  json_decode(file_get_contents('php://input'))
 ));
 
+$event = 'Request';
+$phase = 'Raw';
+
 if (!property_exists($input, 'id')) $input->id = tmstmp();
 
 $ConfigDir = mkdir2(__DIR__, 'configs');
@@ -55,13 +58,15 @@ $input = (object) \assoc\merge(
 );
 
 $event = 'Request';
-$phase = 'Raw';
-$requestData = fireEvent($input);
+$phase = 'Filled';
+$input = fireEvent($input);
 
+$event = 'Request';
+$phase = 'Calced';
 
 $requestData = \assoc\mapKeys(
   \assoc\mapValues(
-    $requestData,
+    $input,
     (object) $request->values,
     true
   ),
@@ -71,7 +76,6 @@ $requestData = \assoc\mapKeys(
 
 $event = 'Request';
 $phase = 'Formed';
-$requestData = fireEvent($requestData);
 
 $request->engine = (object) $request->engine;
 switch($request->engine->method) {
