@@ -86,7 +86,7 @@
     },
     "account": {
       "type": "hidden",
-      "value": "test"
+      "value": "localTest"
     },
     "process": {
       "label": "Processor",
