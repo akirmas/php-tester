@@ -1,9 +1,9 @@
 {
   "name": "localTest",
-  "action": "http://lcoalhost/psps/",
+  "action": "http://localhost/psps/",
   "method": "POST",
-  "subscribeUrl": "http://lcoalhost/psps/await/",
-  "saveUrl": "http://lcoalhost/psps/exchange/",
+  "subscribeUrl": "http://localhost/psps/await/",
+  "saveUrl": "http://localhost/psps/exchange/",
   "inputs": {
     "title": {
       "label": "Payment form"
