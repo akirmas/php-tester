@@ -4,7 +4,6 @@
   // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
   "version": "0.2.0",
   "configurations": [
-
     {
       "name": "Listen for XDebug",
       "type": "php",
@@ -26,6 +25,15 @@
       "request": "launch",
       "program": "${fileDirname}/test.php",
       "port": 9000
-    }
+    },
+    {
+      "name": "accum",
+      "cwd": "${workspaceFolder}",
+      "type": "php",
+      "request": "launch",
+      "program": "${fileDirname}/index.php",
+      "args": ["{\"secret\":\"2rzcxfgGQENj7TQ0\",\"process\"=\"test\"}"],
+      "port": 9000
+    }    
   ]
 }

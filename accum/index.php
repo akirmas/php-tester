@@ -3,6 +3,9 @@
  * https://github.com/gobemarketing/psps/issues/11
  */
 
+/*ini_set('display_errors', 'off');
+ini_set("log_errors", 1);*/
+
 $input = (object) (sizeof($_REQUEST) !== 0
 ? $_REQUEST
 : (array_key_exists('argv', $_SERVER)
@@ -33,13 +36,17 @@ $output = [];
 
 foreach (scandir2($process) as $id) {
   foreach(scandir2("$process/$id") as $processName) {
-    foreach(scandir2("$process/$id/$processName") as $tmstmp) {
+    //foreach(scandir2("$process/$id/$processName") as $tmstmp) {
+    $tmstmp = 'index';
+    if (is_dir("$process/$id/$processName/$tmstmp")) {
       foreach(scandir2("$process/$id/$processName/$tmstmp") as $instance) {
-        foreach(scandir2("$process/$id/$processName/$tmstmp/$instance") as $phaseFile) {
+        //foreach(scandir2("$process/$id/$processName/$tmstmp/$instance") as $phaseFile) {
+        $phaseFile = "index.json";
+        if (file_exists("$process/$id/$processName/$tmstmp/$instance/$phaseFile")) {
           $phase = json_decode(
             file_get_contents("$process/$id/$processName/$tmstmp/$instance/$phaseFile")
           )[0];
-          $output = array_replace_recursive($output, [
+          /*$output = array_replace_recursive($output, [
             "_type" => 'account',
             $input->process => [
               "_type" => 'id',
@@ -57,16 +64,26 @@ foreach (scandir2($process) as $id) {
                 ]
               ]
             ]
-          ]);
+          ]);*/
           if ($tmstmp !== 'index' || $phaseFile !== 'index.json')
             continue;
           $success = !property_exists($phase, 'success') ? -1 : $phase->success;
-          $output[$input->process][$id][$processName]['success'] = $success;
+          $output[$input->process][$id][$processName][$instance]
+          ['success'] = $success;
+          $output[$input->process][$id][$processName][$instance]
+          ['return:message'] =
+            !property_exists($phase, 'return:message')
+            ? '' : $phase->{'return:message'};
+          $output[$input->process][$id][$processName][$instance]
+          ['event'] = $phase->event;
+          $output[$input->process][$id][$processName][$instance]
+          ['event:id'] = $phase->{'event:id'};
+          
           $eventFile = "$eventsDir/$phase->event/index.json";
-          if ($success !== -1 || !file_exists($eventFile)) continue;
+          if (!file_exists($eventFile))
+            continue;
           $eventContent = json_decode(file_get_contents($eventFile));
-          $output[$input->process][$id][$processName]['success'] = $eventContent->success;
-          $output[$input->process][$id][$processName]['return:message'] = $eventContent->{'return:message'};
+          $output[$input->process][$id][$processName][$instance]['event:content'] = $eventContent;          
         }
       }
     }
