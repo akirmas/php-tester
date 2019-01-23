@@ -43,12 +43,12 @@
       "cc:expire:year": "expyear",
       "return:code": "Response",
       "return:message": "ResponseClone",
-      "success": "ResponseClone2",
+      "success:ing": "ResponseClone2",
       "event:id": "Tempref"
     },
     "verify": {},
     "defaults": {
-      "success": 0
+      "success:ing": 0
     },
     "overrides": {},
     "values": {
@@ -58,7 +58,7 @@
         "EUR": 978,
         "GBP": 826
       },
-      "success": {
+      "success:ing": {
         "000": 1
       },
       "return:message" : {
