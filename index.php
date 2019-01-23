@@ -139,10 +139,17 @@ function fireEvent(...$data) :object {
     $data[0]
   );
   $dirs = [$logDir, $processDir];
+  $dataJson = json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
   foreach ($dirs as $dir) {
     file_put_contents(
-      "$dir/$handler-$event$phase.json",
-      json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES)
+      mkdir2($dir, $handler)."/$event$phase.json",
+      $dataJson
+    );
+  }
+  if ($event === 'Response' && $phase = 'Formed') {
+    file_put_contents(
+      "$processDir/$handler/index.json",
+      $dataJson
     );
   }
   return $data[0];

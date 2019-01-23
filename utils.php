@@ -14,3 +14,10 @@ function inFolder($root, $sub) {
 function tmstmp() {
   return date('Ymd-His_').rand();
 }
+
+function scandir2($root) {
+  return array_filter(
+    scandir($root),
+    function($folder){ return !in_array($folder, ['.', '..']); }
+  );
+}

@@ -1,6 +1,6 @@
 <?php
 require_once(__DIR__.'/CycleHandler.php');
-
+require_once(__DIR__.'/utils.php');
 class CommonHandler extends CycleHandler {
   static function onRequestRaw(object $env, object $input): object {
     $date = (property_exists($input, 'cc:expire:date'))
@@ -63,10 +63,11 @@ class CommonHandler extends CycleHandler {
     ];
   }
   static function onResponseFormed(object $env, object $output, object $input) : object {
-    if (!property_exists($output, 'event:id')) return new \stdClass;
-    return (object) [
-      'event' => "$env->instance/".$output->{'event:id'}
-    ];
+    return (object) \assoc\merge(
+      ['success' => -1],
+      (!property_exists($output, 'event:id'))
+      ? []
+      : ['event' => "$env->instance/".$output->{'event:id'}]
+    );
   }
 }
-
