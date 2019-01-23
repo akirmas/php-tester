@@ -23,23 +23,16 @@ class CommonHandler extends CycleHandler {
     $name_last = array_pop($names);
     $name_first = sizeof($names) > 0 ? array_shift($names) : '';
     $name_last = join(' ', array_merge($names, [$name_last]));
-    return (object) [
-      'cc:expire:date' => $date,
-      'name:full' => $name_full,
-      'name:first' => $name_first,
-      'name:last' => $name_last
-    ];
-  }
-  static function onRequestFormed(object $env, object $request): object {
-    $currency = $request->currency;
+
+    $currency = $input->currency;
     $currencyFinal = $currency;
-    $fee = !property_exists($request, 'fee') ? 0 : (float) $request->fee;
-    $amount = (1 + $fee) * (float) $request->amount;
+    $fee = !property_exists($input, 'fee') ? 0 : (float) $input->fee;
+    $amount = (1 + $fee) * (float) $input->amount;
     if (
-      property_exists($request, 'currency:exchange')
-      && ($currency != $request->{'currency:exchange'})
+      property_exists($input, 'currency:exchange')
+      && ($currency != $input->{'currency:exchange'})
     ) {
-      $pair = $currency.'_'.$request->{'currency:exchange'};
+      $pair = $currency.'_'.$input->{'currency:exchange'};
       //TODO: Other information sources, maybe cache
       $ch = curl_init(
         "https://free.currencyconverterapi.com/api/v5/convert?q=$pair&compact=y"
@@ -51,17 +44,23 @@ class CommonHandler extends CycleHandler {
         if ($resp !== null && array_key_exists($pair, $resp) && array_key_exists('val', $resp[$pair])) {
           $rate = $resp[$pair]['val'];
           $amount *= $rate;
-          $currencyFinal = $request->{'currency:exchange'};
+          $currencyFinal = $input->{'currency:exchange'};
         }
       }
     }
+    
     return (object) [
+      'cc:expire:date' => $date,
+      'name:full' => $name_full,
+      'name:first' => $name_first,
+      'name:last' => $name_last,
       'amount:final' => $amount,
       'amountInt:final' => 100 * (float) $amount,
       'currency:final' => $currencyFinal,
       'fee:final' => 0
     ];
   }
+  
   static function onResponseFormed(object $env, object $output, object $input) : object {
     return (object) \assoc\merge(
       ['success' => -1],

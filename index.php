@@ -48,19 +48,17 @@ $response = (object) \assoc\merge($instance->response, $instanceEnv->response);
 
 $url = ((object) $request->engine)->gateway;
 
-$event = 'Request';
-$phase = 'Raw';
-$requestData = fireEvent($input);
-
-$requestData = (object) \assoc\merge(
+$input = (object) \assoc\merge(
   $request->defaults,
-  $requestData,
+  $input,
   $request->overrides
 );
 
 $event = 'Request';
-$phase = 'Formed';
-$requestData = fireEvent($requestData);
+$phase = 'Raw';
+$requestData = fireEvent($input);
+
+
 $requestData = \assoc\mapKeys(
   \assoc\mapValues(
     $requestData,
@@ -71,12 +69,15 @@ $requestData = \assoc\mapKeys(
   false
 );
 
+$event = 'Request';
+$phase = 'Formed';
+$requestData = fireEvent($requestData);
+
 $request->engine = (object) $request->engine;
 switch($request->engine->method) {
   case 'POST':
     $ch = curl_init($request->engine->gateway);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_COOKIE,"XDEBUG_SESSION=VSCODE");
     curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $request->engine->method);
     curl_setopt($ch, CURLOPT_HTTPHEADER, [   
       'Content-Type: application/json'                                                              

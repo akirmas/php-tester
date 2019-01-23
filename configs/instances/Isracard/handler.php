@@ -8,6 +8,7 @@ class Isracard extends CycleHandler {
       : array(
         'quizUrl' => "$r->quizUrl?".http_build_query(
           array_reduce(
+            //TODO: should be picked up from Isracard/index.json
             [
               ['name:first' => 'first_name'],
               ['name:last' => 'last_name'],
