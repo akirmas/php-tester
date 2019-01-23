@@ -33,8 +33,10 @@ if (array_key_exists(Collector::fireField, $_REQUEST)) {
       */
       $request['success'] = (int) ($request['payme_status'] === 'success');
       $request['return:code'] = $request['status_error_code'];
-      if (array_key_exists('status_error_details', $request))
-        $request['return:message'] = $request['status_error_details'];
+      $request['return:message'] =
+        !array_key_exists('status_error_details', $request)
+        ? ''
+        : $request['status_error_details'];
       break;
     case 'Tranzila': 
       $eventId = $request['Tempref'];
