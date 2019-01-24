@@ -67,7 +67,7 @@ class CommonHandler extends CycleHandler {
       ['success' => (int) (
         // success:ing exists === it is last action
         property_exists($output, 'success:ing')
-        ? (int) $output->{'success:ing'} === 0
+        ? (int) $output->{'success:ing'}
         : (
           // intermediate action - therefore for await (-1) shoud be good (0)
           property_exists($output, 'return:code')
