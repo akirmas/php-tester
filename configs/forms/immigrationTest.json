@@ -92,8 +92,8 @@
       "label": "Processor",
       "type": "list",
       "items": [
-        {"value": "Tranzila", "label": "Tranzila"},
-        {"value": "Isracard", "label": "Isracard"}
+        {"value": "Tranzila_instant_charge", "label": "Instant charge"},
+        {"value": "Isracard_3d_secure", "label": "3d secure"}
       ]
     },
     "save": {

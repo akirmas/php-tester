@@ -350,7 +350,7 @@
       "label": "Processor",
       "type": "list",
       "items": [
-        {"value": "Netpay", "label": "Netpay"}
+        {"value": "Netpay_instant_charge", "label": "Netpay"}
       ]
     },
     "submit": {

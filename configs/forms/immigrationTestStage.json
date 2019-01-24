@@ -92,9 +92,9 @@
       "label": "Processor",
       "type": "list",
       "items": [
-        {"value": "Tranzila", "label": "Tranzila"},
-        {"value": "Isracard", "label": "Isracard"},
-        {"value": "Netpay", "label": "Netpay"}
+        {"value": "Tranzila_instant_charge", "label": "Tranzila instant"},
+        {"value": "Isracard_3d_secure", "label": "Isracard 3d"},
+        {"value": "Netpay_3d_secure", "label": "Netpay 3d"}
       ]
     },
     "save": {

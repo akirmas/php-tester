@@ -89,7 +89,7 @@
       "label": "Processor",
       "type": "list",
       "items": [
-        {"value": "Tranzila", "label": "Tranzila"}
+        {"value": "Tranzila_instant_charge", "label": "Instant charge"}
       ]
     },
     "submit": {
