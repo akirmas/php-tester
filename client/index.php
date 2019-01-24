@@ -13,14 +13,17 @@ $input = (object) (sizeof($_REQUEST) !== 0
 :  json_decode(file_get_contents('php://input'))
 ));
 
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: GET');
+header('Access-Control-Allow-Headers: Content-Type');
+
 if ($input->secret !== '2rzcxfgGQENj7TQ0') {
   header("HTTP/1.0 404 Not Found");
   exit;
 }
 
+//header('Content-Type: application/json');
 header('Content-Type: application/json; charset=utf-8');
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: POST, GET');
 
 require_once(__DIR__.'/../utils.php');
 
@@ -70,15 +73,15 @@ foreach (scandir2($process) as $id) {
           $success = !property_exists($phase, 'success') ? -1 : $phase->success;
           $output[$input->process][$id][$processName][$instance]
           ['success'] = $success;
-          $output[$input->process][$id][$processName][$instance]
-          ['return:message'] =
-            !property_exists($phase, 'return:message')
-            ? '' : $phase->{'return:message'};
-          $output[$input->process][$id][$processName][$instance]
-          ['event'] = $phase->event;
-          $output[$input->process][$id][$processName][$instance]
-          ['event:id'] = $phase->{'event:id'};
-          
+          foreach(
+            ['return:message', 'tmstmp', 'quizUrl']
+            as $key
+          ) if (property_exists($phase, $key))
+              $output[$input->process][$id][$processName][$instance]
+                [$key] = $phase->{$key};
+
+          if (!property_exists($phase, 'event'))
+            continue;
           $eventFile = "$eventsDir/$phase->event/index.json";
           if (!file_exists($eventFile))
             continue;
@@ -90,4 +93,4 @@ foreach (scandir2($process) as $id) {
   }
 }
 
-echo json_encode($output, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+echo json_encode($output);
