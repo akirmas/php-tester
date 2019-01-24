@@ -21,3 +21,13 @@ function scandir2($root) {
     function($folder){ return !in_array($folder, ['.', '..']); }
   );
 }
+
+function getClientIp() {
+  $ipKeys = ['HTTP_CLIENT_IP', 'HTTP_X_FORWARDED_FOR', 'REMOTE_ADDR'];
+  $i = 0;
+  while($i < sizeof($ipKeys) && empty($_SERVER[$ipKeys[$i]]))
+    $i++;
+  return $i >= sizeof($ipKeys)
+  ? ''
+  : $_SERVER[$ipKeys[$i]];
+}

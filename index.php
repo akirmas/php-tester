@@ -9,18 +9,26 @@ require_once(__DIR__.'/utils.php');
 require_once(__DIR__.'/handler.php');
 $commonHandler = 'CommonHandler';
 
+$system = [
+  'tmstmp' => tmstmp(),
+  'http:ip' => getClientIp(),
+  'http:method' => $_SERVER['REQUEST_METHOD']
+];
 //$input = json_decode(file_get_contents(__DIR__.'/index.test.json'))->tranz_instant[0];
-$input = (object) (sizeof($_REQUEST) !== 0
+$input = (sizeof($_REQUEST) !== 0
 ? $_REQUEST
 : (array_key_exists('argv', $_SERVER)
-? json_decode(preg_replace('/(^"|"$)/i', '', $_SERVER['argv'][1]))
-:  json_decode(file_get_contents('php://input'))
+? json_decode(preg_replace('/(^"|"$)/i', '', $_SERVER['argv'][1]), true)
+: json_decode(file_get_contents('php://input'), true)
 ));
+$input = $system + $input;
+
+$input = (object) $input;
 
 $event = 'Request';
 $phase = 'Raw';
 
-if (!property_exists($input, 'id')) $input->id = tmstmp();
+if (!property_exists($input, 'id')) $input->id = $input->tmstmp;
 
 $ConfigDir = mkdir2(__DIR__, 'configs');
 $step = json_decode(file_get_contents($ConfigDir."/processes/$input->account/$input->process.json"));
@@ -28,7 +36,7 @@ $handler = $step->instance;
 $instance = json_decode(file_get_contents($ConfigDir."/instances/$handler/index.json"));
 
 $processDir = mkdir2(__DIR__, 'processes', $input->account, $input->id, $input->process);
-$logDir = mkdir2($processDir, tmstmp());
+$logDir = mkdir2($processDir, $input->tmstmp);
 $processDir = mkDir2($processDir, 'index');
 
 $handlerPath = $ConfigDir."/instances/$handler/handler.php";
@@ -115,6 +123,8 @@ $output = \assoc\mapValues(
   (object) $response->values,
   true
 );
+
+$output = (object) ($system + (array) $output);
 
 $event = 'Response';
 $phase = 'Formed';
