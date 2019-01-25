@@ -6,7 +6,7 @@ $scriptPaths = sizeof($_SERVER['argv']) > 1
 : json_decode(file_get_contents(preg_replace('/\.php/i', '.json', __FILE__)), true);
 forEach($scriptPaths as $scriptPath) {
   $testPath = __DIR__.'/'.preg_replace('/\.php$/i', '', $scriptPath).'.test.json';
-  $tests = json_decode(file_get_contents(__DIR__.'/'.preg_replace('/\.php$/i', '', $scriptPath).'.test.json'), true);
+  $tests = json_decode(file_get_contents($testPath), true);
   $failedScript = false;
   $testNames = sizeof($_SERVER['argv']) > 2
   ? [$_SERVER['argv'][2]]
@@ -16,7 +16,6 @@ forEach($scriptPaths as $scriptPath) {
       //TODO: set up 'style' of test - CLI, HTTP/GET, HTTP/POST
       //$response = json_decode(callTest($scriptPath, $tests[$name][0])[0], true);
       $response = json_decode(file_get_contents("http://localhost/psps/$scriptPath.php/?".http_build_query($tests[$name][0])), true);
-
       $expected = $tests[$name][1];
       $failedTest = $expected != array_intersect_assoc($response, $expected);
       $failedScript = $failedScript || $failedTest;
