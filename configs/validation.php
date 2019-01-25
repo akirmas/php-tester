@@ -129,7 +129,7 @@ class JsonValidator {
 
 		$schema = Schema::fromJsonString(file_get_contents(__DIR__."/$schemaFileName"));
 
-		$validator = new Validator(null,  new \Opis\JsonSchema\Loaders\File('hello:', ['.']));
+		$validator = new Validator(null,  new \Opis\JsonSchema\Loaders\File('childSchema:', ['.']));
 		if ($filters !== false)
 			$validator->setFilters($filters);
 
