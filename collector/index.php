@@ -20,6 +20,18 @@ if (array_key_exists(Collector::fireField, $_REQUEST)) {
   switch($instance) {
     case 'Netpay':
       $eventId = $request['reference'];
+      /*
+      $urlToMirrorRequestTo = "https://www.marketscap.com/back.php/payment/default/netpayNotify";
+      $verifyPeerSSL = 1;
+      $requestObject = getRequestObject();
+      if($requestObject){
+        $mirroredRequestData = getRequestObject()->inputData;
+        if(!is_null($mirroredRequestData)){
+          $resultOfRequestMirroring = getResultOfMirroredToUrlRequest($urlToMirrorRequestTo,
+            $mirroredRequestData, $verifyPeerSSL);
+        }
+      }
+      */
       break;
     case 'Isracard': 
       $eventId = $request['payme_sale_id'];
