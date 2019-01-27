@@ -39,34 +39,58 @@ class InstancesIndexesTest extends \Codeception\Test\Unit
 
     public function testNetpayAdditionalPropertyInRootObject()
     {
-        $mapping = [
-            $this->_pathToSchema => [
-                'tests/instances/Netpay/index_additional_property_in_root_object.json'
-                ]
-        ];
-        $this->_jsonValidator->setJsonsToSchemasMapping($mapping);
-        $this->_jsonValidator->validate();
-        $validationResults = $this->_jsonValidator->getValidationResults();
-        $errorData = $this->_jsonValidator->getErrorDataArray();
-        foreach ($errorData[$this->_pathToSchema] as $indexName => $indexResult) {
-            $this->assertEquals($indexResult['errorMessage'], 'additionalProperties');
+        $validationResultAndErrorData = $this->_getBrokenIndexValidationResultAndErrorData('tests/instances/Netpay/index_additional_property_in_root_object.json');
+        $validationResults = $validationResultAndErrorData['validationResults'];
+        $errorData = $validationResultAndErrorData['errorData'];
+        if (!empty($errorData)){
+            foreach ($errorData[$this->_pathToSchema] as $indexName => $indexResult) {
+                $this->assertEquals($indexResult['errorMessage'], 'additionalProperties');
+            }
+        } else {
+            $this->assertFalse(true);
         }
     }
 
     public function testNetpayAdditionalPropertyInFields()
     {
+        $validationResultAndErrorData = $this->_getBrokenIndexValidationResultAndErrorData('tests/instances/Netpay/index_additional_property_in_fields.json');
+        $validationResults = $validationResultAndErrorData['validationResults'];
+        $errorData = $validationResultAndErrorData['errorData'];
+        if (!empty($errorData)){
+            foreach ($errorData[$this->_pathToSchema] as $indexName => $indexResult) {
+                $this->assertEquals($indexResult['errorMessage'], 'additionalProperties');
+            }
+        } else {
+            $this->assertFalse(true);
+        }
+    }
+
+    public function testNetpayResponseMissing()
+    {
+        $validationResultAndErrorData = $this->_getBrokenIndexValidationResultAndErrorData('tests/instances/Netpay/index_response_missing.json');
+        $validationResults = $validationResultAndErrorData['validationResults'];
+        $errorData = $validationResultAndErrorData['errorData'];
+        if (!empty($errorData)){
+            foreach ($errorData[$this->_pathToSchema] as $indexName => $indexResult) {
+                $this->assertEquals($indexResult['errorMessage'], 'required');
+            }
+        } else {
+            $this->assertFalse(true);
+        }
+    }
+
+    private function _getBrokenIndexValidationResultAndErrorData($brokenIndexFileName)
+    {
         $mapping = [
             $this->_pathToSchema => [
-                'tests/instances/Netpay/index_additional_property_in_fields.json'
+                $brokenIndexFileName
                 ]
         ];
         $this->_jsonValidator->setJsonsToSchemasMapping($mapping);
         $this->_jsonValidator->validate();
         $validationResults = $this->_jsonValidator->getValidationResults();
         $errorData = $this->_jsonValidator->getErrorDataArray();
-        foreach ($errorData[$this->_pathToSchema] as $indexName => $indexResult) {
-            $this->assertEquals($indexResult['errorMessage'], 'additionalProperties');
-        }
+        return ['validationResults' => $validationResults, 'errorData' => $errorData];
     }
 
 }

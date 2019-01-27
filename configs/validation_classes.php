@@ -125,13 +125,13 @@ class JsonValidator {
 					}
 
 					$validationResults[$schemaFileName][$fileName] = $message;
-					$errorDataArray[$schemaFileName][$fileName] = $errorData;
+					if(isset($errorData)) $errorDataArray[$schemaFileName][$fileName] = $errorData;
 				}
 			}
 		}
 
 		$this->_validationResults = $validationResults;
-		$this->_errorDataArray = $errorDataArray;
+		if(isset($errorDataArray)) $this->_errorDataArray = $errorDataArray;
 	}
 
 	private function _validateSingleIndex($indexFileName, $schemaFileName, $filters = false) {
