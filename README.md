@@ -50,3 +50,15 @@ Mid is sync, Exchange is async
 |                |      |                | <    | qD       |      |           |      |      | Exchange has what to answer          |
 | answer = qD    | <    |                |      |          |      |           |      |      | Client receives data                 |
 
+## Installations
+
+### Testing 
+
+[Codeception](https://github.com/codeception/codeception)
+`composer require "codeception/codeception" --dev`
+
+`wget https://codeception.com/codecept.phar`
+
+`php codecept.phar`
+
+`codecept bootstrap`
