@@ -26,6 +26,7 @@ class JsonValidationException extends Exception {
 
 class JsonValidator {
 	private $_validationResults = [];
+	private $_errorDataArray = [];
 	/*
 	* The directory where we will get JSONs to validate.
 	* Relative to script
@@ -66,6 +67,10 @@ class JsonValidator {
 
 	public function setJsonsToSchemasMapping($mapping) {
 		$this->_jsonsToSchemasMapping = $mapping;
+	}
+
+	public function getErrorDataArray() {
+		return $this->_errorDataArray;
 	}
 
 	public function validate() {
@@ -120,11 +125,13 @@ class JsonValidator {
 					}
 
 					$validationResults[$schemaFileName][$fileName] = $message;
+					$errorDataArray[$schemaFileName][$fileName] = $errorData;
 				}
 			}
 		}
 
 		$this->_validationResults = $validationResults;
+		$this->_errorDataArray = $errorDataArray;
 	}
 
 	private function _validateSingleIndex($indexFileName, $schemaFileName, $filters = false) {
