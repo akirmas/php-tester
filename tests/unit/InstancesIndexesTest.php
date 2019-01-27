@@ -26,7 +26,7 @@ class InstancesIndexesTest extends \Codeception\Test\Unit
             $this->_pathToSchema => [
                 'instances/Netpay/index.json',
                 'instances/Tranzila/index.json',
-                //'instances/Isracard/index.json'
+                'instances/Isracard/index.json'
                 ]
         ];
         $this->_jsonValidator->setJsonsToSchemasMapping($mapping);
