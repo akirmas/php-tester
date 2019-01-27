@@ -4,5 +4,8 @@
     "require": {
         "opis/json-schema": "^1.0",
         "opis/string": "^1.5"
+    },
+    "require-dev": {
+        "codeception/codeception": "^2.5"
     }
 }
