@@ -13,6 +13,7 @@ class InstancesIndexesTest extends \Codeception\Test\Unit
         $this->_jsonValidator = new JsonValidator();
         $this->_jsonValidator->init();
         $this->_pathToSchema = 'instances/schema.json';
+        $this->_pathToFieldsChildSchema = 'instances/fields_schema.json';
         $this->_instance = 'Netpay';
 
         //Let's access to schema array:
@@ -21,6 +22,17 @@ class InstancesIndexesTest extends \Codeception\Test\Unit
         $internalSchema = $reflectedSchema->getProperty('internal');
         $internalSchema->setAccessible(true);
         $this->_schemaArray = $internalSchema->getValue($schema);
+
+        $this->_setupFieldsChildSchema();
+    }
+
+    protected function _setupFieldsChildSchema()
+    {
+        $schema = Opis\JsonSchema\Schema::fromJsonString(file_get_contents('configs/' . $this->_pathToFieldsChildSchema));
+        $reflectedSchema = new ReflectionClass($schema);
+        $internalSchema = $reflectedSchema->getProperty('internal');
+        $internalSchema->setAccessible(true);
+        $this->_fieldsChildSchemaArray = $internalSchema->getValue($schema);
     }
 
     protected function _after()
@@ -50,13 +62,7 @@ class InstancesIndexesTest extends \Codeception\Test\Unit
         $validationResultAndErrorData = $this->_getBrokenIndexValidationResultAndErrorData('tests/instances/'
             . $this->_instance . '/index_additional_property_in_root_object.json');
         $errorData = $validationResultAndErrorData['errorData'];
-        if (!empty($errorData)){
-            foreach ($errorData[$this->_pathToSchema] as $indexName => $indexResult) {
-                $this->assertEquals($indexResult['errorMessage'], 'additionalProperties');
-            }
-        } else {
-            $this->fail('Test failed for additional property in root object.');
-        }
+        $this->_commonCodeForErrorDataProcessing('some additional property', 'root object', $errorData, 'additionalProperties');
     }
 
     public function testAdditionalPropertyInFields()
@@ -64,13 +70,7 @@ class InstancesIndexesTest extends \Codeception\Test\Unit
         $validationResultAndErrorData = $this->_getBrokenIndexValidationResultAndErrorData('tests/instances/'
             . $this->_instance . '/index_additional_property_in_fields.json');
         $errorData = $validationResultAndErrorData['errorData'];
-        if (!empty($errorData)){
-            foreach ($errorData[$this->_pathToSchema] as $indexName => $indexResult) {
-                $this->assertEquals($indexResult['errorMessage'], 'additionalProperties');
-            }
-        } else {
-            $this->fail('Test failed for additional property in request/fields.');
-        }
+        $this->_commonCodeForErrorDataProcessing('some additional property', 'request/fields', $errorData, 'additionalProperties');
     }
 
     public function testRootPropertiesMissing()
@@ -94,8 +94,7 @@ class InstancesIndexesTest extends \Codeception\Test\Unit
     */
     public function testOneOfMandatoryPropertiesInFieldsMissing()
     {
-        //TODO: Take these properties from schema.json
-        $mandatoryPropertiesInFields = ['email', 'currency:final'];
+        $mandatoryPropertiesInFields = $this->_fieldsChildSchemaArray['/fields_schema.json#']->required;
         foreach ($mandatoryPropertiesInFields as $property) {
             $this->_testSingleMandatoryPropertyInFieldsMissing($property);
         }
@@ -116,8 +115,15 @@ class InstancesIndexesTest extends \Codeception\Test\Unit
                 $this->assertEquals($indexResult['errorMessage'], $errorType);
             }
         } else {
-            $this->fail('Test failed for this property missing in ' . $propertyHolder
-                . ': ' . $propertyName);
+            switch($errorType){
+                case 'required':
+                    $this->fail('Test failed for this property missing in ' . $propertyHolder
+                        . ': ' . $propertyName);
+                break;
+                case 'additionalProperties':
+                    $this->fail('Test failed for additional properties in ' . $propertyHolder);
+                break;
+            }
         }
     }
 
