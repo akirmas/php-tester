@@ -1,5 +1,0 @@
-Require all denied
-
-<FilesMatch "^(index\.[a-z]{0,4})?$">
-    Require all granted
-</FilesMatch>
