@@ -78,9 +78,8 @@ class InstancesIndexesTest extends \Codeception\Test\Unit
                 $this->assertEquals($indexResult['errorMessage'], 'format');
                 $this->assertEquals($indexResult['pathToTheDataThatCausedTheError'], ['request', 'engine', 'gateway']);
             }
-        } else {
+        } else 
             $this->fail('Test failed for not a valid URI in request/engine/gateway');
-        }
     }
 
     public function testNotAValidMethodInEngine()
@@ -93,9 +92,8 @@ class InstancesIndexesTest extends \Codeception\Test\Unit
                 $this->assertEquals($indexResult['errorMessage'], 'enum');
                 $this->assertEquals($indexResult['pathToTheDataThatCausedTheError'], ['request', 'engine', 'method']);
             }
-        } else {
+        } else 
             $this->fail('Test failed for not a valid method in request/engine/method');
-        }
     }
 
     public function testAdditionalPropertyInRootObject()
