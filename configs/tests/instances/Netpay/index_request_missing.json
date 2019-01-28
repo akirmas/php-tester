@@ -1,0 +1,14 @@
+{
+  "response": {
+    "enigine": {},
+    "fields": {
+      "return:message:0": "ReplyDesc",
+      "return:code": "Reply",
+      "quizUrl": "D3Redirect",
+      "event:id": "TransID"
+    },
+    "values": {},
+    "defaults": {},
+    "overrides": {}
+  }
+}

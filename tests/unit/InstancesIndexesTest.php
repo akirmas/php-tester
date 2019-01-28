@@ -47,7 +47,7 @@ class InstancesIndexesTest extends \Codeception\Test\Unit
                 $this->assertEquals($indexResult['errorMessage'], 'additionalProperties');
             }
         } else {
-            $this->assertFalse(true);
+            $this->fail('Test failed for additional property in root object.');
         }
     }
 
@@ -61,13 +61,36 @@ class InstancesIndexesTest extends \Codeception\Test\Unit
                 $this->assertEquals($indexResult['errorMessage'], 'additionalProperties');
             }
         } else {
-            $this->assertFalse(true);
+            $this->fail('Test failed for additional property in request/fields.');
         }
     }
 
-    public function testNetpayResponseMissing()
+    public function testNetpayRootPropertiesMissing()
     {
-        $validationResultAndErrorData = $this->_getBrokenIndexValidationResultAndErrorData('tests/instances/Netpay/index_response_missing.json');
+        //TODO: Take these properties from schema.json
+        $rootProperties = ['request', 'response'];
+        foreach($rootProperties as $property){
+            $this->_testNetpaySingleRootPropertyMissing($property);
+        }
+    }
+
+    /*
+     * Test when one of mandatory properties in request/fields is missing.
+    */
+    public function testNetpayOneOfMandatoryPropertiesInFieldsMissing()
+    {
+        //TODO: Take these properties from schema.json
+        $mandatoryPropertiesInFields = ['email', 'currency:final'];
+        foreach ($mandatoryPropertiesInFields as $property) {
+            $this->_testNetpaySingleMandatoryPropertyInFieldsMissing($property);
+        }
+    }
+
+    private function _testNetpaySingleMandatoryPropertyInFieldsMissing($propertyName)
+    {
+        $testFileName = 'tests/instances/Netpay/index_mandatory_' . preg_replace('/:/', '_', $propertyName)
+            . '_in_fields_missing.json';
+        $validationResultAndErrorData = $this->_getBrokenIndexValidationResultAndErrorData($testFileName);
         $validationResults = $validationResultAndErrorData['validationResults'];
         $errorData = $validationResultAndErrorData['errorData'];
         if (!empty($errorData)){
@@ -75,7 +98,22 @@ class InstancesIndexesTest extends \Codeception\Test\Unit
                 $this->assertEquals($indexResult['errorMessage'], 'required');
             }
         } else {
-            $this->assertFalse(true);
+            $this->fail('Test failed for this property missing in request/fields: ' . $propertyName);
+        }
+    }
+
+    private function _testNetpaySingleRootPropertyMissing($propertyName)
+    {
+        $testFileName = 'tests/instances/Netpay/index_' . $propertyName . '_missing.json';
+        $validationResultAndErrorData = $this->_getBrokenIndexValidationResultAndErrorData($testFileName);
+        $validationResults = $validationResultAndErrorData['validationResults'];
+        $errorData = $validationResultAndErrorData['errorData'];
+        if (!empty($errorData)){
+            foreach ($errorData[$this->_pathToSchema] as $indexName => $indexResult) {
+                $this->assertEquals($indexResult['errorMessage'], 'required');
+            }
+        } else {
+            $this->fail('Test failed for this root property missing in schema: ' . $propertyName);
         }
     }
 
