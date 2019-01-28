@@ -72,6 +72,21 @@ class InstancesIndexesTest extends \Codeception\Test\Unit
         }
     }
 
+    public function testNotAValidMethodInEngine()
+    {
+        $validationResultAndErrorData = $this->_getBrokenIndexValidationResultAndErrorData('tests/instances/'
+            . $this->_instance . '/index_not_a_valid_method_in_engine.json');
+        $errorData = $validationResultAndErrorData['errorData'];
+        if (!empty($errorData)){
+            foreach ($errorData[$this->_pathToSchema] as $indexName => $indexResult) {
+                $this->assertEquals($indexResult['errorMessage'], 'enum');
+                $this->assertEquals($indexResult['pathToTheDataThatCausedTheError'], ['request', 'engine', 'method']);
+            }
+        } else {
+            $this->fail('Test failed for not a valid method in request/engine/method');
+        }
+    }
+
     public function testAdditionalPropertyInRootObject()
     {
         $validationResultAndErrorData = $this->_getBrokenIndexValidationResultAndErrorData('tests/instances/'
