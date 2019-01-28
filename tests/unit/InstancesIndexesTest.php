@@ -59,17 +59,12 @@ class InstancesIndexesTest extends \Codeception\Test\Unit
 
     public function testPropertyPresentInValuesButMissingInFields()
     {
-        $validationResultAndErrorData = $this->_getBrokenIndexValidationResultAndErrorData('tests/instances/'
-            . $this->_instance . '/index_property_present_in_values_but_missing_in_fields.json');
-        $errorData = $validationResultAndErrorData['errorData'];
-        if (!empty($errorData)){
-            foreach ($errorData[$this->_pathToSchema] as $indexName => $indexResult) {
-                $this->assertEquals($indexResult['errorMessage'], 'type');
-                $this->assertEquals($indexResult['dataThatCausedTheError'], 'Member');
-                //$this->assertEquals($indexResult['pathToTheDataThatCausedTheError'], ['request', 'values', 'gateway']);
-            }
-        } else {
-            $this->fail('Test failed for property present in request/values but not present in request/fields');
+        $pathToBrokenIndex = 'tests/instances/'
+            . $this->_instance . '/index_property_present_in_values_but_missing_in_fields.json';
+        $validationResultAndErrorData = $this->_getBrokenIndexValidationResultAndErrorData($pathToBrokenIndex);
+        $validationResults = $validationResultAndErrorData['validationResults'];
+        foreach ($validationResults[$this->_pathToSchema] as $indexName => $indexResult) {
+            $this->assertContains("This key is present in 'values' but is missing in 'fields'", $indexResult);
         }
     }
 

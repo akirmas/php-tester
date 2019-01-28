@@ -53,7 +53,7 @@
         "RSD": 25,
         "BRL": 26
       },
-      "name:full": "Member"
+      "name:full": {}
     },
     "defaults": {
       "installments": 1,
