@@ -49,7 +49,6 @@ class InstancesIndexesTest extends \Codeception\Test\Unit
     {
         $validationResultAndErrorData = $this->_getBrokenIndexValidationResultAndErrorData('tests/instances/'
             . $this->_instance . '/index_additional_property_in_root_object.json');
-        $validationResults = $validationResultAndErrorData['validationResults'];
         $errorData = $validationResultAndErrorData['errorData'];
         if (!empty($errorData)){
             foreach ($errorData[$this->_pathToSchema] as $indexName => $indexResult) {
@@ -64,7 +63,6 @@ class InstancesIndexesTest extends \Codeception\Test\Unit
     {
         $validationResultAndErrorData = $this->_getBrokenIndexValidationResultAndErrorData('tests/instances/'
             . $this->_instance . '/index_additional_property_in_fields.json');
-        $validationResults = $validationResultAndErrorData['validationResults'];
         $errorData = $validationResultAndErrorData['errorData'];
         if (!empty($errorData)){
             foreach ($errorData[$this->_pathToSchema] as $indexName => $indexResult) {
@@ -103,20 +101,42 @@ class InstancesIndexesTest extends \Codeception\Test\Unit
         }
     }
 
+    public function testOneOfMandatoryPropertiesInEngineMissing()
+    {
+        $mandatoryProperties = $this->_schemaArray['/instances_schema.json#']->properties->request->properties->engine->required;
+        foreach($mandatoryProperties as $property){
+            $this->_testSingleEnginePropertyMissing($property);
+        }
+    }
+
+    private function _commonCodeForErrorDataProcessing($propertyName, $propertyHolder, $errorData, $errorType)
+    {
+        if (!empty($errorData)){
+            foreach ($errorData[$this->_pathToSchema] as $indexName => $indexResult) {
+                $this->assertEquals($indexResult['errorMessage'], $errorType);
+            }
+        } else {
+            $this->fail('Test failed for this property missing in ' . $propertyHolder
+                . ': ' . $propertyName);
+        }
+    }
+
+    private function _testSingleEnginePropertyMissing($propertyName)
+    {
+        $testFileName = 'tests/instances/' . $this->_instance . '/index_mandatory_' . preg_replace('/:/', '_', $propertyName)
+            . '_in_engine_missing.json';
+        $validationResultAndErrorData = $this->_getBrokenIndexValidationResultAndErrorData($testFileName);
+        $errorData = $validationResultAndErrorData['errorData'];
+        $this->_commonCodeForErrorDataProcessing($propertyName, 'engine', $errorData, 'required');
+    }
+
     private function _testSingleRequestPropertyMissing($propertyName)
     {
         $testFileName = 'tests/instances/' . $this->_instance . '/index_mandatory_' . preg_replace('/:/', '_', $propertyName)
             . '_in_request_missing.json';
         $validationResultAndErrorData = $this->_getBrokenIndexValidationResultAndErrorData($testFileName);
-        $validationResults = $validationResultAndErrorData['validationResults'];
         $errorData = $validationResultAndErrorData['errorData'];
-        if (!empty($errorData)){
-            foreach ($errorData[$this->_pathToSchema] as $indexName => $indexResult) {
-                $this->assertEquals($indexResult['errorMessage'], 'required');
-            }
-        } else {
-            $this->fail('Test failed for this property missing in request: ' . $propertyName);
-        }
+        $this->_commonCodeForErrorDataProcessing($propertyName, 'request', $errorData, 'required');
     }
 
     private function _testSingleMandatoryPropertyInFieldsMissing($propertyName)
@@ -124,30 +144,16 @@ class InstancesIndexesTest extends \Codeception\Test\Unit
         $testFileName = 'tests/instances/' . $this->_instance . '/index_mandatory_' . preg_replace('/:/', '_', $propertyName)
             . '_in_fields_missing.json';
         $validationResultAndErrorData = $this->_getBrokenIndexValidationResultAndErrorData($testFileName);
-        $validationResults = $validationResultAndErrorData['validationResults'];
         $errorData = $validationResultAndErrorData['errorData'];
-        if (!empty($errorData)){
-            foreach ($errorData[$this->_pathToSchema] as $indexName => $indexResult) {
-                $this->assertEquals($indexResult['errorMessage'], 'required');
-            }
-        } else {
-            $this->fail('Test failed for this property missing in request/fields: ' . $propertyName);
-        }
+        $this->_commonCodeForErrorDataProcessing($propertyName, 'request/fields', $errorData, 'required');
     }
 
     private function _testSingleRootPropertyMissing($propertyName)
     {
         $testFileName = 'tests/instances/' . $this->_instance . '/index_' . $propertyName . '_missing.json';
         $validationResultAndErrorData = $this->_getBrokenIndexValidationResultAndErrorData($testFileName);
-        $validationResults = $validationResultAndErrorData['validationResults'];
         $errorData = $validationResultAndErrorData['errorData'];
-        if (!empty($errorData)){
-            foreach ($errorData[$this->_pathToSchema] as $indexName => $indexResult) {
-                $this->assertEquals($indexResult['errorMessage'], 'required');
-            }
-        } else {
-            $this->fail('Test failed for this root property missing in schema: ' . $propertyName);
-        }
+        $this->_commonCodeForErrorDataProcessing($propertyName, 'root object', $errorData, 'required');
     }
 
     private function _getBrokenIndexValidationResultAndErrorData($brokenIndexFileName)

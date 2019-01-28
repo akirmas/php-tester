@@ -10,6 +10,7 @@
       "properties": {
         "engine": {
           "type": "object",
+          "required": ["gateway", "method"],
           "properties": {
             "gateway": {
               "type": "string",
