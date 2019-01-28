@@ -13,6 +13,7 @@ class InstancesIndexesTest extends \Codeception\Test\Unit
         $this->_jsonValidator = new JsonValidator();
         $this->_jsonValidator->init();
         $this->_pathToSchema = 'instances/schema.json';
+        $this->_instance = 'Netpay';
     }
 
     protected function _after()
@@ -37,9 +38,10 @@ class InstancesIndexesTest extends \Codeception\Test\Unit
         }
     }
 
-    public function testNetpayAdditionalPropertyInRootObject()
+    public function testAdditionalPropertyInRootObject()
     {
-        $validationResultAndErrorData = $this->_getBrokenIndexValidationResultAndErrorData('tests/instances/Netpay/index_additional_property_in_root_object.json');
+        $validationResultAndErrorData = $this->_getBrokenIndexValidationResultAndErrorData('tests/instances/'
+            . $this->_instance . '/index_additional_property_in_root_object.json');
         $validationResults = $validationResultAndErrorData['validationResults'];
         $errorData = $validationResultAndErrorData['errorData'];
         if (!empty($errorData)){
@@ -51,9 +53,10 @@ class InstancesIndexesTest extends \Codeception\Test\Unit
         }
     }
 
-    public function testNetpayAdditionalPropertyInFields()
+    public function testAdditionalPropertyInFields()
     {
-        $validationResultAndErrorData = $this->_getBrokenIndexValidationResultAndErrorData('tests/instances/Netpay/index_additional_property_in_fields.json');
+        $validationResultAndErrorData = $this->_getBrokenIndexValidationResultAndErrorData('tests/instances/'
+            . $this->_instance . '/index_additional_property_in_fields.json');
         $validationResults = $validationResultAndErrorData['validationResults'];
         $errorData = $validationResultAndErrorData['errorData'];
         if (!empty($errorData)){
@@ -65,30 +68,30 @@ class InstancesIndexesTest extends \Codeception\Test\Unit
         }
     }
 
-    public function testNetpayRootPropertiesMissing()
+    public function testRootPropertiesMissing()
     {
         //TODO: Take these properties from schema.json
         $rootProperties = ['request', 'response'];
         foreach($rootProperties as $property){
-            $this->_testNetpaySingleRootPropertyMissing($property);
+            $this->_testSingleRootPropertyMissing($property);
         }
     }
 
     /*
      * Test when one of mandatory properties in request/fields is missing.
     */
-    public function testNetpayOneOfMandatoryPropertiesInFieldsMissing()
+    public function testOneOfMandatoryPropertiesInFieldsMissing()
     {
         //TODO: Take these properties from schema.json
         $mandatoryPropertiesInFields = ['email', 'currency:final'];
         foreach ($mandatoryPropertiesInFields as $property) {
-            $this->_testNetpaySingleMandatoryPropertyInFieldsMissing($property);
+            $this->_testSingleMandatoryPropertyInFieldsMissing($property);
         }
     }
 
-    private function _testNetpaySingleMandatoryPropertyInFieldsMissing($propertyName)
+    private function _testSingleMandatoryPropertyInFieldsMissing($propertyName)
     {
-        $testFileName = 'tests/instances/Netpay/index_mandatory_' . preg_replace('/:/', '_', $propertyName)
+        $testFileName = 'tests/instances/' . $this->_instance . '/index_mandatory_' . preg_replace('/:/', '_', $propertyName)
             . '_in_fields_missing.json';
         $validationResultAndErrorData = $this->_getBrokenIndexValidationResultAndErrorData($testFileName);
         $validationResults = $validationResultAndErrorData['validationResults'];
@@ -102,9 +105,9 @@ class InstancesIndexesTest extends \Codeception\Test\Unit
         }
     }
 
-    private function _testNetpaySingleRootPropertyMissing($propertyName)
+    private function _testSingleRootPropertyMissing($propertyName)
     {
-        $testFileName = 'tests/instances/Netpay/index_' . $propertyName . '_missing.json';
+        $testFileName = 'tests/instances/' . $this->_instance . '/index_' . $propertyName . '_missing.json';
         $validationResultAndErrorData = $this->_getBrokenIndexValidationResultAndErrorData($testFileName);
         $validationResults = $validationResultAndErrorData['validationResults'];
         $errorData = $validationResultAndErrorData['errorData'];
