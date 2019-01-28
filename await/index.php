@@ -10,7 +10,7 @@ header('Access-Control-Allow-Methods: POST, GET');
 $request = $_REQUEST;
 $eventName = $request['event'];
 
-$eventsFolder = mkdir2(__DIR__, "..", "events");
+$eventsFolder = mkdir2(__DIR__, "..", "..", "events");
 $eventFolder = mkdir2($eventsFolder, $eventName);
 
 // check is it injection to path for data grab

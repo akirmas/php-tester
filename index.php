@@ -35,7 +35,7 @@ $step = json_decode(file_get_contents($ConfigDir."/processes/$input->account/$in
 $handler = $step->instance;
 $instance = json_decode(file_get_contents($ConfigDir."/instances/$handler/index.json"));
 
-$processDir = mkdir2(__DIR__, 'processes', $input->account, $input->id, $input->process);
+$processDir = mkdir2(__DIR__, '..', 'processes', $input->account, $input->id, $input->process);
 $logDir = mkdir2($processDir, $input->tmstmp);
 $processDir = mkDir2($processDir, 'index');
 

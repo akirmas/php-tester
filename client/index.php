@@ -28,9 +28,9 @@ header('Content-Type: application/json; charset=utf-8');
 require_once(__DIR__.'/../utils.php');
 
 // processes/%process%/%id%/(index | %tmstmp%)
-$processDir = realpath(__DIR__.'/../processes');
+$processDir = realpath(__DIR__.'/../../processes');
 // events/%instance%/%transaction.id%===%event.id%
-$eventsDir = realpath(__DIR__.'/../events');
+$eventsDir = realpath(__DIR__.'/../../events');
 
 $process = "$processDir/$input->process";
 if (!inFolder($processDir, $process)) exit;

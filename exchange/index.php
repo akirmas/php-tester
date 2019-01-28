@@ -24,7 +24,7 @@ if ($method === '') exit('unknown method');
 
 $input = $method === 'GET' ? $_GET : json_decode($post, true);
 
-$dir = mkdir2(__DIR__, 'content');
+$dir = mkdir2(__DIR__, '..', '..', 'exchange-content');
 $procDir = mkdir2($dir, $input['account']);
 $nodeDir = mkdir2($procDir, $input['id']);
 if (inFolder($dir, $nodeDir) === false) exit;
