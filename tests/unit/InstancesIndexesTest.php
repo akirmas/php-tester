@@ -57,6 +57,22 @@ class InstancesIndexesTest extends \Codeception\Test\Unit
         }
     }
 
+    public function testPropertyPresentInValuesButMissingInFields()
+    {
+        $validationResultAndErrorData = $this->_getBrokenIndexValidationResultAndErrorData('tests/instances/'
+            . $this->_instance . '/index_property_present_in_values_but_missing_in_fields.json');
+        $errorData = $validationResultAndErrorData['errorData'];
+        if (!empty($errorData)){
+            foreach ($errorData[$this->_pathToSchema] as $indexName => $indexResult) {
+                $this->assertEquals($indexResult['errorMessage'], 'type');
+                $this->assertEquals($indexResult['dataThatCausedTheError'], 'Member');
+                //$this->assertEquals($indexResult['pathToTheDataThatCausedTheError'], ['request', 'values', 'gateway']);
+            }
+        } else {
+            $this->fail('Test failed for property present in request/values but not present in request/fields');
+        }
+    }
+
     public function testNotAValidUriInGatewayInEngine()
     {
         $validationResultAndErrorData = $this->_getBrokenIndexValidationResultAndErrorData('tests/instances/'
@@ -95,6 +111,14 @@ class InstancesIndexesTest extends \Codeception\Test\Unit
         $this->_commonCodeForErrorDataProcessing('some additional property', 'root object', $errorData, 'additionalProperties');
     }
 
+    public function testAdditionalPropertyInEngine()
+    {
+        $validationResultAndErrorData = $this->_getBrokenIndexValidationResultAndErrorData('tests/instances/'
+            . $this->_instance . '/index_additional_property_in_engine.json');
+        $errorData = $validationResultAndErrorData['errorData'];
+        $this->_commonCodeForErrorDataProcessing('some additional property', 'request/engine', $errorData, 'additionalProperties');
+    }
+
     public function testAdditionalPropertyInFields()
     {
         $validationResultAndErrorData = $this->_getBrokenIndexValidationResultAndErrorData('tests/instances/'
@@ -103,11 +127,11 @@ class InstancesIndexesTest extends \Codeception\Test\Unit
         $this->_commonCodeForErrorDataProcessing('some additional property', 'request/fields', $errorData, 'additionalProperties');
     }
 
-    public function testRootPropertiesMissing()
+    public function testRootMandatoryPropertiesMissing()
     {
         $rootProperties = $this->_schemaArray['/instances_schema.json#']->required;
         foreach($rootProperties as $property){
-            $this->_testSingleRootPropertyMissing($property);
+            $this->_testSingleMandatoryRootPropertyMissing($property);
         }
     }
 
@@ -184,7 +208,7 @@ class InstancesIndexesTest extends \Codeception\Test\Unit
         $this->_commonCodeForErrorDataProcessing($propertyName, 'request/fields', $errorData, 'required');
     }
 
-    private function _testSingleRootPropertyMissing($propertyName)
+    private function _testSingleMandatoryRootPropertyMissing($propertyName)
     {
         $testFileName = 'tests/instances/' . $this->_instance . '/index_' . $propertyName . '_missing.json';
         $validationResultAndErrorData = $this->_getBrokenIndexValidationResultAndErrorData($testFileName);
