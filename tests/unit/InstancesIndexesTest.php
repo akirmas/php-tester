@@ -1,4 +1,4 @@
-<?php 
+<?php
 require_once 'configs/validation_classes.php';
 
 class InstancesIndexesTest extends \Codeception\Test\Unit
@@ -14,6 +14,13 @@ class InstancesIndexesTest extends \Codeception\Test\Unit
         $this->_jsonValidator->init();
         $this->_pathToSchema = 'instances/schema.json';
         $this->_instance = 'Netpay';
+
+        //Let's access to schema array:
+        $schema = Opis\JsonSchema\Schema::fromJsonString(file_get_contents('configs/' . $this->_pathToSchema));
+        $reflectedSchema = new ReflectionClass($schema);
+        $internalSchema = $reflectedSchema->getProperty('internal');
+        $internalSchema->setAccessible(true);
+        $this->_schemaArray = $internalSchema->getValue($schema);
     }
 
     protected function _after()
@@ -70,10 +77,17 @@ class InstancesIndexesTest extends \Codeception\Test\Unit
 
     public function testRootPropertiesMissing()
     {
-        //TODO: Take these properties from schema.json
-        $rootProperties = ['request', 'response'];
+        $rootProperties = $this->_schemaArray['/instances_schema.json#']->required;
         foreach($rootProperties as $property){
             $this->_testSingleRootPropertyMissing($property);
+        }
+    }
+
+    public function testRequestMandatoryPropertiesMissing()
+    {
+        $requestMandatoryProperties = $this->_schemaArray['/instances_schema.json#']->properties->request->required;
+        foreach($requestMandatoryProperties as $property){
+            $this->_testSingleRequestPropertyMissing($property);
         }
     }
 
@@ -86,6 +100,22 @@ class InstancesIndexesTest extends \Codeception\Test\Unit
         $mandatoryPropertiesInFields = ['email', 'currency:final'];
         foreach ($mandatoryPropertiesInFields as $property) {
             $this->_testSingleMandatoryPropertyInFieldsMissing($property);
+        }
+    }
+
+    private function _testSingleRequestPropertyMissing($propertyName)
+    {
+        $testFileName = 'tests/instances/' . $this->_instance . '/index_mandatory_' . preg_replace('/:/', '_', $propertyName)
+            . '_in_request_missing.json';
+        $validationResultAndErrorData = $this->_getBrokenIndexValidationResultAndErrorData($testFileName);
+        $validationResults = $validationResultAndErrorData['validationResults'];
+        $errorData = $validationResultAndErrorData['errorData'];
+        if (!empty($errorData)){
+            foreach ($errorData[$this->_pathToSchema] as $indexName => $indexResult) {
+                $this->assertEquals($indexResult['errorMessage'], 'required');
+            }
+        } else {
+            $this->fail('Test failed for this property missing in request: ' . $propertyName);
         }
     }
 
