@@ -1,9 +1,9 @@
 {
   "name": "immigration",
-  "action": "https://payment.gobemark.info/php/psps/",
+  "action": "https://payment.gobemark.info/apis/master/",
   "method": "POST",
-  "subscribeUrl": "https://payment.gobemark.info/php/psps/await/",
-  "saveUrl": "https://payment.gobemark.info/php/psps/exchange/",
+  "subscribeUrl": "https://payment.gobemark.info/apis/master/await/",
+  "saveUrl": "https://payment.gobemark.info/apis/master/exchange/",
   "inputs": {
     "title": {
       "label": "Payment form"

@@ -30,7 +30,7 @@
       "language": "en"
     },
     "overrides": {
-      "callbackUrl": "https://payment.gobemark.info/php/psps/collector/?instance=Isracard&"
+      "callbackUrl": "https://payment.gobemark.info/apis/collector/?instance=Isracard&"
     }
   },
   "response": {

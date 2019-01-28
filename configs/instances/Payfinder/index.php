@@ -14,7 +14,7 @@ $params = array(
   "trans_refNum" => "ph.{$phoneNumber}", // Unique text used to defer one transaction from another
   "disp_payFor" => "Green Card Service", // Text shown to buyer in payment window, Usually description of purchase (Cart description, Product name)
   "trans_comment" => "some comment", // Optional text used mainly to describe the transaction
-  "url_notify" => "https://payment.gobemark.info/php/psps/collector/?instance=Payfinder&",
+  "url_notify" => "https://payment.gobemark.info/apis/master/collector/?instance=Payfinder&",
   "url_redirect" => "",
   "client_email" => "test@gbm.com",
   "client_fullName"	=> "andy test",
