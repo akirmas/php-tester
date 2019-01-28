@@ -57,6 +57,21 @@ class InstancesIndexesTest extends \Codeception\Test\Unit
         }
     }
 
+    public function testNotAValidUriInGatewayInEngine()
+    {
+        $validationResultAndErrorData = $this->_getBrokenIndexValidationResultAndErrorData('tests/instances/'
+            . $this->_instance . '/index_not_a_valid_uri_in_gateway_in_engine.json');
+        $errorData = $validationResultAndErrorData['errorData'];
+        if (!empty($errorData)){
+            foreach ($errorData[$this->_pathToSchema] as $indexName => $indexResult) {
+                $this->assertEquals($indexResult['errorMessage'], 'format');
+                $this->assertEquals($indexResult['pathToTheDataThatCausedTheError'], ['request', 'engine', 'gateway']);
+            }
+        } else {
+            $this->fail('Test failed for not a valid URI in request/engine/gateway');
+        }
+    }
+
     public function testAdditionalPropertyInRootObject()
     {
         $validationResultAndErrorData = $this->_getBrokenIndexValidationResultAndErrorData('tests/instances/'
