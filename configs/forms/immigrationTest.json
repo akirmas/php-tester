@@ -89,12 +89,8 @@
       "value": "test"
     },
     "process": {
-      "label": "Processor",
-      "type": "list",
-      "items": [
-        {"value": "Tranzila_instant_charge", "label": "Instant charge"},
-        {"value": "Isracard_3d_secure", "label": "3d secure"}
-      ]
+      "type": "hidden",
+      "value": "cascade"
     },
     "save": {
       "label": "Save",
