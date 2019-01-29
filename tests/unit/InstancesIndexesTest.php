@@ -42,7 +42,7 @@ class InstancesIndexesTest extends \Codeception\Test\Unit
     }
 
     // Test if each instance's index is valid.
-    public function testRealIndexes()
+    public function testNotBrokenIndexesToBeValidByJsonSchema()
     {
         $mapping = [
             $this->_pathToSchema => [
