@@ -45,8 +45,8 @@ class InstancesIndexesTest extends \Codeception\Test\Unit
         $mapping = [
             $this->_pathToSchema => [
                 'instances/Netpay/index.json',
-                'instances/Tranzila/index.json',
-                'instances/Isracard/index.json'
+                //'instances/Tranzila/index.json',
+                //'instances/Isracard/index.json'
                 ]
         ];
         $this->_jsonValidator->setJsonsToSchemasMapping($mapping);
@@ -84,6 +84,62 @@ class InstancesIndexesTest extends \Codeception\Test\Unit
         $this->_checkRequestFieldsValuesType($invalidIndexObj, 'invalid');
     }
 
+    public function testKeyAndValuePairDataTypesInRequestValuesForValidIndex()
+    {
+        $pathToIndex = 'configs/instances/' . $this->_instance . '/index.json';
+        $this->_checkRequestValuesObjectValuesType($pathToIndex, 'valid');
+    }
+
+    public function testKeyAndValuePairDataTypesInRequestValuesForInvalidIndex()
+    {
+        $pathToIndex = 'configs/tests/instances/' . $this->_instance . '/index_not_valid_value_data_type_in_values.json';
+        $this->_checkRequestValuesObjectValuesType($pathToIndex, 'invalid');
+    }
+
+    private function _checkRequestValuesObjectValuesType($pathToIndex, $typeOfIndexBeingChecked)
+    {
+        $indexObj = json_decode(file_get_contents($pathToIndex));
+        if(!is_object($indexObj)){
+            return $this->fail('Could not parse the index-file.');
+        }
+        $fields = get_object_vars($indexObj->request->values);
+        switch($typeOfIndexBeingChecked){
+            case 'valid':
+                foreach($fields as $fieldKey => $fieldValue){
+                    if(!is_object($fieldValue))
+                        return $this->fail('The value of this key in request/values: "' . $fieldKey . '" has to be only OBJECT data type! Invalid data in real index file!');
+                    $propertiesOfSingleValueObject = get_object_vars($fieldValue);
+                    foreach ($propertiesOfSingleValueObject as $internalKey => $internalValue) {
+                        if(!is_string($internalKey))
+                            return $this->fail('Key is not of STRING data type: inside request/values/' . $fieldKey . ' Invalid data in real index file!');
+                        if(!is_string($internalValue) && !is_numeric($internalValue)
+                            && !is_bool($internalValue) && !is_null($internalValue))
+                            return $this->fail('Value is not of allowed data type: inside request/values/' . $fieldKey
+                                . '/' . $internalKey . ' Invalid data in real index file!');
+                    }
+                }
+                $this->assertEquals(true, true);
+            break;
+            case 'invalid':
+                foreach($fields as $fieldKey => $fieldValue){
+                    if(!is_object($fieldValue)) return $this->assertEquals(true, true);
+                    //TODO: Move the following commented code to a separate test:
+                    /*
+                    $propertiesOfSingleValueObject = get_object_vars($fieldValue);
+                    foreach ($propertiesOfSingleValueObject as $internalKey => $internalValue) {
+                        if(!is_string($internalKey))
+                            return $this->assertEquals(true, true);
+                        if(!is_string($internalValue) && !is_numeric($internalValue)
+                            && !is_bool($internalValue) && !is_null($internalValue))
+                            return $this->assertEquals(true, true);
+                    }
+                    */
+                }
+                $this->fail('Failed: all values are of OBJECT data type in request/values(this means that file provided for the test is not broken).');
+                break;
+        }
+    }
+
     private function _checkRequestFieldsValuesType($indexObj, $typeOfIndexBeingChecked)
     {
         $fields = get_object_vars($indexObj->request->fields);
@@ -99,7 +155,7 @@ class InstancesIndexesTest extends \Codeception\Test\Unit
                 foreach($fields as $fieldKey => $fieldValue){
                     if(!is_string($fieldValue)) return $this->assertEquals(true, true);
                 }
-                $this->fail('Failed: all values are of STRING data type in request/fields.');
+                $this->fail('Failed: all values are of STRING data type in request/fields(this means that file provided for the test is not broken).');
                 break;
         }
     }
