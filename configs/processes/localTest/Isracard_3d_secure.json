@@ -1,4 +1,6 @@
-{
-  "instance": "Isracard",
-  "account": "test"
-}
+[
+  {
+    "instance": "Isracard",
+    "account": "test"
+  }
+]

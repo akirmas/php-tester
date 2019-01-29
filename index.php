@@ -31,104 +31,109 @@ $phase = 'Raw';
 if (!property_exists($input, 'id')) $input->id = $input->tmstmp;
 
 $ConfigDir = mkdir2(__DIR__, 'configs');
-$step = json_decode(file_get_contents($ConfigDir."/processes/$input->account/$input->process.json"));
-$handler = $step->instance;
-$instance = json_decode(file_get_contents($ConfigDir."/instances/$handler/index.json"));
 
 $processDir = mkdir2(__DIR__, '..', 'processes', $input->account, $input->id, $input->process);
 $logDir = mkdir2($processDir, $input->tmstmp);
 $processDir = mkDir2($processDir, 'index');
 
-$handlerPath = $ConfigDir."/instances/$handler/handler.php";
-if (file_exists($handlerPath))
-  require_once($handlerPath);
-else {
-  $handler = 'CycleHandler';
-  require_once(__DIR__."/$handler.php");
-}
+$steps = json_decode(file_get_contents($ConfigDir."/processes/$input->account/$input->process.json"));
+forEach($steps as $step) {
+  $handler = $step->instance;
+  $instance = json_decode(file_get_contents($ConfigDir."/instances/$handler/index.json"));
 
-$instanceEnv = json_decode(file_get_contents($ConfigDir."/instances/$step->instance/accounts/$step->account.json"));
+  $handlerPath = $ConfigDir."/instances/$handler/handler.php";
+  if (file_exists($handlerPath))
+    require_once($handlerPath);
+  else {
+    $handler = 'CycleHandler';
+    require_once(__DIR__."/$handler.php");
+  }
 
-$request = (object) \assoc\merge($instance->request, $instanceEnv->request);
-$response = (object) \assoc\merge($instance->response, $instanceEnv->response);
+  $instanceEnv = json_decode(file_get_contents($ConfigDir."/instances/$step->instance/accounts/$step->account.json"));
 
-$url = ((object) $request->engine)->gateway;
+  $request = (object) \assoc\merge($instance->request, $instanceEnv->request);
+  $response = (object) \assoc\merge($instance->response, $instanceEnv->response);
 
-$input = (object) \assoc\merge(
-  $request->defaults,
-  $input,
-  $request->overrides
-);
+  $url = ((object) $request->engine)->gateway;
 
-$event = 'Request';
-$phase = 'Filled';
-$input = fireEvent($input);
-
-$event = 'Request';
-$phase = 'Calced';
-
-$requestData = \assoc\mapKeys(
-  \assoc\mapValues(
+  $filled = (object) \assoc\merge(
+    $request->defaults,
     $input,
-    (object) $request->values,
-    true
-  ),
-  $request->fields,
-  false
-);
+    $request->overrides
+  );
 
-$event = 'Request';
-$phase = 'Formed';
+  $event = 'Request';
+  $phase = 'Filled';
+  $filled = fireEvent($filled);
 
-$request->engine = (object) $request->engine;
-switch($request->engine->method) {
-  case 'POST':
-    $ch = curl_init($request->engine->gateway);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $request->engine->method);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, [   
-      'Content-Type: application/json'                                                              
-    ]);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($requestData));
-    $responseText = curl_exec($ch);
-    if ($responseText === false) 
-      throw new Exception(curl_error($ch), curl_errno($ch));
-    $responseData = json_decode($responseText);
-    $htmlResp = '<!doctype html>';
-    if ($htmlResp === strtolower(substr($responseText, 0, strlen($htmlResp))))
-      file_put_contents("$processDir/error.html", $responseText);
-    curl_close($ch);
-    break;
-  case 'GET':
-    $gate = $url.'?'.http_build_query($requestData);
-    parse_str(
-      file_get_contents($gate),
-      $responseData
-    );
-    $responseData = (object) $responseData; 
-    $responseData->gate = $gate;
-    break;
-  default: exit('not impelemented');
-}
-$event = 'Response';
-$phase = 'Raw';
-$output = fireEvent($responseData, $requestData);
+  $event = 'Request';
+  $phase = 'Calced';
 
-$output = \assoc\mapValues(
-  \assoc\mapKeys(
-    $output,    
-    \assoc\flip($response->fields),
+  $requestData = \assoc\mapKeys(
+    \assoc\mapValues(
+      $filled,
+      (object) $request->values,
+      true
+    ),
+    $request->fields,
     false
-  ),
-  (object) $response->values,
-  true
-);
+  );
 
-$output = (object) ($system + (array) $output);
+  $event = 'Request';
+  $phase = 'Formed';
 
-$event = 'Response';
-$phase = 'Formed';
-$output = fireEvent($output, $input);
+  $request->engine = (object) $request->engine;
+  switch($request->engine->method) {
+    case 'POST':
+      $ch = curl_init($request->engine->gateway);
+      curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+      curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $request->engine->method);
+      curl_setopt($ch, CURLOPT_HTTPHEADER, [   
+        'Content-Type: application/json'                                                              
+      ]);
+      curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($requestData));
+      $responseText = curl_exec($ch);
+      if ($responseText === false) 
+        throw new Exception(curl_error($ch), curl_errno($ch));
+      $responseData = json_decode($responseText);
+      $htmlResp = '<!doctype html>';
+      if ($htmlResp === strtolower(substr($responseText, 0, strlen($htmlResp))))
+        file_put_contents("$processDir/error.html", $responseText);
+      curl_close($ch);
+      break;
+    case 'GET':
+      $gate = $url.'?'.http_build_query($requestData);
+      parse_str(
+        file_get_contents($gate),
+        $responseData
+      );
+      $responseData = (object) $responseData; 
+      $responseData->gate = $gate;
+      break;
+    default: exit('not impelemented');
+  }
+  $event = 'Response';
+  $phase = 'Raw';
+  $output = fireEvent($responseData, $requestData);
+
+  $output = \assoc\mapValues(
+    \assoc\mapKeys(
+      $output,    
+      \assoc\flip($response->fields),
+      false
+    ),
+    (object) $response->values,
+    true
+  );
+
+  $output = (object) ($system + (array) $output);
+
+  $event = 'Response';
+  $phase = 'Formed';
+  $output = fireEvent($output, $filled);
+  if ($output->success === 1)
+    break;
+}
 
 echo json_encode($output);
 

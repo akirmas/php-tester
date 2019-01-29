@@ -1,4 +1,6 @@
-{
-  "instance": "Tranzila",
-  "account": "test"
-}
+[
+  {
+    "instance": "Tranzila",
+    "account": "test"
+  }
+]
