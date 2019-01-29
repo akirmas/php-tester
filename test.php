@@ -40,6 +40,6 @@ exit;
 function callTest($php, $params) {
   $params = preg_replace('/(")/', '\\\\$0', json_encode($params));
   $php = preg_replace('/\.php/', '', $php).'.php';
-  exec("php $php \"$params\"", $output);
+  exec("php $php ".escapeshellarg($params), $output);
   return $output;
 }

@@ -1,4 +1,28 @@
 {
+  "cascade": [
+    {
+      "amount": 10,
+      "name:full": "First Lastname",
+      "cc:cvv": "123",
+      "cc:expire:date": "0120",
+      "cc:number": "4242424242424242",
+      "cc:system": "None",
+      "company": "company",
+      "currency": "USD",
+      "description": "test",
+      "email": "andrii@gobe-mark.com",
+      "entity": "lead",
+      "account": "localTest",
+      "process": "cascade",
+      "id": "test1",
+      "phone": "987654321",
+      "leadId": "1426917"
+    },
+    {
+      "return:code": 0,
+      "quizUrl": "*"
+    }    
+  ], 
   "isra_frame_good": [
     {
       "amount": 10,
