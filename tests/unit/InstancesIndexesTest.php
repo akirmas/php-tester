@@ -68,20 +68,16 @@ class InstancesIndexesTest extends \Codeception\Test\Unit
         }
     }
 
-    public function testKeyAndValuePairDataTypesInRequestFields()
+    public function testKeyAndValuePairDataTypesInRequestFieldsForValidIndex()
     {
-        $pathToValidIndex = 'configs/instances/' . $this->_instance . '/index.json';
-        $pathToInvalidIndex = 'configs/tests/instances/' . $this->_instance . '/index_not_valid_value_data_type_in_fields.json';
-        $validIndexObj = json_decode(file_get_contents($pathToValidIndex));
-        $invalidIndexObj = json_decode(file_get_contents($pathToInvalidIndex));
-        if(!is_object($validIndexObj)){
-            return $this->fail('Could not parse the valid index-file.');
-        }
-        if(!is_object($invalidIndexObj)){
-            return $this->fail('Could not parse the invalid index-file.');
-        }
-        $this->_checkRequestFieldsValuesType($validIndexObj, 'valid');
-        $this->_checkRequestFieldsValuesType($invalidIndexObj, 'invalid');
+        $pathToIndex = 'configs/instances/' . $this->_instance . '/index.json';
+        $this->_checkRequestFieldsValuesType($pathToIndex, 'valid');
+    }
+
+    public function testKeyAndValuePairDataTypesInRequestFieldsForInvalidIndex()
+    {
+        $pathToIndex = 'configs/tests/instances/' . $this->_instance . '/index_not_valid_value_data_type_in_fields.json';
+        $this->_checkRequestFieldsValuesType($pathToIndex, 'invalid');
     }
 
     public function testKeyAndValuePairDataTypesInRequestValuesForValidIndex()
@@ -140,8 +136,12 @@ class InstancesIndexesTest extends \Codeception\Test\Unit
         }
     }
 
-    private function _checkRequestFieldsValuesType($indexObj, $typeOfIndexBeingChecked)
+    private function _checkRequestFieldsValuesType($pathToIndex, $typeOfIndexBeingChecked)
     {
+        $indexObj = json_decode(file_get_contents($pathToIndex));
+        if(!is_object($indexObj)){
+            return $this->fail('Could not parse the index-file.');
+        }
         $fields = get_object_vars($indexObj->request->fields);
         switch($typeOfIndexBeingChecked){
             case 'valid':
