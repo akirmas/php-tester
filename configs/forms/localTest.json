@@ -92,6 +92,7 @@
       "label": "Processor",
       "type": "list",
       "items": [
+        {"value": "cascade", "label": "Cascade"},
         {"value": "Tranzila_instant_charge", "label": "Instant charge"},
         {"value": "Isracard_3d_secure", "label": "3d secure Isracard"},
         {"value": "Netpay_3d_secure", "label": "3d secure Netpay"}
