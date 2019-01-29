@@ -9,6 +9,9 @@ require_once(__DIR__.'/utils.php');
 require_once(__DIR__.'/handler.php');
 $commonHandler = 'CommonHandler';
 
+if (!isset($_SERVER['REQUEST_METHOD']))
+  $_SERVER['REQUEST_METHOD'] = 'CLI';
+
 $system = [
   'tmstmp' => tmstmp(),
   'http:ip' => getClientIp(),
@@ -17,7 +20,7 @@ $system = [
 //$input = json_decode(file_get_contents(__DIR__.'/index.test.json'))->tranz_instant[0];
 $input = (sizeof($_REQUEST) !== 0
 ? $_REQUEST
-: (array_key_exists('argv', $_SERVER)
+: (array_key_exists('argv', $_SERVER) && sizeof($_SERVER['argv']) > 1
 ? json_decode(preg_replace('/(^"|"$)/i', '', $_SERVER['argv'][1]), true)
 : json_decode(file_get_contents('php://input'), true)
 ));
