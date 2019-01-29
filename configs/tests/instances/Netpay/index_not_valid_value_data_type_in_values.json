@@ -26,7 +26,7 @@
     },
     "values": {
       "currency:final": {
-        "ILS": 0,
+        "ILS": {},
         "USD": 1,
         "EUR": 2,
         "GBP": 3,

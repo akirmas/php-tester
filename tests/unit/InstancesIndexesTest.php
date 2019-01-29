@@ -7,6 +7,8 @@ class InstancesIndexesTest extends \Codeception\Test\Unit
      * @var \UnitTester
      */
     protected $tester;
+    protected $_pathToTestInstances = 'configs/tests/instances/';
+    protected $_pathToInstances = 'configs/instances/';
     
     protected function _before()
     {
@@ -70,26 +72,45 @@ class InstancesIndexesTest extends \Codeception\Test\Unit
 
     public function testKeyAndValuePairDataTypesInRequestFieldsForValidIndex()
     {
-        $pathToIndex = 'configs/instances/' . $this->_instance . '/index.json';
+        $pathToIndex = $this->_pathToInstances . $this->_instance . '/index.json';
         $this->_checkRequestFieldsValuesType($pathToIndex, 'valid');
     }
 
     public function testKeyAndValuePairDataTypesInRequestFieldsForInvalidIndex()
     {
-        $pathToIndex = 'configs/tests/instances/' . $this->_instance . '/index_not_valid_value_data_type_in_fields.json';
+        $pathToIndex = $this->_pathToTestInstances . $this->_instance . '/index_not_valid_value_data_type_in_fields.json';
         $this->_checkRequestFieldsValuesType($pathToIndex, 'invalid');
     }
 
     public function testKeyAndValuePairDataTypesInRequestValuesForValidIndex()
     {
-        $pathToIndex = 'configs/instances/' . $this->_instance . '/index.json';
+        $pathToIndex = $this->_pathToInstances . $this->_instance . '/index.json';
         $this->_checkRequestValuesObjectValuesType($pathToIndex, 'valid');
     }
 
     public function testKeyAndValuePairDataTypesInRequestValuesForInvalidIndex()
     {
-        $pathToIndex = 'configs/tests/instances/' . $this->_instance . '/index_not_valid_value_data_type_in_values.json';
+        $pathToIndex = $this->_pathToTestInstances . $this->_instance . '/index_not_valid_value_data_type_in_values.json';
         $this->_checkRequestValuesObjectValuesType($pathToIndex, 'invalid');
+    }
+
+    public function testKeyAndValuePairDataTypesInRequestValuesInEachValuePropertyForInvalidIndex()
+    {
+        $pathToIndex = $this->_pathToTestInstances . $this->_instance . '/index_not_valid_value_data_type_in_values.json';
+        $indexArray = json_decode(file_get_contents($pathToIndex), true);
+        if(!is_array($indexArray)){
+            return $this->fail('Could not parse the index-file.');
+        }
+        foreach($indexArray['request']['values'] as $singleValue){
+            if(is_array($singleValue)){
+                foreach ($singleValue as $internalKey => $internalValue) {
+                    if(!is_string($internalValue) && !is_numeric($internalValue)
+                        && !is_bool($internalValue) && !is_null($internalValue))
+                            return $this->assertTrue(true);
+                }
+            }
+        }
+        $this->fail('Every request/values single value contains allowed data types(this means that index file is valid when it has to be invalid).');
     }
 
     private function _checkRequestValuesObjectValuesType($pathToIndex, $typeOfIndexBeingChecked)
@@ -119,17 +140,6 @@ class InstancesIndexesTest extends \Codeception\Test\Unit
             case 'invalid':
                 foreach($fields as $fieldKey => $fieldValue){
                     if(!is_object($fieldValue)) return $this->assertEquals(true, true);
-                    //TODO: Move the following commented code to a separate test:
-                    /*
-                    $propertiesOfSingleValueObject = get_object_vars($fieldValue);
-                    foreach ($propertiesOfSingleValueObject as $internalKey => $internalValue) {
-                        if(!is_string($internalKey))
-                            return $this->assertEquals(true, true);
-                        if(!is_string($internalValue) && !is_numeric($internalValue)
-                            && !is_bool($internalValue) && !is_null($internalValue))
-                            return $this->assertEquals(true, true);
-                    }
-                    */
                 }
                 $this->fail('Failed: all values are of OBJECT data type in request/values(this means that file provided for the test is not broken).');
                 break;
