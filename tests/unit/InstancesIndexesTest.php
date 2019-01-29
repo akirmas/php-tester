@@ -115,31 +115,30 @@ class InstancesIndexesTest extends \Codeception\Test\Unit
 
     private function _checkRequestValuesObjectValuesType($pathToIndex, $typeOfIndexBeingChecked)
     {
-        $indexObj = json_decode(file_get_contents($pathToIndex));
-        if(!is_object($indexObj)){
+        $indexArray = json_decode(file_get_contents($pathToIndex), true);
+        if(!is_array($indexArray)){
             return $this->fail('Could not parse the index-file.');
         }
-        $fields = get_object_vars($indexObj->request->values);
+        $values = $indexArray['request']['values'];
         switch($typeOfIndexBeingChecked){
             case 'valid':
-                foreach($fields as $fieldKey => $fieldValue){
-                    if(!is_object($fieldValue))
-                        return $this->fail('The value of this key in request/values: "' . $fieldKey . '" has to be only OBJECT data type! Invalid data in real index file!');
-                    $propertiesOfSingleValueObject = get_object_vars($fieldValue);
-                    foreach ($propertiesOfSingleValueObject as $internalKey => $internalValue) {
+                foreach($values as $valueKey => $singleValue){
+                    if(!is_array($singleValue))
+                        return $this->fail('The value of this key in request/values: "' . $valueKey . '" has to be only OBJECT data type! Invalid data in real index file!');
+                    foreach ($singleValue as $internalKey => $internalValue) {
                         if(!is_string($internalKey))
                             return $this->fail('Key is not of STRING data type: inside request/values/' . $fieldKey . ' Invalid data in real index file!');
                         if(!is_string($internalValue) && !is_numeric($internalValue)
                             && !is_bool($internalValue) && !is_null($internalValue))
-                            return $this->fail('Value is not of allowed data type: inside request/values/' . $fieldKey
+                            return $this->fail('Value is not of allowed data type: inside request/values/' . $valueKey
                                 . '/' . $internalKey . ' Invalid data in real index file!');
                     }
                 }
-                $this->assertEquals(true, true);
+                $this->assertTrue(true);
             break;
             case 'invalid':
-                foreach($fields as $fieldKey => $fieldValue){
-                    if(!is_object($fieldValue)) return $this->assertEquals(true, true);
+                foreach($values as $valueKey => $singleValue){
+                    if(!is_array($singleValue)) return $this->assertTrue(true);
                 }
                 $this->fail('Failed: all values are of OBJECT data type in request/values(this means that file provided for the test is not broken).');
                 break;
@@ -148,11 +147,11 @@ class InstancesIndexesTest extends \Codeception\Test\Unit
 
     private function _checkRequestFieldsValuesType($pathToIndex, $typeOfIndexBeingChecked)
     {
-        $indexObj = json_decode(file_get_contents($pathToIndex));
-        if(!is_object($indexObj)){
+        $indexArray = json_decode(file_get_contents($pathToIndex), true);
+        if(!is_array($indexArray)){
             return $this->fail('Could not parse the index-file.');
         }
-        $fields = get_object_vars($indexObj->request->fields);
+        $fields = $indexArray['request']['fields'];
         switch($typeOfIndexBeingChecked){
             case 'valid':
                 foreach($fields as $fieldKey => $fieldValue){
