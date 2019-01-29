@@ -104,8 +104,7 @@ class InstancesIndexesTest extends \Codeception\Test\Unit
         foreach($indexArray['request']['values'] as $singleValue){
             if(is_array($singleValue)){
                 foreach ($singleValue as $internalKey => $internalValue) {
-                    if(!is_string($internalValue) && !is_numeric($internalValue)
-                        && !is_bool($internalValue) && !is_null($internalValue))
+                    if(!is_string($internalValue) && !is_numeric($internalValue))
                             return $this->assertTrue(true);
                 }
             }
@@ -128,8 +127,7 @@ class InstancesIndexesTest extends \Codeception\Test\Unit
                     foreach ($singleValue as $internalKey => $internalValue) {
                         if(!is_string($internalKey))
                             return $this->fail('Key is not of STRING data type: inside request/values/' . $fieldKey . ' Invalid data in real index file!');
-                        if(!is_string($internalValue) && !is_numeric($internalValue)
-                            && !is_bool($internalValue) && !is_null($internalValue))
+                        if(!is_string($internalValue) && !is_numeric($internalValue))
                             return $this->fail('Value is not of allowed data type: inside request/values/' . $valueKey
                                 . '/' . $internalKey . ' Invalid data in real index file!');
                     }
