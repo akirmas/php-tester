@@ -1,0 +1,39 @@
+.Table .Header {
+  position: sticky;
+  grid-row: 1;
+  top: 0;
+  font-weight: bold;
+  background-color: blue;
+  color: white;
+  border: 1px solid lightblue;
+  border-radius: 10px;
+  text-align: center;
+  padding: 1em;
+  margin: 0 0.5em;
+}
+
+.Table .Cell {
+  padding: 0.5em 1em;
+  border-bottom-style: solid;
+  border-width: 1px;
+  vertical-align: middle;
+  grid-row: inherit;
+}
+
+.Table .Cell .Success {
+  padding: 0.25em;
+}
+
+.Table .Cell .Success-1 {
+  background-color: rgba(255, 255, 0, 0.3)
+}
+.Table .Cell .Success0 {
+  background-color: rgba(255, 0, 0, 0.3)
+}
+.Table .Cell .Success1 {
+  background-color: rgba(0, 255, 0, 0.3)
+}
+
+.Table .Col2 {
+  grid-column: 3;
+}
