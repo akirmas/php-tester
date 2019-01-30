@@ -19,9 +19,19 @@ function readNestedFile($root, $relativePath) {
     return file_get_contents($file);
 }
 
-function tmstmp() {
-  return date('Ymd-His_').rand();
+function fileDelivery($root, $relativePath, $contentType) {
+  try {
+    $content = readNestedFile($root, $relativePath);
+    header('Access-Control-Allow-Origin: *');
+    header('Access-Control-Allow-Methods: GET');
+    header('Access-Control-Allow-Headers: Content-Type');
+    header("Content-Type: $contentType");
+    echo $content;  
+  } catch (Exception $err) {
+    http_response_code(404);
+  }
 }
+
 
 function scandir2($root) {
   return array_filter(
@@ -38,6 +48,10 @@ function getClientIp() {
   return $i >= sizeof($ipKeys)
   ? ''
   : $_SERVER[$ipKeys[$i]];
+}
+
+function tmstmp() {
+  return date('Ymd-His_').rand();
 }
 
 function getRequestObject()
