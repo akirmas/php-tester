@@ -1,0 +1,9 @@
+{
+  "name": "immigrationTestStage",
+  "account": "immigrationTest",
+  "formUrl": "https://gobemarketing.github.io/paymentform/",
+  "apisUrl": "https://payment.gobemark.info/apis/master/",
+  "schema$url": "https://payment.gobemark.info/apis/master/configs/forms/?json=immigrationTestStage",
+  "controlDataUrl": "https://payment.gobemark.info/apis/master/client/?secret=2rzcxfgGQENj7TQ0&process=immigrationTest",
+  "data$url$search": "?account=immigrationTest&id="
+}
