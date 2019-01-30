@@ -5,5 +5,9 @@
   "apisUrl": "http://localhost/psps",
   "schema$url": "http://localhost/psps/configs/forms/?json=localTestStage",
   "controlDataUrl": "http://localhost/psps/client/?secret=2rzcxfgGQENj7TQ0&process=localTest",
-  "data$url$search": "?account=localTest&id="
+  "data$url$search": "?account=localTest&id=",
+  "fields": {
+    "return:message": "Status",
+    "tmstmp": "Date-Time"
+  }
 }
