@@ -19,8 +19,8 @@
       "leadId": "1426917"
     },
     {
-      "return:code": 0,
-      "quizUrl": "*"
+      "success": -1,
+      "amountInt": 1000
     }    
   ], 
   "isra_frame_good": [
