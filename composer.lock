@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f23ec8fa2969169a387225fc235ba0f8",
+    "content-hash": "8579e223604a9bb60d9e718a2ea7e2a2",
     "packages": [
         {
             "name": "opis/json-schema",
-            "version": "1.0.13",
+            "version": "1.0.15",
             "source": {
                 "type": "git",
                 "url": "https://github.com/opis/json-schema.git",
-                "reference": "3dbf288ac08730bc864feaa449ca6e611387d284"
+                "reference": "ff5c65a03373bf5fbf6bf14a83d282e093091c8d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/opis/json-schema/zipball/3dbf288ac08730bc864feaa449ca6e611387d284",
-                "reference": "3dbf288ac08730bc864feaa449ca6e611387d284",
+                "url": "https://api.github.com/repos/opis/json-schema/zipball/ff5c65a03373bf5fbf6bf14a83d282e093091c8d",
+                "reference": "ff5c65a03373bf5fbf6bf14a83d282e093091c8d",
                 "shasum": ""
             },
             "require": {
@@ -66,7 +66,7 @@
                 "validation",
                 "validator"
             ],
-            "time": "2019-01-15T13:32:47+00:00"
+            "time": "2019-01-18T14:11:57+00:00"
         },
         {
             "name": "opis/string",
@@ -317,6 +317,44 @@
             "time": "2019-01-13T10:34:39+00:00"
         },
         {
+            "name": "codeception/specify",
+            "version": "1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Codeception/Specify.git",
+                "reference": "504ac7a882e6f7226b0cff44c72a6c0bbd0bad95"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Codeception/Specify/zipball/504ac7a882e6f7226b0cff44c72a6c0bbd0bad95",
+                "reference": "504ac7a882e6f7226b0cff44c72a6c0bbd0bad95",
+                "shasum": ""
+            },
+            "require": {
+                "myclabs/deep-copy": "~1.1",
+                "php": ">=7.1.0",
+                "phpunit/phpunit": "^7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Codeception\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michael Bodnarchuk",
+                    "email": "davert@codeception.com"
+                }
+            ],
+            "description": "BDD code blocks for PHPUnit and Codeception",
+            "time": "2018-03-12T23:55:10+00:00"
+        },
+        {
             "name": "codeception/stub",
             "version": "2.0.4",
             "source": {
@@ -345,6 +383,46 @@
             ],
             "description": "Flexible Stub wrapper for PHPUnit's Mock Builder",
             "time": "2018-07-26T11:55:37+00:00"
+        },
+        {
+            "name": "codeception/verify",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Codeception/Verify.git",
+                "reference": "f45b39025b3f5cfd9a9d8fb992432885ff5380c1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Codeception/Verify/zipball/f45b39025b3f5cfd9a9d8fb992432885ff5380c1",
+                "reference": "f45b39025b3f5cfd9a9d8fb992432885ff5380c1",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">= 7.0",
+                "phpunit/phpunit": "> 6.0"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/Codeception/function.php"
+                ],
+                "psr-4": {
+                    "Codeception\\": "src\\Codeception"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michael Bodnarchuk",
+                    "email": "davert@codeception.com"
+                }
+            ],
+            "description": "BDD assertion library for PHPUnit",
+            "time": "2017-11-12T01:51:59+00:00"
         },
         {
             "name": "doctrine/instantiator",
@@ -1590,16 +1668,16 @@
         },
         {
             "name": "sebastian/environment",
-            "version": "4.0.1",
+            "version": "4.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/environment.git",
-                "reference": "febd209a219cea7b56ad799b30ebbea34b71eb8f"
+                "reference": "4a43e9af57b4afa663077b9bc85255dbc6e8a2bd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/environment/zipball/febd209a219cea7b56ad799b30ebbea34b71eb8f",
-                "reference": "febd209a219cea7b56ad799b30ebbea34b71eb8f",
+                "url": "https://api.github.com/repos/sebastianbergmann/environment/zipball/4a43e9af57b4afa663077b9bc85255dbc6e8a2bd",
+                "reference": "4a43e9af57b4afa663077b9bc85255dbc6e8a2bd",
                 "shasum": ""
             },
             "require": {
@@ -1636,7 +1714,7 @@
                 "environment",
                 "hhvm"
             ],
-            "time": "2018-11-25T09:31:21+00:00"
+            "time": "2019-01-28T15:26:03+00:00"
         },
         {
             "name": "sebastian/exporter",

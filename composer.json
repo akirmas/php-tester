@@ -6,7 +6,9 @@
         "opis/string": "^1.5"
     },
     "require-dev": {
-        "codeception/codeception": "^2.5"
+        "codeception/codeception": "^2.5",
+        "codeception/specify": "*",
+        "codeception/verify": "*"
     },
     "scripts": {
         "test": "codecept run",
