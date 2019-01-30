@@ -1,6 +1,6 @@
 {
-  "name": "immigrationTestStage",
-  "action": "https://payment.gobemark.info/apis/master/",
+  "name": "localTestStage",
+  "action": "http://localhost/psps/",
   "method": "POST",
   "subscribeUrl": "https://payment.gobemark.info/apis/master/await/",
   "saveUrl": "https://payment.gobemark.info/apis/master/exchange/",
