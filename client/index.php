@@ -79,14 +79,6 @@ foreach (scandir2($process) as $id) {
           ) if (property_exists($phase, $key))
               $output[$input->process][$id][$processName][$instance]
                 [$key] = $phase->{$key};
-
-          if (!property_exists($phase, 'event'))
-            continue;
-          $eventFile = "$eventsDir/$phase->event/index.json";
-          if (!file_exists($eventFile))
-            continue;
-          $eventContent = json_decode(file_get_contents($eventFile));
-          $output[$input->process][$id][$processName][$instance]['event:content'] = $eventContent;          
         }
       }
     }
