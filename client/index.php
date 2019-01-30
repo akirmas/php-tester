@@ -70,11 +70,10 @@ foreach (scandir2($process) as $id) {
           ]);*/
           if ($tmstmp !== 'index' || $phaseFile !== 'index.json')
             continue;
-          $success = !property_exists($phase, 'success') ? -1 : $phase->success;
-          $output[$input->process][$id][$processName][$instance]
-          ['success'] = $success;
+
+          $keys = ['return:message', 'quizUrl', 'success', 'tmstmp'];
           foreach(
-            ['return:message', 'tmstmp', 'quizUrl']
+            $keys
             as $key
           ) if (property_exists($phase, $key))
               $output[$input->process][$id][$processName][$instance]
