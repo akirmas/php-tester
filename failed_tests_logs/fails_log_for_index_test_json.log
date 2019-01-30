@@ -1,0 +1,19 @@
+
+Test failed for tranz_instant:
+
+Response received:
+{
+    "success": 3,
+    "event": "Tranzila\/23750002",
+    "tmstmp": "20190130-145018_1500258892",
+    "http:ip": "127.0.0.1",
+    "http:method": "GET",
+    "return:message": "Contact credit company",
+    "success:ing": "003",
+    "return:code": "003",
+    "event:id": "23750002"
+}
+While expected is:
+{
+    "return:code": "000"
+}
