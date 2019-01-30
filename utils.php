@@ -11,6 +11,14 @@ function inFolder($root, $sub) {
   return strpos(realpath($sub), realpath($root)) === 0;
 }
 
+function readNestedFile($root, $relativePath) {
+  $file = "$root/$relativePath";
+  if (!inFolder($root, $file)) {
+    throw new Exception('File not exists or permission denied');
+  } else
+    return file_get_contents($file);
+}
+
 function tmstmp() {
   return date('Ymd-His_').rand();
 }
