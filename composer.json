@@ -10,6 +10,8 @@
     },
     "scripts": {
         "test": "codecept run",
-        "utest": "codecept run unit"
+        "utest": "codecept run unit",
+        "sutest": "codecept run unit -o 'settings: shuffle: true'"
+
     }
 }
