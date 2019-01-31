@@ -2,8 +2,8 @@
   "name": "localTestStage",
   "action": "http://localhost/psps/",
   "method": "POST",
-  "subscribeUrl": "https://payment.gobemark.info/apis/master/await/",
-  "saveUrl": "https://payment.gobemark.info/apis/master/exchange/",
+  "subscribeUrl": "http://localhost/psps/await/",
+  "saveUrl": "http://localhost/psps/exchange/",
   "inputs": {
     "title": {
       "label": "Payment form"
