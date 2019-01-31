@@ -321,6 +321,46 @@ class OpisValidatorTest extends \Codeception\Test\Unit
         $this->assertFalse($resultForInvalidData->isValid(), 'Not expected result for invalid data!');
     }
 
+    public function testValidatorMappingApplication()
+    {
+        $validData = json_decode('{
+                         "url": "http://google.com",
+                         "amount": 100500
+                     }');
+        $invalidData = json_decode('{
+                         "url": "http://google.com",
+                         "amount": "hello"
+                     }');
+        $secondSchemaString = '{
+                           "$id": "second_schema.json#",
+                           "type": "object",
+                           "properties": {
+                                "url": {
+                                    "type": "string"
+                                },
+                                "amount": {
+                                    "type": "integer"
+                                }
+                            },
+                            "allOf": [
+                                    {
+                                        "$ref": "additionalSchema:tests/unit/dataForOpisValidatorTest/first_schema.json#",
+                                        "$map": {
+                                            "url_of_resource": {"$ref": "/url"},
+                                            "amount_to_pay": {"$ref": "/amount"}
+                                        }
+                                    }
+                                ]
+                         }';
+        $secondSchema = \Opis\JsonSchema\Schema::fromJsonString($secondSchemaString);
+        $validator = new Opis\JsonSchema\Validator(null,
+            new \Opis\JsonSchema\Loaders\File('additionalSchema:', ['.']));
+        $resultForValidData = $validator->schemaValidation($validData, $secondSchema);
+        $resultForInvalidData = $validator->schemaValidation($invalidData, $secondSchema);
+        $this->assertTrue($resultForValidData->isValid(), 'Not expected result for valid data!');
+        $this->assertFalse($resultForInvalidData->isValid(), 'Not expected result for invalid data!');
+    }
+
     protected function _writeObjectToLog($object, $logName = 'some_log.txt')
     {
         ob_start();

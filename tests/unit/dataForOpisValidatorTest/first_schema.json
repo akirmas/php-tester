@@ -1,0 +1,13 @@
+{
+  "$id": "first_schema.json#",
+  "type": "object",
+  "properties": {
+    "url_of_resource": {
+      "type": "string",
+      "minLength": 4
+    },
+    "amount_to_pay": {
+      "type": "integer"
+    }
+  }
+}
