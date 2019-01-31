@@ -403,6 +403,31 @@ class OpisValidatorTest extends \Codeception\Test\Unit
         $this->assertEquals($resultForInvalidDataWithMaxErrors1->totalErrors(), 1, 'Not expected result for invalid data with 2 errors and maxErrors set as 1!');
     }
 
+    public function testTheTypeOfAnErrorAndTheDataCausedTheErrorAreAccessible()
+    {
+        $invalidDataWithTwoErrors = json_decode('{ "url": "good bye", "amount": "hello" }');
+        $schemaString = '{ "type": "object",
+                           "properties": {
+                                "url": {
+                                    "type": "string",
+                                    "format": "uri"
+                                },
+                                "amount": {
+                                    "type": "integer"
+                                }
+                           }
+                        }';
+        $schema = \Opis\JsonSchema\Schema::fromJsonString($schemaString);
+        $resultForInvalidDataWithMaxErrors100 = $this->_validator->schemaValidation($invalidDataWithTwoErrors, $schema, 100);
+        $errors = $resultForInvalidDataWithMaxErrors100->getErrors();
+        $firstError = $errors[0];
+        $secondError = $errors[1];
+        $this->assertEquals($firstError->error(), 'format', 'Not expected error when testing URI format with invalid value: "' . $firstError->data() . '"');
+        $this->assertEquals($firstError->data(), 'good bye', 'Data has to be "good bye"');
+        $this->assertEquals($secondError->error(), 'type', 'Not expected error when testing integer data type error with invalid value: "' . $secondError->data() . '"');
+        $this->assertEquals($secondError->data(), 'hello', 'Data has to be "hello"');
+    }
+
     protected function _writeObjectToLog($object, $logName = 'some_log.txt')
     {
         ob_start();
