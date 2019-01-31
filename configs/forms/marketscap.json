@@ -1,7 +1,7 @@
 {
-  "action": "https://payment.gobemark.info/apis/v1.0.0/",
+  "action": "https://payment.gobemark.info/apis/v1.0.1/",
   "method": "POST",
-  "subscribeUrl": "https://payment.gobemark.info/apis/v1.0.0/await/",
+  "subscribeUrl": "https://payment.gobemark.info/apis/v1.0.1/await/",
   "inputs": {
     "title": {
       "label": "Vade"
