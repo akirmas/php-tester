@@ -361,6 +361,27 @@ class OpisValidatorTest extends \Codeception\Test\Unit
         $this->assertFalse($resultForInvalidData->isValid(), 'Not expected result for invalid data!');
     }
 
+    public function testBasicTypeValidationForValidAndInvalidData()
+    {
+        $invalidData = json_decode('{ "url": "http://google.com", "amount": "hello" }');
+        $validData = json_decode('{ "url": "http://google.com", "amount": 100500 }');
+        $schemaString = '{ "type": "object",
+                           "properties": {
+                                "url": {
+                                    "type": "string"
+                                },
+                                "amount": {
+                                    "type": "integer"
+                                }
+                           }
+                        }';
+        $schema = \Opis\JsonSchema\Schema::fromJsonString($schemaString);
+        $resultForValidData = $this->_validator->schemaValidation($validData, $schema);
+        $resultForInvalidData = $this->_validator->schemaValidation($invalidData, $schema);
+        $this->assertTrue($resultForValidData->isValid(), 'Not expected result for valid data!');
+        $this->assertFalse($resultForInvalidData->isValid(), 'Not expected result for invalid data!');
+    }
+
     protected function _writeObjectToLog($object, $logName = 'some_log.txt')
     {
         ob_start();
