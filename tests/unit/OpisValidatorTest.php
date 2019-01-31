@@ -194,6 +194,81 @@ class OpisValidatorTest extends \Codeception\Test\Unit
         $this->assertFalse($result->isValid());
     }
 
+    public function testPatternPropertiesForValidAndInvalidProperties()
+    {
+        $invalidData = json_decode('{ "url": "http://google.com", "amount": "hello" }');
+        $validData = json_decode('{ "url": "http://google.com", "amount": 100500 }');
+        $schemaString = '{ "type": "object",
+                           "patternProperties": {
+                                "^url": {
+                                    "type": "string"
+                                    },
+                                "^amount": {
+                                    "type": "integer"
+                                    }
+                                }
+                            }';
+        $schema = \Opis\JsonSchema\Schema::fromJsonString($schemaString);
+        $resultForValidData = $this->_validator->schemaValidation($validData, $schema);
+        $resultForInvalidData = $this->_validator->schemaValidation($invalidData, $schema);
+        $this->assertTrue($resultForValidData->isValid(), 'Not expected result for valid data!');
+        $this->assertFalse($resultForInvalidData->isValid(), 'Not expected result for invalid data!');
+    }
+
+
+    public function testRelativeJsonPointer()
+    {
+        $validData = json_decode('{ "url": "http://google.com", "amount": 100500, "name": "Andrii" }');
+        $schemaString = '{ "type": "object",
+                           "properties": {
+                                "url": {
+                                    "type": "string"
+                                },
+                                "amount": {
+                                    "type": "integer"
+                                },
+                                "name": {
+                                    "$ref": "1/url"
+                                }
+                            }
+                         }';
+        $schema = \Opis\JsonSchema\Schema::fromJsonString($schemaString);
+        $resultForValidData = $this->_validator->schemaValidation($validData, $schema);
+        $this->assertTrue($resultForValidData->isValid(), 'Not expected result for valid data!');
+    }
+
+    public function testAbsoluteJsonPointer()
+    {
+        $validData = json_decode('{
+                         "url": "http://google.com",
+                         "amount": 100500,
+                         "name": "Andrii"
+                     }');
+        $schemaString = '{
+                           "$id": "http://example.com/path/to/user.json",
+                           "type": "object",
+                           "properties": {
+                                "url": {
+                                    "type": "string"
+                                },
+                                "amount": {
+                                    "type": "integer"
+                                },
+                                "name": {
+                                    "$ref": "#/some_definitions/name"
+                                }
+                            },
+                            "some_definitions": {
+                                "name": {
+                                    "type": "string"
+                                }
+                            }
+                         }';
+        $schema = \Opis\JsonSchema\Schema::fromJsonString($schemaString);
+        $resultForValidData = $this->_validator->schemaValidation($validData, $schema);
+        $this->assertTrue($resultForValidData->isValid(), 'Not expected result for valid data!');
+    }
+
     protected function _writeObjectToLog($object, $logName = 'some_log.txt')
     {
         ob_start();
