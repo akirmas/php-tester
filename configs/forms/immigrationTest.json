@@ -93,7 +93,7 @@
       "value": "cascade"
     },
     "save": {
-      "label": "Save",
+      "label": "Send to stage",
       "type": "button"
     },
     "submit": {
