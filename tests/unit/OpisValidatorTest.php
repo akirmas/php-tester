@@ -1,6 +1,19 @@
 <?php
 require_once 'configs/validation_classes.php';
 
+class TestingOpisFilteringFilter implements Opis\JsonSchema\IFilter {
+    public function validate($value, array $args): bool {
+        switch($value){
+            case 'http://google.com':
+                return true;
+            break;
+            default:
+                return false;
+            break;
+        }
+    }
+}
+
 class OpisValidatorTest extends \Codeception\Test\Unit
 {
     /**
@@ -267,6 +280,45 @@ class OpisValidatorTest extends \Codeception\Test\Unit
         $schema = \Opis\JsonSchema\Schema::fromJsonString($schemaString);
         $resultForValidData = $this->_validator->schemaValidation($validData, $schema);
         $this->assertTrue($resultForValidData->isValid(), 'Not expected result for valid data!');
+    }
+
+    public function testValidatorFilterApplication()
+    {
+        $validData = json_decode('{
+                         "url": "http://google.com",
+                         "amount": 100500,
+                         "name": "Andrii"
+                     }');
+        $invalidData = json_decode('{
+                         "url": "http://google.co.uk",
+                         "amount": 100500,
+                         "name": "Andrii"
+                     }');
+        $schemaString = '{
+                           "$id": "http://example.com/path/to/user.json",
+                           "type": "object",
+                           "properties": {
+                                "url": {
+                                    "type": "string",
+                                    "$filters": { "$func": "testingOpisFiltering" }
+                                },
+                                "amount": {
+                                    "type": "integer"
+                                },
+                                "name": {
+                                    "type": "string"
+                                }
+                            }
+                         }';
+        $schema = \Opis\JsonSchema\Schema::fromJsonString($schemaString);
+        $validator = new Opis\JsonSchema\Validator();
+        $filters = new Opis\JsonSchema\FilterContainer();
+        $filters->add('string', 'testingOpisFiltering', new TestingOpisFilteringFilter());
+        $validator->setFilters($filters);
+        $resultForValidData = $validator->schemaValidation($validData, $schema);
+        $resultForInvalidData = $validator->schemaValidation($invalidData, $schema);
+        $this->assertTrue($resultForValidData->isValid(), 'Not expected result for valid data!');
+        $this->assertFalse($resultForInvalidData->isValid(), 'Not expected result for invalid data!');
     }
 
     protected function _writeObjectToLog($object, $logName = 'some_log.txt')
