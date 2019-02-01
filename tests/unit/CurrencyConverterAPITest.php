@@ -30,6 +30,7 @@ class CurrencyConverterAPITest extends \Codeception\Test\Unit
 
     private function _sendCurlRequestToApi($currenciesPair)
     {
+        $this->_apiRequestCounterIncrement();
         $currenciesPair = strtoupper($currenciesPair);
         $ch = curl_init(
             "http://psps/currency_rates.php?q=$currenciesPair&compact=y"
@@ -43,6 +44,19 @@ class CurrencyConverterAPITest extends \Codeception\Test\Unit
                 return $rate;
             }
         } else return false;
+    }
+
+    private function _apiRequestCounterIncrement()
+    {
+        $counterFileName = 'api_request_counter.txt';
+        if(!file_exists($counterFileName)){
+            $fp = fopen($counterFileName, 'w');
+            fwrite($fp, 0);
+            fclose($fp);
+            return $this->_apiRequestCounterIncrement();
+        }
+        $current = file_get_contents($counterFileName);
+        file_put_contents($counterFileName, ++$current);
     }
 
 }
