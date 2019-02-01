@@ -5,6 +5,7 @@ class CurrencyConverterAPITest extends \Codeception\Test\Unit
      * @var \UnitTester
      */
     protected $tester;
+    protected $_currencyConverterDir = 'currency_converter';
     
     protected function _before()
     {
@@ -53,21 +54,73 @@ class CurrencyConverterAPITest extends \Codeception\Test\Unit
         $this->assertEquals($receivedErrorMessage, 'Not a valid currency pair provided!');
     }
 
-    private function _sendCurlRequestToApi($currenciesPair)
+    public function testNotValidCurrenciesPairWithEmptyCurrencyTo()
+    {
+        $receivedResponse = $this->_sendCurlRequestToApi('usd_');
+        $receivedRate = $receivedResponse['rate'];
+        $receivedErrorMessage = $receivedResponse['errorMessage'];
+        $this->assertFalse($receivedRate);
+        $this->assertEquals($receivedErrorMessage, 'Not a valid currency pair provided!');
+    }
+
+    public function testNotValidCurrenciesPairWithEmptyCurrencyFrom()
+    {
+        $receivedResponse = $this->_sendCurlRequestToApi('_usd');
+        $receivedRate = $receivedResponse['rate'];
+        $receivedErrorMessage = $receivedResponse['errorMessage'];
+        $this->assertFalse($receivedRate);
+        $this->assertEquals($receivedErrorMessage, 'Not a valid currency pair provided!');
+    }
+
+
+    public function testRateReceivedIsNumeric()
+    {
+        $receivedResponse = $this->_sendCurlRequestToApi('usd_uah');
+        $receivedRate = $receivedResponse['rate'];
+        if(!is_numeric($receivedRate)){
+            $this->fail('Rate is not numeric!');
+        }
+    }
+
+    public function testRateWhenRequestToExternalApiIsPerformed()
+    {
+        $testId = time() . '_' . mt_rand(1000, 20000);
+        $receivedResponse = $this->_sendCurlRequestToApi('usd_uah', $testId);
+        $receivedRate = $receivedResponse['rate'];
+        if(!is_numeric($receivedRate)){
+            $this->fail('Rate is not numeric!');
+        }
+        $loggedMessage = $this->_getLoggedMessageByTestId($testId);
+        $this->assertEquals($loggedMessage, 'USD_UAH request to external API.');
+    }
+
+    private function _getLoggedMessageByTestId($testId)
+    {
+        $logFileName = $this->_currencyConverterDir . '/logged_test_messages.log';
+        $messagesArray = json_decode(file_get_contents($logFileName), true);
+        if(array_key_exists($testId, $messagesArray)){
+            return $messagesArray[$testId];
+        }
+        return false;
+    }
+
+    private function _sendCurlRequestToApi($currenciesPair, $testId = null)
     {
         $this->_apiRequestCounterIncrement();
         $currenciesPair = strtoupper($currenciesPair);
-        $ch = curl_init(
-            "http://psps/currency_rates.php?q=$currenciesPair&compact=y"
-        );
+        $url = "http://psps/$this->_currencyConverterDir/currency_rates.php?q=$currenciesPair&compact=y";
+        if(!is_null($testId)){
+            $url .= "&test_id=$testId";
+        }
+        $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);   
         $resp = curl_exec($ch);
-        if ($resp !== false) {
+        if ($resp !== false && $resp !== null) {
             $resp = json_decode($resp, true);
             if(array_key_exists('errorMessage', $resp)){
                 return ['rate' => false, 'errorMessage' => $resp['errorMessage']];
             }
-            if ($resp !== null && array_key_exists($currenciesPair, $resp) && array_key_exists('val', $resp[$currenciesPair])) {
+            if (array_key_exists($currenciesPair, $resp) && array_key_exists('val', $resp[$currenciesPair])) {
                 return ['rate' => $resp[$currenciesPair]['val']];
             }
         }
@@ -76,7 +129,7 @@ class CurrencyConverterAPITest extends \Codeception\Test\Unit
 
     private function _apiRequestCounterIncrement()
     {
-        $counterFileName = 'api_request_counter.txt';
+        $counterFileName = $this->_currencyConverterDir . '/api_request_counter.txt';
         if(!file_exists($counterFileName)){
             $fp = fopen($counterFileName, 'w');
             fwrite($fp, 0);

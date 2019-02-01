@@ -3,12 +3,17 @@
 class CurrencyRate {
 
 	protected $_allowedCurrencies = null;
-
+	protected $_testId = null;
+	
 	public function __construct()
 	{
 		$allowedCurrencies = json_decode(file_get_contents('common_currencies.json'), true);
 		if(is_array($allowedCurrencies)) $this->_allowedCurrencies = $allowedCurrencies;
 		else throw new Exception('Can not initialize CurrencyRate object!');
+	}
+
+	public function setTestId($testId){
+		$this->_testId = $testId;
 	}
 
 	public function getAllowedCurrencies()
@@ -29,12 +34,25 @@ class CurrencyRate {
 	{
 		switch($currenciesPair){
 			case 'USD_UAH':
-				return 2;
+				if(!is_null($this->_testId)) 
+					$this->_logRequestMessage($this->_testId, 'USD_UAH request to external API.');
+				return 2.0;
 			break;
 			case 'USD_USD':
 				return 1;
 			break;
 		}
+	}
+
+	protected function _logRequestMessage($testId, $message)
+	{
+		$logFileName = 'logged_test_messages.log';
+		$currentMessages = json_decode(file_get_contents($logFileName), true);
+		if(array_key_exists($testId, $currentMessages)){
+			throw new Exception('Duplicate testId!');
+		}
+		$currentMessages[$testId] = $message;
+		file_put_contents($logFileName, json_encode($currentMessages));
 	}
 
 	protected function _isValidCurrenciesPair($currenciesPair)
@@ -72,13 +90,19 @@ class CurrencyRate {
 	}
 
 }
-
+/*
+$_GET['q'] = 'usd_uah';
+$_GET['test_id'] = '878787834324';
+*/
 try {
 	$currenciesPair = strtoupper($_GET['q']);
 	if(empty(trim($currenciesPair))){
 		throw new Exception('Empty currencies pair provided!');
 	}
 	$currencyRate = new CurrencyRate();
+	if(isset($_GET['test_id'])){
+		$currencyRate->setTestId($_GET['test_id']);	
+	}
 	$rate = $currencyRate->getRateByPair($currenciesPair);
 	$responseArray = array("$currenciesPair" => array("val" => $rate));
 	$jsonStr = json_encode($responseArray);
