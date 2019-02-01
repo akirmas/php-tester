@@ -397,9 +397,10 @@ class OpisValidatorTest extends \Codeception\Test\Unit
                            }
                         }';
         $schema = \Opis\JsonSchema\Schema::fromJsonString($schemaString);
-        $resultForInvalidDataWithMaxErrors100 = $this->_validator->schemaValidation($invalidDataWithTwoErrors, $schema, 100);
+        $validator = new Opis\JsonSchema\Validator();
+        $resultForInvalidDataWithMaxErrors100 = $validator->schemaValidation($invalidDataWithTwoErrors, $schema, 100);
         $this->assertEquals($resultForInvalidDataWithMaxErrors100->totalErrors(), 2, 'Not expected result for invalid data with 2 errors and maxErrors set as 100!');
-        $resultForInvalidDataWithMaxErrors1 = $this->_validator->schemaValidation($invalidDataWithTwoErrors, $schema, 1);
+        $resultForInvalidDataWithMaxErrors1 = $validator->schemaValidation($invalidDataWithTwoErrors, $schema, 1);
         $this->assertEquals($resultForInvalidDataWithMaxErrors1->totalErrors(), 1, 'Not expected result for invalid data with 2 errors and maxErrors set as 1!');
     }
 
@@ -418,7 +419,8 @@ class OpisValidatorTest extends \Codeception\Test\Unit
                            }
                         }';
         $schema = \Opis\JsonSchema\Schema::fromJsonString($schemaString);
-        $resultForInvalidDataWithMaxErrors100 = $this->_validator->schemaValidation($invalidDataWithTwoErrors, $schema, 100);
+        $validator = new Opis\JsonSchema\Validator();
+        $resultForInvalidDataWithMaxErrors100 = $validator->schemaValidation($invalidDataWithTwoErrors, $schema, 100);
         $errors = $resultForInvalidDataWithMaxErrors100->getErrors();
         $firstError = $errors[0];
         $secondError = $errors[1];
