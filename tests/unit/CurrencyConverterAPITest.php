@@ -18,14 +18,32 @@ class CurrencyConverterAPITest extends \Codeception\Test\Unit
     public function testGetRateForUSD_USD()
     {
         $expectedRate = 1;
-        $receivedRate = $this->_sendCurlRequestToApi('usd_usd');
+        $receivedRate = $this->_sendCurlRequestToApi('usd_usd')['rate'];
         $this->assertEquals($expectedRate, $receivedRate, 'Not expected rate received for USD to USD request.'); 
     }
 
     public function testGetRateNotEqualsToOne()
     {
-        $receivedRate = $this->_sendCurlRequestToApi('usd_uah');
+        $receivedRate = $this->_sendCurlRequestToApi('usd_uah')['rate'];
         $this->assertNotEquals(1, $receivedRate, 'Not expected rate for USD to UAH request.');
+    }
+
+    public function testNotValidCurrenciesPairWithNotValidCurrencyCodes()
+    {
+        $receivedResponse = $this->_sendCurlRequestToApi('aaa_zzz');
+        $receivedRate = $receivedResponse['rate'];
+        $receivedErrorMessage = $receivedResponse['errorMessage'];
+        $this->assertFalse($receivedRate);
+        $this->assertEquals($receivedErrorMessage, 'Not a valid currency pair provided!');
+    }
+
+    public function testNotValidCurrenciesPairWithNotValidDelimiter()
+    {
+        $receivedResponse = $this->_sendCurlRequestToApi('aaa%zzz');
+        $receivedRate = $receivedResponse['rate'];
+        $receivedErrorMessage = $receivedResponse['errorMessage'];
+        $this->assertFalse($receivedRate);
+        $this->assertEquals($receivedErrorMessage, 'Not a valid currency pair provided!');
     }
 
     private function _sendCurlRequestToApi($currenciesPair)
@@ -39,11 +57,14 @@ class CurrencyConverterAPITest extends \Codeception\Test\Unit
         $resp = curl_exec($ch);
         if ($resp !== false) {
             $resp = json_decode($resp, true);
-            if ($resp !== null && array_key_exists($currenciesPair, $resp) && array_key_exists('val', $resp[$currenciesPair])) {
-                $rate = $resp[$currenciesPair]['val'];
-                return $rate;
+            if(array_key_exists('errorMessage', $resp)){
+                return ['rate' => false, 'errorMessage' => $resp['errorMessage']];
             }
-        } else return false;
+            if ($resp !== null && array_key_exists($currenciesPair, $resp) && array_key_exists('val', $resp[$currenciesPair])) {
+                return ['rate' => $resp[$currenciesPair]['val']];
+            }
+        }
+        return ['rate' => false];
     }
 
     private function _apiRequestCounterIncrement()

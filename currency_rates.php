@@ -29,6 +29,12 @@ class CurrencyRate {
 
 	protected function _isValidCurrenciesPair($currenciesPair)
 	{
+		if(strlen($currenciesPair) !== 7){
+			return false;
+		}
+		if(strpos($currenciesPair, '_') !== 3){
+			return false;
+		}
 		$currenciesPairArray = explode('_', $currenciesPair);
 		$currencyFrom = $currenciesPairArray[0];
 		$currencyTo = $currenciesPairArray[1];
@@ -65,5 +71,5 @@ try {
 	$jsonStr = json_encode($responseArray);
 	echo $jsonStr;
 } catch(Exception $e){
-	echo json_encode($e->getMessage());
+	echo json_encode(['errorMessage' => $e->getMessage()]);
 }
