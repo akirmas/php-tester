@@ -28,9 +28,16 @@ class CurrencyConverterAPITest extends \Codeception\Test\Unit
         $this->assertNotEquals(1, $receivedRate, 'Not expected rate for USD to UAH request.');
     }
 
+    public function testEmptyCurrenciesPair()
+    {
+        $receivedResponse = $this->_sendCurlRequestToApi('');
+        $receivedErrorMessage = $receivedResponse['errorMessage'];
+        $this->assertEquals($receivedErrorMessage, 'Empty currencies pair provided!');
+    }
+
     public function testNotValidCurrenciesPairWithNotValidCurrencyCodes()
     {
-        $receivedResponse = $this->_sendCurlRequestToApi('aaa_zzz');
+        $receivedResponse = $this->_sendCurlRequestToApi('aaa_aaa');
         $receivedRate = $receivedResponse['rate'];
         $receivedErrorMessage = $receivedResponse['errorMessage'];
         $this->assertFalse($receivedRate);

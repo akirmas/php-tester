@@ -2,9 +2,19 @@
 
 class CurrencyRate {
 
-	protected $_allowedCurrencies = [
-		'USD', 'UAH'
-		];
+	protected $_allowedCurrencies = null;
+
+	public function __construct()
+	{
+		$allowedCurrencies = json_decode(file_get_contents('common_currencies.json'), true);
+		if(is_array($allowedCurrencies)) $this->_allowedCurrencies = $allowedCurrencies;
+		else throw new Exception('Can not initialize CurrencyRate object!');
+	}
+
+	public function getAllowedCurrencies()
+	{
+		return $this->_allowedCurrencies;
+	}
 
 	public function getRateByPair($currenciesPair)
 	{
@@ -38,7 +48,7 @@ class CurrencyRate {
 		$currenciesPairArray = explode('_', $currenciesPair);
 		$currencyFrom = $currenciesPairArray[0];
 		$currencyTo = $currenciesPairArray[1];
-		if(in_array($currencyFrom, $this->_allowedCurrencies) && in_array($currencyTo, $this->_allowedCurrencies)){
+		if(array_key_exists($currencyFrom, $this->_allowedCurrencies) && array_key_exists($currencyTo, $this->_allowedCurrencies)){
 			return true;
 		}
 		return false;
@@ -65,6 +75,9 @@ class CurrencyRate {
 
 try {
 	$currenciesPair = strtoupper($_GET['q']);
+	if(empty(trim($currenciesPair))){
+		throw new Exception('Empty currencies pair provided!');
+	}
 	$currencyRate = new CurrencyRate();
 	$rate = $currencyRate->getRateByPair($currenciesPair);
 	$responseArray = array("$currenciesPair" => array("val" => $rate));
