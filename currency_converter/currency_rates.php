@@ -34,32 +34,56 @@ class CurrencyRate {
 	{
 		switch($currenciesPair){
 			case 'USD_UAH':
-				if(!is_null($this->_testId)){
+				$rate = 200500;
+					/*
+					* For testing purposes we may want to expire the cache:
+					*/
+					if(strstr($this->_testId, '_make_the_cache_expired')){
+						$this->_makeTheCacheExpired($currenciesPair, $this->_testId);
+					}
 					//At first let's look at the cache:
 					$rate = $this->_getRateFromCache($currenciesPair, $this->_testId);
+					/*
+					* If nothing is in the cache or the cache is expired,
+					* we have to make a request to the external API:
+					*/
 					if($rate === false){
 						$this->_logActionMessage($this->_testId,
 							'USD_UAH request to external API sending...', 'request');
 						$rate = $this->_getRateFromExternalApi($currenciesPair);
+						/*
+						* We throw an Exception if we do not manage to
+						* retrieve the rate from the external API:
+						*/
 						if($rate === false){
 							$this->_logActionMessage($this->_testId, 'USD_UAH response was not received from the external API.', 'response_failure');
 							throw new Exception('Failed to receive rate from external API!');
 						}
+						//Now let's update the cache with the newly received rate:
 						$this->_putReceivedResponseToCache($currenciesPair, $rate, $this->_testId);
 						$this->_logActionMessage($this->_testId, 'USD_UAH response from external API received.', 'response');
 						$this->_logActionMessage($this->_testId, 'USD_UAH response from external API is saved to the local cache.', 'rate_is_cached');
 					} else {
+						//Let's write a message to the log if we managed to get the rate from the cache:
 						$this->_logActionMessage($this->_testId, 'USD_UAH response received from the local cache.', 'response_received_from_cache');
 					}
-				} else {
-					$rate = 200500;
-				}
 			return $rate;
 			break;
 			case 'USD_USD':
 				return 1;
 			break;
 		}
+	}
+
+	protected function _makeTheCacheExpired($currenciesPair, $testId)
+	{
+		$cachedDataArray = json_decode(file_get_contents('rates_cache.txt'), true);
+		if(!is_array($cachedDataArray)){
+			$cachedDataArray = [];
+		}
+		$cachedDataArray[$currenciesPair]['time'] = $cachedDataArray[$currenciesPair]['time'] - 100000;
+		$cachedDataArray[$currenciesPair]['testId'] = $testId;
+		file_put_contents('rates_cache.txt', json_encode($cachedDataArray));
 	}
 
 	protected function _putReceivedResponseToCache($currenciesPair, $rate, $testId)
