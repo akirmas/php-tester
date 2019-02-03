@@ -34,14 +34,25 @@ class CurrencyRate {
 	{
 		switch($currenciesPair){
 			case 'USD_UAH':
-				//TODO Remove this hardcoded $rate:
-				$rate = 2.0;
 				if(!is_null($this->_testId)){
-					$this->_logActionMessage($this->_testId,
-						'USD_UAH request to external API sending...', 'request');
-					//Request to external API done here and $rate received:
-					$this->_logActionMessage($this->_testId,
-						'USD_UAH response from external API received.', 'response');
+					//At first let's look at the cache:
+					$rate = $this->_getRateFromCache($currenciesPair, $this->_testId);
+					if($rate === false){
+						$this->_logActionMessage($this->_testId,
+							'USD_UAH request to external API sending...', 'request');
+						$rate = $this->_getRateFromExternalApi($currenciesPair);
+						if($rate === false){
+							$this->_logActionMessage($this->_testId, 'USD_UAH response was not received from the external API.', 'response_failure');
+							throw new Exception('Failed to receive rate from external API!');
+						}
+						$this->_putReceivedResponseToCache($currenciesPair, $rate, $this->_testId);
+						$this->_logActionMessage($this->_testId, 'USD_UAH response from external API received.', 'response');
+						$this->_logActionMessage($this->_testId, 'USD_UAH response from external API is saved to the local cache.', 'rate_is_cached');
+					} else {
+						$this->_logActionMessage($this->_testId, 'USD_UAH response received from the local cache.', 'response_received_from_cache');
+					}
+				} else {
+					$rate = 200500;
 				}
 			return $rate;
 			break;
@@ -49,6 +60,39 @@ class CurrencyRate {
 				return 1;
 			break;
 		}
+	}
+
+	protected function _putReceivedResponseToCache($currenciesPair, $rate, $testId)
+	{
+		$cachedDataArray = json_decode(file_get_contents('rates_cache.txt'), true);
+		if(!is_array($cachedDataArray)){
+			$cachedDataArray = [];
+		}
+		$cachedDataArray[$currenciesPair]['time'] = time();
+		$cachedDataArray[$currenciesPair]['rate'] = $rate;
+		$cachedDataArray[$currenciesPair]['testId'] = $testId;
+		file_put_contents('rates_cache.txt', json_encode($cachedDataArray));
+	}
+
+	protected function _getRateFromCache($currenciesPair, $testId)
+	{
+		$cachedDataArray = json_decode(file_get_contents('rates_cache.txt'), true);
+		if(!is_array($cachedDataArray)){
+			return false;
+		}
+		if(!array_key_exists($currenciesPair, $cachedDataArray)){
+			return false;
+		}
+		$timeOfTheRecord = $cachedDataArray[$currenciesPair]['time'];
+		if(time() - $timeOfTheRecord > 86400){
+			return false;
+		}
+		if(isset($testId)){
+			if(isset($cachedDataArray[$currenciesPair]['testId'])
+				&& ($cachedDataArray[$currenciesPair]['testId'] === $testId))
+				return $cachedDataArray[$currenciesPair]['rate'];
+			return false;
+		} else return $cachedDataArray[$currenciesPair]['rate'];
 	}
 
 	protected function _logActionMessage($testId, $message, $messageType)
@@ -82,6 +126,7 @@ class CurrencyRate {
 
 	protected function _getRateFromExternalApi($currenciesPair)
 	{
+		return 100500;
 		$rate = false;
 		$ch = curl_init(
 			"https://free.currencyconverterapi.com/api/v5/convert?q=$currenciesPair&compact=y"

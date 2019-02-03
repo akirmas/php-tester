@@ -83,7 +83,7 @@ class CurrencyConverterAPITest extends \Codeception\Test\Unit
         }
     }
 
-    public function testRateWhenRequestToExternalApiIsPerformed()
+    public function testRateWhenRequestToExternalApiIsPerformedAndCacheIsUsed()
     {
         $testId = time() . '_' . mt_rand(1000, 20000);
         $receivedResponse = $this->_sendCurlRequestToApi('usd_uah', $testId);
@@ -93,8 +93,27 @@ class CurrencyConverterAPITest extends \Codeception\Test\Unit
         }
         $loggedMessageRequest = $this->_getLoggedMessageByTestId($testId, 'request');
         $loggedMessageResponse = $this->_getLoggedMessageByTestId($testId, 'response');
+        $loggedMessageIsCached = $this->_getLoggedMessageByTestId($testId, 'rate_is_cached');
+
         $this->assertEquals($loggedMessageRequest, 'USD_UAH request to external API sending...');
         $this->assertEquals($loggedMessageResponse, 'USD_UAH response from external API received.');
+        $this->assertEquals($loggedMessageIsCached, 'USD_UAH response from external API is saved to the local cache.',
+            'Rate has not been put into the cache!');
+        $this->assertTrue($this->_checkResponseFromTheCacheByTestIdForUSD_UAH($testId, $receivedRate, 'Did not manage to receive the rate from the cache!'));
+    }
+
+    /*
+    * The method checks if the previously requested rate present in the cache.
+    */
+    private function _checkResponseFromTheCacheByTestIdForUSD_UAH($testId, $receivedRate)
+    {
+        $responseFromTheCache = $this->_sendCurlRequestToApi('usd_uah', $testId);
+        if($responseFromTheCache['rate'] === $receivedRate){
+            if($this->_getLoggedMessageByTestId($testId, 'response_received_from_cache') === 'USD_UAH response received from the local cache.'){
+                    return true;
+            }
+        }
+        return false;
     }
 
     private function _getLoggedMessageByTestId($testId, $messageType)
@@ -119,7 +138,16 @@ class CurrencyConverterAPITest extends \Codeception\Test\Unit
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);   
         $resp = curl_exec($ch);
-        if ($resp !== false && $resp !== null) {
+        if ($resp !== false && !is_null($resp)){
+            /*
+            $fp = fopen('some_log.txt', 'a');
+            fwrite($fp, "Single resp:");
+            fwrite($fp, $resp);
+            fwrite($fp, "\n\n");
+            fwrite($fp, "==============");
+            fwrite($fp, "\n\n");
+            fclose($fp);
+            */
             $resp = json_decode($resp, true);
             if(array_key_exists('errorMessage', $resp)){
                 return ['rate' => false, 'errorMessage' => $resp['errorMessage']];
