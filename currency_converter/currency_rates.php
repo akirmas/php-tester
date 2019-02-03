@@ -34,9 +34,16 @@ class CurrencyRate {
 	{
 		switch($currenciesPair){
 			case 'USD_UAH':
-				if(!is_null($this->_testId)) 
-					$this->_logRequestMessage($this->_testId, 'USD_UAH request to external API.');
-				return 2.0;
+				//TODO Remove this hardcoded $rate:
+				$rate = 2.0;
+				if(!is_null($this->_testId)){
+					$this->_logActionMessage($this->_testId,
+						'USD_UAH request to external API sending...', 'request');
+					//Request to external API done here and $rate received:
+					$this->_logActionMessage($this->_testId,
+						'USD_UAH response from external API received.', 'response');
+				}
+			return $rate;
 			break;
 			case 'USD_USD':
 				return 1;
@@ -44,8 +51,9 @@ class CurrencyRate {
 		}
 	}
 
-	protected function _logRequestMessage($testId, $message)
+	protected function _logActionMessage($testId, $message, $messageType)
 	{
+		$testId = $testId . '_' . $messageType;
 		$logFileName = 'logged_test_messages.log';
 		$currentMessages = json_decode(file_get_contents($logFileName), true);
 		if(array_key_exists($testId, $currentMessages)){

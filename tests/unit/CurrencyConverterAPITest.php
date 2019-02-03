@@ -78,6 +78,7 @@ class CurrencyConverterAPITest extends \Codeception\Test\Unit
         $receivedResponse = $this->_sendCurlRequestToApi('usd_uah');
         $receivedRate = $receivedResponse['rate'];
         if(!is_numeric($receivedRate)){
+            $this->_logFailedTestMessage("Rate is not numeric:\n" . json_encode($receivedRate));
             $this->fail('Rate is not numeric!');
         }
     }
@@ -87,15 +88,18 @@ class CurrencyConverterAPITest extends \Codeception\Test\Unit
         $testId = time() . '_' . mt_rand(1000, 20000);
         $receivedResponse = $this->_sendCurlRequestToApi('usd_uah', $testId);
         $receivedRate = $receivedResponse['rate'];
-        if(!is_numeric($receivedRate)){
+        if(!is_numeric($receivedRate) && !isset($receivedResponse['errorMessage'])){
             $this->fail('Rate is not numeric!');
         }
-        $loggedMessage = $this->_getLoggedMessageByTestId($testId);
-        $this->assertEquals($loggedMessage, 'USD_UAH request to external API.');
+        $loggedMessageRequest = $this->_getLoggedMessageByTestId($testId, 'request');
+        $loggedMessageResponse = $this->_getLoggedMessageByTestId($testId, 'response');
+        $this->assertEquals($loggedMessageRequest, 'USD_UAH request to external API sending...');
+        $this->assertEquals($loggedMessageResponse, 'USD_UAH response from external API received.');
     }
 
-    private function _getLoggedMessageByTestId($testId)
+    private function _getLoggedMessageByTestId($testId, $messageType)
     {
+        $testId = $testId . '_' . $messageType;
         $logFileName = $this->_currencyConverterDir . '/logged_test_messages.log';
         $messagesArray = json_decode(file_get_contents($logFileName), true);
         if(array_key_exists($testId, $messagesArray)){
@@ -138,6 +142,17 @@ class CurrencyConverterAPITest extends \Codeception\Test\Unit
         }
         $current = file_get_contents($counterFileName);
         file_put_contents($counterFileName, ++$current);
+    }
+
+    private function _logFailedTestMessage($message)
+    {
+        $logName = 'failed_tests_logs/failed_test_for_currency_converter.log';
+        file_put_contents($logName, $message);
+        /*
+        $fp = fopen($logName, 'a');
+        fwrite($fp, date() . ":" . $message . "\n");
+        fclose($fp);
+        */
     }
 
 }
