@@ -64,18 +64,21 @@ class CommonHandler extends CycleHandler {
   
   static function onResponseFormed(object $env, object $output, object $input) : object {
     return (object) \assoc\merge(
-      ['success' => (int) (
-        // success:ing exists === it is last action
-        property_exists($output, 'success:ing')
-        ? (int) $output->{'success:ing'}
-        : (
-          // intermediate action - therefore for await (-1) shoud be good (0)
-          property_exists($output, 'return:code')
-          && ((int) $output->{'return:code'} === 0)
-          ? -1
-          : 0
+      [
+        'id' => $input->id,
+        'success' => (int) (
+          // success:ing exists === it is last action
+          property_exists($output, 'success:ing')
+          ? (int) $output->{'success:ing'}
+          : (
+            // intermediate action - therefore for await (-1) shoud be good (0)
+            property_exists($output, 'return:code')
+            && ((int) $output->{'return:code'} === 0)
+            ? -1
+            : 0
+          )
         )
-      )],
+      ],
       (!property_exists($output, 'event:id'))
       ? []
       : ['event' => "$env->instance/".$output->{'event:id'}]
