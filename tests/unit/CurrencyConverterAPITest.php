@@ -15,8 +15,13 @@ class CurrencyConverterAPITest extends \Codeception\Test\Unit
     {
     }
 
-    /*
-    * Let's clear the log and the cache to make each new tests with sense.
+    /**
+    * This method clears the log and the local cache.
+    * We need to clear the log and the local cache because test methods
+    * are written as a logical consequence of checks what has been
+    * written to the logs and what has been stored in the local cache.
+    * And each next method assumes and checks that there is specific
+    * data present in the logs and the local cache.
     * Please note that we have to run this method first!
     * TODO: Find more elegant way to clear these files
     * before running the tests.
@@ -29,7 +34,9 @@ class CurrencyConverterAPITest extends \Codeception\Test\Unit
         fclose($fp2);
     }
 
-    // tests
+    /**
+    * Checks that the rate for USD_USD pair is 1.
+    */
     public function testGetRateForUSD_USD()
     {
         $expectedRate = 1;
@@ -37,6 +44,10 @@ class CurrencyConverterAPITest extends \Codeception\Test\Unit
         $this->assertEquals($expectedRate, $receivedRate, 'Not expected rate received for USD to USD request.'); 
     }
 
+    /**
+    * Checks that the rate for the pair of currencies which is not
+    * "USD_USD" will not be equal to 1.
+    */
     public function testGetRateNotEqualsToOne()
     {
         $currenciesPair = 'usd_php';
@@ -44,6 +55,10 @@ class CurrencyConverterAPITest extends \Codeception\Test\Unit
         $this->assertNotEquals(1, $receivedRate);
     }
 
+    /**
+    * Checks that a response for an empty currencies pair will contain the corresponding
+    * error message.
+    */
     public function testEmptyCurrenciesPair()
     {
         $receivedResponse = $this->_sendCurlRequestToApi('', $this->_generateTestId('usd_usd'));
@@ -51,6 +66,10 @@ class CurrencyConverterAPITest extends \Codeception\Test\Unit
         $this->assertEquals($receivedErrorMessage, 'Empty currencies pair provided!');
     }
 
+    /**
+    * Checks that a response for the currencies pair concatenated from not valid currency codes will
+    * contain corresponding error message.
+    */
     public function testNotValidCurrenciesPairWithNotValidCurrencyCodes()
     {
         $receivedResponse = $this->_sendCurlRequestToApi('aaa_aaa', $this->_generateTestId('usd_usd'));
@@ -60,6 +79,10 @@ class CurrencyConverterAPITest extends \Codeception\Test\Unit
         $this->assertEquals($receivedErrorMessage, 'Not a valid currency pair provided!');
     }
 
+    /**
+    * Checks that a response for the currencies pair with invalid delimiter will
+    * contain corresponding error message.
+    */
     public function testNotValidCurrenciesPairWithNotValidDelimiter()
     {
         $receivedResponse = $this->_sendCurlRequestToApi('aaa%zzz', $this->_generateTestId('usd_usd'));
@@ -69,6 +92,10 @@ class CurrencyConverterAPITest extends \Codeception\Test\Unit
         $this->assertEquals($receivedErrorMessage, 'Not a valid currency pair provided!');
     }
 
+    /**
+    * Checks that a response for the currencies pair with empty currencyTo will
+    * contain corresponding error message.
+    */
     public function testNotValidCurrenciesPairWithEmptyCurrencyTo()
     {
         $receivedResponse = $this->_sendCurlRequestToApi('usd_', $this->_generateTestId('usd_usd'));
@@ -78,6 +105,10 @@ class CurrencyConverterAPITest extends \Codeception\Test\Unit
         $this->assertEquals($receivedErrorMessage, 'Not a valid currency pair provided!');
     }
 
+    /**
+    * Checks that a response for the currencies pair with empty currencyFrom will
+    * contain corresponding error message.
+    */
     public function testNotValidCurrenciesPairWithEmptyCurrencyFrom()
     {
         $receivedResponse = $this->_sendCurlRequestToApi('_usd', $this->_generateTestId('usd_usd'));
@@ -88,6 +119,12 @@ class CurrencyConverterAPITest extends \Codeception\Test\Unit
     }
 
 
+    /**
+    * Checks that if we make a first request for some currencies pair the workflow will
+    * be the following:
+    * 1)A request to the external API will be issues.
+    * 2)A response from the external API will be received and stored in the local cache.
+    */
     public function testRateIsNumericAndReceivedFromTheExternalApiFirstThenIsStoredInTheCache()
     {
         $currenciesPair = 'USD_UAH';
@@ -107,6 +144,12 @@ class CurrencyConverterAPITest extends \Codeception\Test\Unit
         $this->assertEquals($loggedMessageIsCached, $currenciesPair . ' response from external API is saved to the local cache.');
     }
 
+
+    /**
+    * Checks that if we make a subsequent request for same currencies pair the workflow will
+    * be the following:
+    * 1)The rate will be taken from the local cache(no requests will be performed to the external API).
+    */
     public function testUSD_UAHReceivedFromTheLocalCache()
     {
         $testId = $this->_generateTestId('usd_uah');
@@ -126,10 +169,11 @@ class CurrencyConverterAPITest extends \Codeception\Test\Unit
         $this->assertEquals($loggedMessageIsReceivedFromCache, 'USD_UAH response received from the local cache.');
     }
 
-    /*
-    * This method checks that request for the rate(for the specified currencies pair)
-    * will be issued towards the external API('free.currencyconverterapi.com') after
-    * we manually set cache(for the specified currency pair) to the expired state.
+    /**
+    * Checks that if we manually invalidate the local cache for some particular currencies pair the workflow will
+    * be the following:
+    * 1)A request to the external API will be issues.
+    * 2)The received response will be stored in the local cache.
     */
     public function testCheckThatRateIsTakenFromExternalApiWhenCacheIsExpiredForUSD_UAH()
     {
@@ -146,12 +190,36 @@ class CurrencyConverterAPITest extends \Codeception\Test\Unit
             'Rate has not been put into the cache!');
     }
 
+    /**
+    * Generated a unique testId to be able to track some
+    * particular testing workflow.
+    *
+    * @param string $currenciesPair The unique testId will be generated using the specified
+    * currencies pair.
+    *
+    * @return string Returns the generated testId.
+    */
     private function _generateTestId($currenciesPair)
     {
         $currenciesPair = strtoupper($currenciesPair);
         return 'testing_' . $currenciesPair . '_' . time() . '_' . mt_rand(1000, 20000);
     }
 
+    /**
+    * Returns logged message which tells us all needed information
+    * about some particular action(sending a request to the external API,
+    * getting a rate from the local cache, etc).
+    *
+    * @param string $testId The unique testId we need to find specific information
+    * inside the log.
+    *
+    * @param string $messageType The type of a message in the log. This parameter is used
+    * together with testId to identify events in the log in a more convenient way.
+    *
+    * @return bool|string Returns a message(describing particular event like sending
+    * a request to the external API, etc) from the log or FALSE if we did not manage
+    * to find any message.
+    */
     private function _getLoggedMessageByTestId($testId, $messageType)
     {
         $logFileName = $this->_currencyConverterDir . '/logged_test_messages.log';
@@ -161,6 +229,18 @@ class CurrencyConverterAPITest extends \Codeception\Test\Unit
         return false;
     }
 
+    /**
+    * Sends cURL request to our currency converter API.
+    *
+    * @param string $currenciesPair The pair of currencies for which we want
+    * to get an exchange rate.
+    *
+    * @param string $testId The unique ID of the test to be able to track all
+    * the corresponding workflow inside the log.
+    *
+    * @return array Returns an array with the rate retrieved. Also can contain
+    * error message if something goes wrong.
+    */
     private function _sendCurlRequestToApi($currenciesPair, $testId = null)
     {
         $this->_apiRequestCounterIncrement();
@@ -193,6 +273,10 @@ class CurrencyConverterAPITest extends \Codeception\Test\Unit
         return ['rate' => false];
     }
 
+    /**
+    * Increments a counter on each request to our currency converted
+    * API.
+    */
     private function _apiRequestCounterIncrement()
     {
         $counterFileName = $this->_currencyConverterDir . '/api_request_counter.txt';
