@@ -2,10 +2,36 @@
 
 class CurrencyRate {
 
+	/** @var array|null Should contain allowed currency codes('USD', 'UAH', etc) */
 	protected $_allowedCurrencies = null;
+	/** @var string|null
+	* ID of each request to this class. We need this to
+	* separate each record in the logs and for testing purposes.
+	* Will be generated in __construct() on each class
+	* instantiation. Also can be set manually with
+	* setRequestId() method.
+	*/
 	protected $_requestId = null;
+	/** @var string
+	* A name for the log where we will record
+	* requests to the external API(to get currency rates).
+	* Also actions like storing currency rates to the local cache,
+	* retrieving rates from the local cache, etc are recorded.
+	*/
 	protected $_logFileName = 'logged_test_messages.log';
+	/** @var integer
+	* The amount of time we will keep currency rates
+	* in our local cache.
+	*/
+	protected $_timeToStoreInCache = 86400;
 	
+	/**
+	* Initializes allowed currency codes from the external storage
+	* and generates current requestId.
+	*
+	* @param string $currenciesPair The pair of currencies for which we
+	* need to get the exchange rate.
+	*/
 	public function __construct($currenciesPair)
 	{
 		$allowedCurrencies = json_decode(file_get_contents('common_currencies.json'), true);
@@ -14,6 +40,16 @@ class CurrencyRate {
 		$this->_requestId = $currenciesPair . '_' . time() . '_' . mt_rand(1000, 20000);
 	}
 
+	/**
+	* Sets ID for current request to the class.
+	*
+	* @param string $requestId This ID will be stored in the requests log
+	* to uniquely identify each request. By default it is generated in __construct()
+	* on each class instantiation, but may be set manually from outside(mainly for
+	* testing purposes).
+	*
+	* @return void
+	*/
 	public function setRequestId($requestId){
 		$this->_requestId = $requestId;
 	}

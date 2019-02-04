@@ -115,7 +115,6 @@ class CurrencyConverterAPITest extends \Codeception\Test\Unit
         if(!is_numeric($receivedRate) && !isset($receivedResponse['errorMessage'])){
             $this->fail('Rate is not numeric!');
         }
-        file_put_contents('some_test.txt', $testId);
         $loggedMessageRequest = $this->_getLoggedMessageByTestId($testId, 'request');
         $loggedMessageResponse = $this->_getLoggedMessageByTestId($testId, 'response');
         $loggedMessageIsCached = $this->_getLoggedMessageByTestId($testId, 'rate_is_cached');
