@@ -36,6 +36,11 @@ class CurrencyRate {
 	*
 	* @param string $currenciesPair The pair of currencies for which we
 	* need to get the exchange rate.
+	*
+	* @throws Exception if we did not manage to set the list of
+	* allowed currency codes.
+	*
+	* @return void
 	*/
 	public function __construct($currenciesPair)
 	{
@@ -77,6 +82,11 @@ class CurrencyRate {
 	*
 	* @param string $currenciesPair The pair of currencies for which
 	* we want to get an exchange rate in "USD_UAH" or "usd_uah" format.
+	*
+	* @throws Exception if we provided an invalid currency pair
+	* or if we did not managed to get an exchange rate from the
+	* external API and the local cache is empty at the same time
+	* for the provided pair of currencies.
 	*
 	* @return bool|float
 	*/
@@ -134,6 +144,11 @@ class CurrencyRate {
 	* @param string $messageType A type of the message(can be 'request', 'response', etc). This type is
 	* different for different type of actions like: request to the external API, storing received rate
 	* in the local cache, etc. It's like a short form of description for the action being logged.
+	*
+	* @throws Exception if we try to add a duplicate actionId into
+	* the log(the actionId has to be unique). Actually this is almost
+	* unreal situation because the actionId consists of current time concatenated
+	* with a random integer number and the messageType.
 	*
 	* @return void
 	*/
