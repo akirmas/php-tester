@@ -3,6 +3,7 @@
 header('Content-Type: application/json; charset=utf-8');
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: POST, GET');
+header('Access-Control-Allow-Headers: origin, x-requested-with, Content-Type, Date, Request-Date');
 
 require_once(__DIR__.'/assoc.php');
 require_once(__DIR__.'/utils.php');
