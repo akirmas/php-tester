@@ -270,6 +270,7 @@ class CurrencyRate {
 	*/
 	protected function _getRateFromExternalApi($currenciesPair)
 	{
+		/*
 		switch($currenciesPair){
 			case 'USD_USD':
 				return 1;
@@ -278,6 +279,7 @@ class CurrencyRate {
 				return 100500;
 			break;
 		}
+		*/
 		$rate = false;
 		$ch = curl_init(
 			"https://free.currencyconverterapi.com/api/v5/convert?q=$currenciesPair&compact=y"
