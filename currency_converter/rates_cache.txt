@@ -1,1 +1,0 @@
-{"USD_UAH":{"time":1549113617,"rate":100500,"testId":"1549213617_2397_make_the_cache_expired"}}

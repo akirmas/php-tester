@@ -15,30 +15,45 @@ class CurrencyConverterAPITest extends \Codeception\Test\Unit
     {
     }
 
+    /*
+    * Let's clear the log and the cache to make each new tests with sense.
+    * Please note that we have to run this method first!
+    * TODO: Find more elegant way to clear these files
+    * before running the tests.
+    */
+    public function testClearTheOldCacheAndLogBeforeTestingStarts()
+    {
+        $fp1 = fopen($this->_currencyConverterDir . '/logged_test_messages.log', 'w');
+        fclose($fp1);
+        $fp2 = fopen($this->_currencyConverterDir . '/rates_cache.txt', 'w');
+        fclose($fp2);
+    }
+
     // tests
     public function testGetRateForUSD_USD()
     {
         $expectedRate = 1;
-        $receivedRate = $this->_sendCurlRequestToApi('usd_usd')['rate'];
+        $receivedRate = $this->_sendCurlRequestToApi('usd_usd', $this->_generateTestId('usd_usd'))['rate'];
         $this->assertEquals($expectedRate, $receivedRate, 'Not expected rate received for USD to USD request.'); 
     }
 
     public function testGetRateNotEqualsToOne()
     {
-        $receivedRate = $this->_sendCurlRequestToApi('usd_uah')['rate'];
-        $this->assertNotEquals(1, $receivedRate, 'Not expected rate for USD to UAH request.');
+        $currenciesPair = 'usd_php';
+        $receivedRate = $this->_sendCurlRequestToApi($currenciesPair, $this->_generateTestId($currenciesPair))['rate'];
+        $this->assertNotEquals(1, $receivedRate);
     }
 
     public function testEmptyCurrenciesPair()
     {
-        $receivedResponse = $this->_sendCurlRequestToApi('');
+        $receivedResponse = $this->_sendCurlRequestToApi('', $this->_generateTestId('usd_usd'));
         $receivedErrorMessage = $receivedResponse['errorMessage'];
         $this->assertEquals($receivedErrorMessage, 'Empty currencies pair provided!');
     }
 
     public function testNotValidCurrenciesPairWithNotValidCurrencyCodes()
     {
-        $receivedResponse = $this->_sendCurlRequestToApi('aaa_aaa');
+        $receivedResponse = $this->_sendCurlRequestToApi('aaa_aaa', $this->_generateTestId('usd_usd'));
         $receivedRate = $receivedResponse['rate'];
         $receivedErrorMessage = $receivedResponse['errorMessage'];
         $this->assertFalse($receivedRate);
@@ -47,7 +62,7 @@ class CurrencyConverterAPITest extends \Codeception\Test\Unit
 
     public function testNotValidCurrenciesPairWithNotValidDelimiter()
     {
-        $receivedResponse = $this->_sendCurlRequestToApi('aaa%zzz');
+        $receivedResponse = $this->_sendCurlRequestToApi('aaa%zzz', $this->_generateTestId('usd_usd'));
         $receivedRate = $receivedResponse['rate'];
         $receivedErrorMessage = $receivedResponse['errorMessage'];
         $this->assertFalse($receivedRate);
@@ -56,7 +71,7 @@ class CurrencyConverterAPITest extends \Codeception\Test\Unit
 
     public function testNotValidCurrenciesPairWithEmptyCurrencyTo()
     {
-        $receivedResponse = $this->_sendCurlRequestToApi('usd_');
+        $receivedResponse = $this->_sendCurlRequestToApi('usd_', $this->_generateTestId('usd_usd'));
         $receivedRate = $receivedResponse['rate'];
         $receivedErrorMessage = $receivedResponse['errorMessage'];
         $this->assertFalse($receivedRate);
@@ -65,7 +80,7 @@ class CurrencyConverterAPITest extends \Codeception\Test\Unit
 
     public function testNotValidCurrenciesPairWithEmptyCurrencyFrom()
     {
-        $receivedResponse = $this->_sendCurlRequestToApi('_usd');
+        $receivedResponse = $this->_sendCurlRequestToApi('_usd', $this->_generateTestId('usd_usd'));
         $receivedRate = $receivedResponse['rate'];
         $receivedErrorMessage = $receivedResponse['errorMessage'];
         $this->assertFalse($receivedRate);
@@ -73,40 +88,43 @@ class CurrencyConverterAPITest extends \Codeception\Test\Unit
     }
 
 
-    public function testRateReceivedIsNumeric()
+    public function testRateIsNumericAndReceivedFromTheExternalApiFirstThenIsStoredInTheCache()
     {
-        $receivedResponse = $this->_sendCurlRequestToApi('usd_uah');
+        $currenciesPair = 'USD_UAH';
+        $testId = $this->_generateTestId($currenciesPair);
+        $receivedResponse = $this->_sendCurlRequestToApi($currenciesPair, $testId);
         $receivedRate = $receivedResponse['rate'];
         if(!is_numeric($receivedRate)){
             $this->_logFailedTestMessage("Rate is not numeric:\n" . json_encode($receivedRate));
-            $this->fail('Rate is not numeric!');
-        }
-    }
-
-    /*
-    * This method checks the result of the request to the
-    * external API(to retrieve the current rate for the currency pair)
-    * and then it check if the retrieved rate has been stored in
-    * the cache(where rates are stored for 24 hours) and can be retrieved
-    * from the cache as well.
-    */
-    public function testRequestToExternalApiIsPerformedAndCacheIsUsed()
-    {
-        $testId = $this->_generateTestId();
-        $receivedResponse = $this->_sendCurlRequestToApi('usd_uah', $testId);
-        $receivedRate = $receivedResponse['rate'];
-        if(!is_numeric($receivedRate) && !isset($receivedResponse['errorMessage'])){
             $this->fail('Rate is not numeric!');
         }
         $loggedMessageRequest = $this->_getLoggedMessageByTestId($testId, 'request');
         $loggedMessageResponse = $this->_getLoggedMessageByTestId($testId, 'response');
         $loggedMessageIsCached = $this->_getLoggedMessageByTestId($testId, 'rate_is_cached');
 
-        $this->assertEquals($loggedMessageRequest, 'USD_UAH request to external API sending...');
-        $this->assertEquals($loggedMessageResponse, 'USD_UAH response from external API received.');
-        $this->assertEquals($loggedMessageIsCached, 'USD_UAH response from external API is saved to the local cache.',
-            'Rate has not been put into the cache!');
-        $this->assertTrue($this->_checkResponseFromTheCacheByTestIdForUSD_UAH($testId, $receivedRate, 'Did not manage to receive the rate from the cache!'));
+        $this->assertEquals($loggedMessageRequest, $currenciesPair . ' request to external API sending...');
+        $this->assertEquals($loggedMessageResponse, $currenciesPair . ' response from external API received.');
+        $this->assertEquals($loggedMessageIsCached, $currenciesPair . ' response from external API is saved to the local cache.');
+    }
+
+    public function testUSD_UAHReceivedFromTheLocalCache()
+    {
+        $testId = $this->_generateTestId('usd_uah');
+        $receivedResponse = $this->_sendCurlRequestToApi('usd_uah', $testId);
+        $receivedRate = $receivedResponse['rate'];
+        if(!is_numeric($receivedRate) && !isset($receivedResponse['errorMessage'])){
+            $this->fail('Rate is not numeric!');
+        }
+        file_put_contents('some_test.txt', $testId);
+        $loggedMessageRequest = $this->_getLoggedMessageByTestId($testId, 'request');
+        $loggedMessageResponse = $this->_getLoggedMessageByTestId($testId, 'response');
+        $loggedMessageIsCached = $this->_getLoggedMessageByTestId($testId, 'rate_is_cached');
+        $loggedMessageIsReceivedFromCache = $this->_getLoggedMessageByTestId($testId, 'response_received_from_cache');
+
+        $this->assertFalse($loggedMessageRequest);
+        $this->assertFalse($loggedMessageResponse);
+        $this->assertFalse($loggedMessageIsCached);
+        $this->assertEquals($loggedMessageIsReceivedFromCache, 'USD_UAH response received from the local cache.');
     }
 
     /*
@@ -116,9 +134,8 @@ class CurrencyConverterAPITest extends \Codeception\Test\Unit
     */
     public function testCheckThatRateIsTakenFromExternalApiWhenCacheIsExpiredForUSD_UAH()
     {
-        $testId = $this->_generateTestId();
+        $testId = $this->_generateTestId('usd_uah');
         $testId .= '_make_the_cache_expired';
-        $receivedResponse = $this->_sendCurlRequestToApi('usd_uah', $testId);
         $receivedResponse = $this->_sendCurlRequestToApi('usd_uah', $testId);
         $receivedRate = $receivedResponse['rate'];
         $loggedMessageRequest = $this->_getLoggedMessageByTestId($testId, 'request');
@@ -130,33 +147,18 @@ class CurrencyConverterAPITest extends \Codeception\Test\Unit
             'Rate has not been put into the cache!');
     }
 
-    private function _generateTestId()
+    private function _generateTestId($currenciesPair)
     {
-        return time() . '_' . mt_rand(1000, 20000);
-    }
-
-    /*
-    * The method checks if the previously requested rate present in the cache.
-    */
-    private function _checkResponseFromTheCacheByTestIdForUSD_UAH($testId, $receivedRate)
-    {
-        $responseFromTheCache = $this->_sendCurlRequestToApi('usd_uah', $testId);
-        if($responseFromTheCache['rate'] === $receivedRate){
-            if($this->_getLoggedMessageByTestId($testId, 'response_received_from_cache') === 'USD_UAH response received from the local cache.'){
-                    return true;
-            }
-        }
-        return false;
+        $currenciesPair = strtoupper($currenciesPair);
+        return 'testing_' . $currenciesPair . '_' . time() . '_' . mt_rand(1000, 20000);
     }
 
     private function _getLoggedMessageByTestId($testId, $messageType)
     {
-        $testId = $testId . '_' . $messageType;
         $logFileName = $this->_currencyConverterDir . '/logged_test_messages.log';
         $messagesArray = json_decode(file_get_contents($logFileName), true);
-        if(array_key_exists($testId, $messagesArray)){
-            return $messagesArray[$testId];
-        }
+        $fullTestId = $testId . '_' . $messageType;
+        if(array_key_exists($fullTestId, $messagesArray)) return $messagesArray[$fullTestId];
         return false;
     }
 
