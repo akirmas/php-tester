@@ -191,6 +191,19 @@ class CurrencyConverterAPITest extends \Codeception\Test\Unit
     }
 
     /**
+    * Checks whether we will receive the rate if we do not
+    * provide a testId for our currency converter API.
+    */
+    public function testCheckThatWeReceiveTheRateIfWeDoNotProvideATestId()
+    {
+        $receivedResponse = $this->_sendCurlRequestToApi('usd_uah');
+        $receivedRate = $receivedResponse['rate'];
+        if(!is_numeric($receivedRate) || isset($receivedResponse['errorMessage'])){
+            $this->fail('Did not manage to get the rate when testId is not supplied!');
+        }
+    }
+
+    /**
     * Generated a unique testId to be able to track some
     * particular testing workflow.
     *
