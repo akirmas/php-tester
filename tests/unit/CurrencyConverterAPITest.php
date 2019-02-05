@@ -266,15 +266,6 @@ class CurrencyConverterAPITest extends \Codeception\Test\Unit
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);   
         $resp = curl_exec($ch);
         if ($resp !== false && !is_null($resp)){
-            /*
-            $fp = fopen('some_log.txt', 'a');
-            fwrite($fp, "Single resp:");
-            fwrite($fp, $resp);
-            fwrite($fp, "\n\n");
-            fwrite($fp, "==============");
-            fwrite($fp, "\n\n");
-            fclose($fp);
-            */
             $resp = json_decode($resp, true);
             if(array_key_exists('errorMessage', $resp)){
                 return ['rate' => false, 'errorMessage' => $resp['errorMessage']];
@@ -303,15 +294,15 @@ class CurrencyConverterAPITest extends \Codeception\Test\Unit
         file_put_contents($counterFileName, ++$current);
     }
 
+    /**
+    * Writes messages to a log.
+    */
     private function _logFailedTestMessage($message)
     {
         $logName = 'failed_tests_logs/failed_test_for_currency_converter.log';
-        file_put_contents($logName, $message);
-        /*
         $fp = fopen($logName, 'a');
-        fwrite($fp, date() . ":" . $message . "\n");
+        fwrite($fp, date("D M j G:i:s T Y", time()) . ":" . $message . "\n");
         fclose($fp);
-        */
     }
 
 }
