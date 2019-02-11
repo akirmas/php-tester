@@ -8,11 +8,13 @@ function mapKeys(
   bool $keepUnmet = false
 ) :object {
   $result = new \stdClass; // class{} or \stdClass 
-  forEach((array) $assoc as $key => $value)
+  forEach((array) $assoc as $key0 => $value) {
+    $key = (string) $key0;
     if (property_exists($keyMap, $key))
       $result->{$keyMap->{$key}} = $value;
     elseif ($keepUnmet)
       $result->{$key} = $value;
+  }
   return $result;
 }
  
@@ -22,7 +24,8 @@ function mapValues(
   bool $keepUnmet = false
 ) :object {
   $result = new \stdClass;
-  forEach((array) $assoc as $key => $value) 
+  forEach((array) $assoc as $key0 => $value) {
+    $key = (string) $key0;
     if (
       property_exists($valuesMap, $key)
       && (!in_array(gettype($valuesMap->{$key}), ['array', 'object']))
@@ -35,6 +38,7 @@ function mapValues(
       $result->{$key} = $valuesMap->{$key}->{$value};
     elseif ($keepUnmet)
       $result->{$key} = $value;
+  }
   return $result;
 }
 
