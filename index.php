@@ -1,4 +1,6 @@
 <?php
+set_time_limit(0);
+ini_set('max_execution_time', 0);
 
 header('Content-Type: application/json; charset=utf-8');
 header('Access-Control-Allow-Origin: *');
@@ -18,6 +20,10 @@ $system = [
   'http:ip' => getClientIp(),
   'http:method' => $_SERVER['REQUEST_METHOD']
 ];
+
+if ($system['http:method'] === 'OPTIONS')
+  exit;
+
 //$input = json_decode(file_get_contents(__DIR__.'/index.test.json'))->tranz_instant[0];
 $input = (sizeof($_REQUEST) !== 0
 ? $_REQUEST
