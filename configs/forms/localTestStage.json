@@ -1,16 +1,13 @@
 {
   "name": "localTestStage",
-  "action": "http://localhost/psps/",
-  "method": "POST",
-  "subscribeUrl": "http://localhost/psps/await/",
-  "saveUrl": "http://localhost/psps/exchange/",
+  "account": "localTest",
+  "data$url": "http://localhost/exchange/index.php/",
   "inputs": {
     "title": {
       "label": "Payment form"
     },
     "entityId": {
-      "label": "Entity Id",
-      "type": "number"
+      "type": "hidden"
     },
     "name:first": {
       "label": "First name",
@@ -25,12 +22,10 @@
       "type": "textarea"
     },
     "email": {
-      "label": "Email",
-      "type": "email"
+      "type": "hidden"
     },
     "phone": {
-      "label": "Phone",
-      "type": "tel"
+      "type": "hidden"
     },
     "cc": {
       "label": "Credit Card"
@@ -86,24 +81,24 @@
     },
     "account": {
       "type": "hidden",
-      "value": "test"
+      "value": "localTest"
     },
     "process": {
       "label": "Processor",
       "type": "list",
       "items": [
-        {"value": "Tranzila_instant_charge", "label": "Tranzila instant"},
+        {"value": "Kaspit", "label": "Kaspit"},
+        {"value": "Netpay_3d_secure", "label": "Netpay 3d"},
+        {"value": "cascade", "label": "Cascade"},
         {"value": "Isracard_3d_secure", "label": "Isracard 3d"},
-        {"value": "Netpay_3d_secure", "label": "Netpay 3d"}
+        {"value": "Tranzila_instant_charge", "label": "Tranzila instant"}        
       ]
     },
-    "save": {
-      "label": "Save",
-      "type": "button"
-    },
-    "submit": {
-      "label": "Process",
-      "type": "submit"
+    "pay": {
+      "label": "Pay",
+      "type": "submit",
+      "action": "http://localhost/psps/",
+      "method": "POST"    
     }
   }
 }

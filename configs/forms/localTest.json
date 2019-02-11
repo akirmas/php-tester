@@ -1,6 +1,7 @@
 {
   "name": "localTest",
-  "subscribeUrl": "http://localhost/psps/await/",
+  "account": "localTest",
+  "data$url": "http://localhost/exchange/index.php/",
   "inputs": {
     "title": {
       "label": "Payment form"
@@ -67,31 +68,22 @@
     },
     "currency": {
       "label": "Currency",
-      "type": "list",
-      "items": [
-        {"value": "GBP"},
-        {"value": "USD"},
-        {"value": "ILS"}
-      ]
+      "disabled": true,
+      "value": "GBP"
     },
     "account": {
       "type": "hidden",
       "value": "localTest"
     },
     "process": {
-      "label": "Processor",
-      "type": "list",
-      "items": [
-        {"value": "cascade", "label": "Cascade"},
-        {"value": "Tranzila_instant_charge", "label": "Instant charge"},
-        {"value": "Isracard_3d_secure", "label": "3d secure Isracard"},
-        {"value": "Netpay_3d_secure", "label": "3d secure Netpay"}
-      ]
+      "type": "hidden",
+      "value": "cascade"
     },
     "save": {
-      "label": "Save",
+      "label": "Send to stage",
       "type": "submit",
-      "action": "http://localhost/exchange/index.php/"
+      "action": "http://localhost/exchange/index.php/localteststagebank/",
+      "method": "PATCH"
     },
     "pay": {
       "label": "Pay",
