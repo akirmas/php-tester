@@ -64,8 +64,6 @@ forEach($steps as $step) {
   $request = (object) \assoc\merge($instance->request, $instanceEnv->request);
   $response = (object) \assoc\merge($instance->response, $instanceEnv->response);
 
-  $url = ((object) $request->engine)->gateway;
-
   $filled = (object) \assoc\merge(
     $request->defaults,
     $input,
@@ -93,6 +91,11 @@ forEach($steps as $step) {
   $phase = 'Formed';
 
   $request->engine = (object) $request->engine;
+  $request->engine->gateway = formatString(
+    $filled,
+    $request->engine->gateway
+  );
+
   switch($request->engine->method) {
     case 'POST':
       $ch = curl_init($request->engine->gateway);
@@ -112,7 +115,7 @@ forEach($steps as $step) {
       curl_close($ch);
       break;
     case 'GET':
-      $gate = $url.'?'.http_build_query($requestData);
+      $gate =$request->engine->gateway.'?'.http_build_query($requestData);
       parse_str(
         file_get_contents($gate),
         $responseData

@@ -112,3 +112,17 @@ function getResultOfMirroredToUrlRequest($url, $request, $verifyPeerSSL = 0)
   curl_close ($ch);
   return $response;
 }
+
+function formatString($obj, $format) {
+  $obj = (array) $obj;
+  return str_replace(
+    array_map(
+      function($key) {
+        return "{{$key}}";
+      },
+      array_keys($obj)
+    ),
+    array_values($obj),
+    $format
+  );
+}
