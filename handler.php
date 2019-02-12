@@ -28,7 +28,7 @@ class CommonHandler extends CycleHandler {
     //<Amount and currency>
     $amount = 0;
     $currencyFinal = '';
-    if (property_exists($input, $amount)) {
+    if (property_exists($input, 'amount')) {
       $currency = $input->currency;
       $currencyFinal = $currency;
       $fee = !property_exists($input, 'fee') ? 0 : (float) $input->fee;
