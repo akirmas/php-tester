@@ -124,6 +124,8 @@ forEach($steps as $step) {
       if ($responseText === false) 
         throw new Exception(curl_error($ch), curl_errno($ch));
       $responseData = json_decode($responseText);
+      if ($responseData === null) 
+        $responseData = new \stdClass;
       $htmlResp = '<!doctype html>';
       if ($htmlResp === strtolower(substr($responseText, 0, strlen($htmlResp))))
         file_put_contents("$processDir/error.html", $responseText);
