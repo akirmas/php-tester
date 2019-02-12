@@ -51,21 +51,21 @@ forEach($steps as $step) {
   $handler = $step->instance;
   //TODO: Move out from code
   $directionSchema = [
-      "fields" => [],
-      "values" => [],
-      "defaults" => [],
-      "overrides" => []
+      "fields" => new \stdClass,
+      "values" => new \stdClass,
+      "defaults" => new \stdClass,
+      "overrides" => new \stdClass
   ];
   $schema = [
+    "engine" => new \stdClass,
     "request" => $directionSchema,
     "response" => $directionSchema
   ];
-  $instance = (object) (    
-    json_decode(file_get_contents($ConfigDir."/instances/$handler/index.json"), true)
-    + $schema
-  );
+  $instance = json_decode(file_get_contents($ConfigDir."/instances/$handler/index.json"), true)
+    + $schema;
+  // Awfull
+  $instance = json_decode(json_encode($instance));
   
-
   $handlerPath = $ConfigDir."/instances/$handler/handler.php";
   if (file_exists($handlerPath))
     require_once($handlerPath);
@@ -98,7 +98,7 @@ forEach($steps as $step) {
       (object) $request->values,
       true
     ),
-    $request->fields,
+    (object) $request->fields,
     false
   );
 
@@ -195,5 +195,5 @@ function fireEvent(...$data) :object {
       $dataJson
     );
   }
-  return $data[0];
+  return (object) $data[0];
 }
