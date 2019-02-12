@@ -49,7 +49,22 @@ $processDir = mkDir2($processDir, 'index');
 $steps = json_decode(file_get_contents($ConfigDir."/processes/$input->account/$input->process.json"));
 forEach($steps as $step) {
   $handler = $step->instance;
-  $instance = json_decode(file_get_contents($ConfigDir."/instances/$handler/index.json"));
+  //TODO: Move out from code
+  $directionSchema = [
+      "fields" => [],
+      "values" => [],
+      "defaults" => [],
+      "overrides" => []
+  ];
+  $schema = [
+    "request" => $directionSchema,
+    "response" => $directionSchema
+  ];
+  $instance = (object) (    
+    json_decode(file_get_contents($ConfigDir."/instances/$handler/index.json"), true)
+    + $schema
+  );
+  
 
   $handlerPath = $ConfigDir."/instances/$handler/handler.php";
   if (file_exists($handlerPath))

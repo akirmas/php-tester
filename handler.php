@@ -3,6 +3,7 @@ require_once(__DIR__.'/CycleHandler.php');
 require_once(__DIR__.'/utils.php');
 class CommonHandler extends CycleHandler {
   static function onRequestFilled(object $env, object $input): object {
+    //<Date>
     $date = (property_exists($input, 'cc:expire:date'))
     ? $input->{'cc:expire:date'}
     : (property_exists($input, 'cc:expire:month') && property_exists($input, 'cc:expire:year')
@@ -10,7 +11,8 @@ class CommonHandler extends CycleHandler {
     . substr('00'.$input->{'cc:expire:year'}, -2)
     : ''
     );
-
+    //</Date>
+    //<Names>
     $name_full = (property_exists($input, 'name:full'))
     ? $input->{'name:full'}
     : trim(
@@ -18,37 +20,42 @@ class CommonHandler extends CycleHandler {
       .' '
       .(!(property_exists($input, 'name:last')) ? '' : $input->{'name:last'})
     );
-    
     $names = explode(' ', $name_full);
     $name_last = array_pop($names);
     $name_first = sizeof($names) > 0 ? array_shift($names) : '';
     $name_last = join(' ', array_merge($names, [$name_last]));
-
-    $currency = $input->currency;
-    $currencyFinal = $currency;
-    $fee = !property_exists($input, 'fee') ? 0 : (float) $input->fee;
-    $amount = (1 + $fee) * (float) $input->amount;
-    if (
-      property_exists($input, 'currency:exchange')
-      && ($currency != $input->{'currency:exchange'})
-    ) {
-      $pair = $currency.'_'.$input->{'currency:exchange'};
-      //TODO: Other information sources, maybe cache
-      //NB! TODO: This sync request could drop script
-      $ch = curl_init(
-        "https://free.currencyconverterapi.com/api/v5/convert?q=$pair&compact=y"
-      );
-      curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);   
-      $resp = curl_exec($ch);
-      if ($resp !== false) {
-        $resp = json_decode($resp, true);
-        if ($resp !== null && array_key_exists($pair, $resp) && array_key_exists('val', $resp[$pair])) {
-          $rate = $resp[$pair]['val'];
-          $amount *= $rate;
-          $currencyFinal = $input->{'currency:exchange'};
+    //</Names>
+    //<Amount and currency>
+    $amount = 0;
+    $currencyFinal = '';
+    if (property_exists($input, $amount)) {
+      $currency = $input->currency;
+      $currencyFinal = $currency;
+      $fee = !property_exists($input, 'fee') ? 0 : (float) $input->fee;
+      $amount = (1 + $fee) * (float) $input->amount;
+      if (
+        property_exists($input, 'currency:exchange')
+        && ($currency != $input->{'currency:exchange'})
+      ) {
+        $pair = $currency.'_'.$input->{'currency:exchange'};
+        //TODO: Other information sources, maybe cache
+        //NB! TODO: This sync request could drop script
+        $ch = curl_init(
+          "https://free.currencyconverterapi.com/api/v5/convert?q=$pair&compact=y"
+        );
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);   
+        $resp = curl_exec($ch);
+        if ($resp !== false) {
+          $resp = json_decode($resp, true);
+          if ($resp !== null && array_key_exists($pair, $resp) && array_key_exists('val', $resp[$pair])) {
+            $rate = $resp[$pair]['val'];
+            $amount *= $rate;
+            $currencyFinal = $input->{'currency:exchange'};
+          }
         }
       }
     }
+    //</Amount and currency>
     
     return (object) [
       'cc:expire:date' => $date,

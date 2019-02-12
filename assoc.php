@@ -7,6 +7,10 @@ function mapKeys(
   object $keyMap,
   bool $keepUnmet = false
 ) :object {
+  if ($assoc === null)
+    $assoc = new \stdClass;
+  if ($keyMap === null)
+    $keyMap = new \stdClass;    
   $result = new \stdClass; // class{} or \stdClass 
   forEach((array) $assoc as $key0 => $value) {
     $key = (string) $key0;
@@ -23,6 +27,10 @@ function mapValues(
   object $valuesMap,
   bool $keepUnmet = false
 ) :object {
+  if ($assoc === null)
+    $assoc = new \stdClass;
+  if ($valuesMap === null)
+    $valuesMap = new \stdClass;   
   $result = new \stdClass;
   forEach((array) $assoc as $key0 => $value) {
     $key = (string) $key0;
