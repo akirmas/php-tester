@@ -2,7 +2,7 @@
   "request": {
     "engine": {
       "method": "POST",
-      "gateway": "https://payment.gobemark.info/php/exchange/master/index.php/{id:absolute}/result",
+      "gateway": "https://payment.gobemark.info/php/exchange/master/index.php/{id:absolute:received}/result",
       "sourceIsAPI": true
     },
     "fields": {
@@ -14,7 +14,7 @@
       "return:code": "status_error_code",
       "return:message": "status_error_details",
       "success": "payme_status",
-      "id:absolute": "transaction_id"
+      "id:absolute:received": "transaction_id"
     },
     "values": {
       "success": {
