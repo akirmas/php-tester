@@ -57,7 +57,7 @@ class CommonHandler extends CycleHandler {
     }
     //</Amount and currency>
     //<Absolute identifier>
-    $idAbsolute = join(',', [
+    $idAbsolute = join('/', [
       !property_exists($input, 'requester') ? $input->account : $input->requester,
       !property_exists($input, 'id') ? '' : $input->id
     ]);
