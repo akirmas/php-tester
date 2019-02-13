@@ -124,7 +124,7 @@ forEach($steps as $step) {
       if ($responseText === false) 
         throw new Exception(curl_error($ch), curl_errno($ch));
       $responseData = json_decode($responseText);
-      if ($responseData === null) 
+      if ($responseData === null || gettype($responseData) !== 'object') 
         $responseData = new \stdClass;
       $htmlResp = '<!doctype html>';
       if ($htmlResp === strtolower(substr($responseText, 0, strlen($htmlResp))))
