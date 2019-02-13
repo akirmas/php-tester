@@ -135,15 +135,14 @@ forEach($steps as $step) {
           CURLOPT_RETURNTRANSFER => true,
           CURLOPT_CUSTOMREQUEST => $request->engine->method,
           CURLOPT_POSTFIELDS => json_encode($requestData),
-          CURLOPT_HTTPHEADER => (
+          CURLOPT_HTTPHEADER => array_merge(
             [
-              'Request-Date: '. gmdate('D, d M Y H:i:s T'),
-              'Date: '. gmdate('D, d M Y H:i:s T')
-            ]
-            + (property_exists($request->engine, 'headers')
-              ? $request->engine->headers
-              : []
-            )
+              'Request-Date: '. gmdate('D, d M Y H:i:s T')/*,
+              'Date: '. gmdate('D, d M Y H:i:s T')*/
+            ],
+            property_exists($request->engine, 'headers')
+            ? $request->engine->headers
+            : []
           )
         ]
       );
