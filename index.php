@@ -130,12 +130,23 @@ forEach($steps as $step) {
   switch($request->engine->method) {
     case 'POST':
       $ch = curl_init($request->engine->gateway);
-      curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-      curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $request->engine->method);
-      curl_setopt($ch, CURLOPT_HTTPHEADER, [   
-        'Content-Type: application/json'                                                              
-      ]);
-      curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($requestData));
+      curl_setopt_array($ch,
+        [
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_CUSTOMREQUEST => $request->engine->method,
+          CURLOPT_POSTFIELDS => json_encode($requestData),
+          CURLOPT_HTTPHEADER => (
+            [
+              'Request-Date: '. gmdate('D, d M Y H:i:s T'),
+              'Date: '. gmdate('D, d M Y H:i:s T')
+            ]
+            + (property_exists($request->engine, 'headers')
+              ? $request->engine->headers
+              : []
+            )
+          )
+        ]
+      );
       $responseText = curl_exec($ch);
       if ($responseText === false) 
         throw new Exception(curl_error($ch), curl_errno($ch));
