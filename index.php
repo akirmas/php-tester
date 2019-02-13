@@ -92,20 +92,25 @@ forEach($steps as $step) {
   $event = 'Request';
   $phase = 'Calced';
 
+  $request->engine = (object) $request->engine;
+  //TODO: if request Source is API then (it seems) 1) mapKeys 2) mapValues
   $requestData = \assoc\mapKeys(
     \assoc\mapValues(
       $filled,
       (object) $request->values,
       true
     ),
-    (object) $request->fields,
+    (object)(
+      (property_exists($request->engine, 'sourceIsAPI') && $request->engine->sourceIsAPI)
+      ? array_flip((array) $request->fields)
+      : $request->fields
+    ),
     false
   );
 
   $event = 'Request';
   $phase = 'Formed';
 
-  $request->engine = (object) $request->engine;
   $request->engine->gateway = formatString(
     $filled,
     $request->engine->gateway
