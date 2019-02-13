@@ -56,7 +56,12 @@ class CommonHandler extends CycleHandler {
       }
     }
     //</Amount and currency>
-    
+    //<Absolute identifier>
+    $idAbsolute = join(',', [
+      !property_exists($input, 'requester') ? $input->account : $input->requester,
+      !property_exists($input, 'id') ? '' : $input->id
+    ]);
+    //</Absolute identifier>
     return (object) [
       'cc:expire:date' => $date,
       'name:full' => $name_full,
@@ -65,7 +70,8 @@ class CommonHandler extends CycleHandler {
       'amount:final' => $amount,
       'amountInt:final' => 100 * (float) $amount,
       'currency:final' => $currencyFinal,
-      'fee:final' => 0
+      'fee:final' => 0,
+      'id:absolute' => $idAbsolute
     ];
   }
   
@@ -86,6 +92,7 @@ class CommonHandler extends CycleHandler {
           )
         )
       ],
+      // Reduntdant?
       (!property_exists($output, 'event:id'))
       ? []
       : ['event' => "$env->instance/".$output->{'event:id'}]
