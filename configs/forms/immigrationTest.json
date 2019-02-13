@@ -1,9 +1,7 @@
 {
   "name": "immigrationTest",
-  "action": "https://payment.gobemark.info/apis/master/",
-  "method": "POST",
-  "subscribeUrl": "https://payment.gobemark.info/apis/master/await/",
-  "saveUrl": "https://payment.gobemark.info/apis/master/exchange/",
+  "account": "test",
+  "data$url": "https://payment.gobemark.info/php/exchange/master/index.php/",
   "inputs": {
     "title": {
       "label": "Payment form"
@@ -37,23 +35,19 @@
     },
     "cc:number": {
       "label": "Number",
-      "type": "text",
-      "required": true
+      "type": "text"
     },  
     "cc:expire:month": {
       "label": "Expire month",
-      "type": "month",
-      "required": true
+      "type": "month"
     },  
     "cc:expire:year": {
       "label": "Expire year",
-      "type": "year",
-      "required": true
+      "type": "year"
     },
     "cc:cvv": {
       "label": "CVV2",
-      "type": "number",
-      "required": true
+      "type": "number"
     },
     "deal": {
       "label": "Deal"
@@ -65,24 +59,17 @@
     "description": {
       "label": "Products",
       "type": "textarea",
-      "rows": 4,
-      "required": true
+      "rows": 4
     },
     "amount": {
       "label": "Sum",
       "type": "number",
-      "required": true,
       "step": 0.01
     },
     "currency": {
       "label": "Currency",
-      "type": "list",
-      "items": [
-        {"value": "GBP"},
-        {"value": "USD"},
-        {"value": "ILS"}
-      ],
-      "required": true
+      "disabled": true,
+      "value": "GBP"
     },
     "account": {
       "type": "hidden",
@@ -94,11 +81,15 @@
     },
     "save": {
       "label": "Send to stage",
-      "type": "button"
+      "type": "submit",
+      "action": "https://payment.gobemark.info/php/exchange/master/index.php/localteststagebank/",
+      "method": "PATCH"
     },
-    "submit": {
-      "label": "Process",
-      "type": "submit"
+    "pay": {
+      "label": "Pay",
+      "type": "submit",
+      "action": "https://payment.gobemark.info/php/psps/master/",
+      "method": "POST"    
     }
   }
 }

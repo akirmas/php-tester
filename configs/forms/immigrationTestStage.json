@@ -1,16 +1,13 @@
 {
   "name": "immigrationTestStage",
-  "action": "https://payment.gobemark.info/apis/master/",
-  "method": "POST",
-  "subscribeUrl": "https://payment.gobemark.info/apis/master/await/",
-  "saveUrl": "https://payment.gobemark.info/apis/master/exchange/",
+  "account": "test",
+  "data$url": "https://payment.gobemark.info/php/exchange/master/index.php/",
   "inputs": {
     "title": {
       "label": "Payment form"
     },
     "entityId": {
-      "label": "Entity Id",
-      "type": "number"
+      "type": "hidden"
     },
     "name:first": {
       "label": "First name",
@@ -25,12 +22,10 @@
       "type": "textarea"
     },
     "email": {
-      "label": "Email",
-      "type": "email"
+      "type": "hidden"
     },
     "phone": {
-      "label": "Phone",
-      "type": "tel"
+      "type": "hidden"
     },
     "cc": {
       "label": "Credit Card"
@@ -92,18 +87,28 @@
       "label": "Processor",
       "type": "list",
       "items": [
-        {"value": "Tranzila_instant_charge", "label": "Tranzila instant"},
+        {"value": "Kaspit", "label": "Kaspit - action-button is better"},
+        {"value": "Netpay_3d_secure", "label": "Netpay 3d"},
+        {"value": "cascade", "label": "Cascade"},
         {"value": "Isracard_3d_secure", "label": "Isracard 3d"},
-        {"value": "Netpay_3d_secure", "label": "Netpay 3d"}
+        {"value": "Tranzila_instant_charge", "label": "Tranzila instant"}        
       ]
     },
-    "save": {
-      "label": "Save",
-      "type": "button"
+    "pay": {
+      "label": "Pay",
+      "type": "submit",
+      "action":  "https://payment.gobemark.info/php/psps/master/",
+      "method": "POST"    
     },
-    "submit": {
-      "label": "Process",
-      "type": "submit"
+    "transaction:id": {
+      "label": "Transaction number (id)",
+      "type": "number",
+      "value": "000000"
+    },      
+    "transaction:receipt": {
+      "label": "Receipt number (id)",
+      "type": "number",
+      "value": "00000000"
     }
   }
 }

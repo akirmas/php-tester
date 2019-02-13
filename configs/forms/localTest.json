@@ -1,6 +1,6 @@
 {
   "name": "localTest",
-  "account": "localTest",
+  "account": "test",
   "data$url": "http://localhost/exchange/index.php/",
   "inputs": {
     "title": {
@@ -73,7 +73,7 @@
     },
     "account": {
       "type": "hidden",
-      "value": "localTest"
+      "value": "test"
     },
     "process": {
       "type": "hidden",
