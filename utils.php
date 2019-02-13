@@ -113,7 +113,7 @@ function getResultOfMirroredToUrlRequest($url, $request, $verifyPeerSSL = 0)
   return $response;
 }
 
-function formatString($obj, $format) {
+function formatString($format, $obj) {
   $obj = (array) $obj;
   return str_replace(
     array_map(

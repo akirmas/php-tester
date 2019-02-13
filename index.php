@@ -117,9 +117,9 @@ forEach($steps as $step) {
   $event = 'Request';
   $phase = 'Formed';
 
-  $request->engine->gateway = formatString(
-    $filled,
-    $request->engine->gateway
+  $request->engine->gateway = formatString(formatString(
+    $request->engine->gateway,
+    $requestData), $filled
   );
 
   switch($request->engine->method) {
