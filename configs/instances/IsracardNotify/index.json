@@ -2,19 +2,20 @@
   "request": {
     "engine": {
       "method": "POST",
-      "gateway": "https://payment.gobemark.info/php/exchange/master/index.php/{account}/{id}/result",
+      "gateway": "https://payment.gobemark.info/php/exchange/master/index.php/{requester}/{transaction:id}/result",
       "sourceIsAPI": true
     },
     "fields": {
       "event:id": "payme_sale_id",
-      "id": "transaction_id",
+      "id": "transaction:id",
       "signature": "signature",
       "cc:number": "payme_sale_id",
       "cc:expire:date": "buyer_card_exp",
       "currency:final": "currency",
       "return:code": "status_error_code",
       "return:message": "status_error_details",
-      "success": "payme_status"
+      "success": "payme_status",
+      "requester": "sale_name"
     },
     "values": {
       "success": {

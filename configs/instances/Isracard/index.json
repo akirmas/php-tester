@@ -13,6 +13,7 @@
       "currency:final": "currency",
       "description": "product_name",
       "id": "transaction_id",
+      "requester": "sale_name",
       "account": "seller_payme_id",
       "installments": "installments",
       "language": "language",
