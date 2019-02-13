@@ -3,23 +3,31 @@
     "engine": {
       "method": "POST",
       "gateway": "https://payment.gobemark.info/php/exchange/master/index.php/{account}/{id}/result"
-    }
+    },
+    "fields": {
+      "event:id": "payme_sale_id",
+      "id": "transaction_id",
+      "signature": "signature",
+      "cc:number": "payme_sale_id",
+      "cc:expire:date": "buyer_card_exp",
+      "currency:final": "currency",
+      "return:code": "status_error_code",
+      "return:message": "status_error_details",
+      "success": "payme_status"
+    },
+    "values": {
+      "success": {
+        "success": 1,
+        "error": 0
+      }
+    },
+    "defaults": {},
+    "overrides": {}
   },
-  "fields": {
-    "event:id": "payme_sale_id",
-    "id": "transaction_id",
-    "signature": "signature",
-    "cc:number": "payme_sale_id",
-    "cc:expire:date": "buyer_card_exp",
-    "currency:final": "currency",
-    "return:code": "status_error_code",
-    "return:message": "status_error_details",
-    "success": "payme_status"
-  },
-  "values": {
-    "success": {
-      "success": 1,
-      "error": 0
-    }
-  }
+  "response": {
+    "fields": {},
+    "values": {},
+    "defaults": {},
+    "overrides": {}
+ }
 }
