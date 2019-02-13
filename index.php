@@ -93,18 +93,24 @@ forEach($steps as $step) {
   $phase = 'Calced';
 
   $request->engine = (object) $request->engine;
-  //TODO: if request Source is API then (it seems) 1) mapKeys 2) mapValues
-  $requestData = \assoc\mapKeys(
+  //Keep unified vocabulary in schema keys
+  $requestData = (property_exists($request->engine, 'sourceIsAPI') && $request->engine->sourceIsAPI)
+  ? \assoc\mapValues(
+    \assoc\mapKeys(
+      $filled,
+      (object) array_flip((array) $request->fields),
+      false
+    ),
+    (object) $request->values,
+    true
+  )
+  : \assoc\mapKeys(
     \assoc\mapValues(
       $filled,
       (object) $request->values,
       true
     ),
-    (object)(
-      (property_exists($request->engine, 'sourceIsAPI') && $request->engine->sourceIsAPI)
-      ? array_flip((array) $request->fields)
-      : $request->fields
-    ),
+    (object) $request->fields,
     false
   );
 
