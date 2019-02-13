@@ -31,6 +31,11 @@ $input = (sizeof($_REQUEST) !== 0
 ? json_decode(preg_replace('/(^"|"$)/i', '', $_SERVER['argv'][1]), true)
 : json_decode(file_get_contents('php://input'), true)
 ));
+
+// The only field to be hardcoded - key 'account' will be used as it in 3rd parties, avoid ambiguity
+$input['_account'] = $input['account'];
+unset($input['account']);
+
 $input = $system + $input;
 
 $input = (object) $input;
@@ -42,11 +47,11 @@ if (!property_exists($input, 'id')) $input->id = $input->tmstmp;
 
 $ConfigDir = mkdir2(__DIR__, 'configs');
 
-$processDir = mkdir2(__DIR__, '..', 'processes', $input->account, $input->id, $input->process);
+$processDir = mkdir2(__DIR__, '..', 'processes', $input->_account, $input->id, $input->process);
 $logDir = mkdir2($processDir, $input->tmstmp);
 $processDir = mkDir2($processDir, 'index');
 
-$steps = json_decode(file_get_contents($ConfigDir."/processes/$input->account/$input->process.json"));
+$steps = json_decode(file_get_contents($ConfigDir."/processes/$input->_account/$input->process.json"));
 forEach($steps as $step) {
   $handler = $step->instance;
   //TODO: Move out from code

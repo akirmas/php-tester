@@ -5,8 +5,7 @@
     },
     "overrides": {
       "account": "MPL15421-07939ATV-KSOBZ0VM-V4TFWHH2",
-      "currency:final": "USD",
-      "requester": "test"
+      "currency:final": "USD"
     }
   },
   "response": {}
