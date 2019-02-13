@@ -3,7 +3,10 @@
     "engine": {
       "method": "POST",
       "gateway": "https://payment.gobemark.info/php/exchange/master/index.php/{id:absolute:received}/result",
-      "sourceIsAPI": true
+      "sourceIsAPI": true,
+      "headers": [
+        "Content-Type: application/json"
+      ]
     },
     "fields": {
       "event:id": "payme_sale_id",
