@@ -40,7 +40,8 @@
       "cc:number": "buyer_card_mask",
       "cc:expire:date": "buyer_card_exp",
       "success": "payme_status",
-      "event:id": "payme_sale_id"
+      "event:id": "payme_sale_id",
+      "id:absolute": "transaction_id"
     },
     "values": {},
     "defaults": {},
