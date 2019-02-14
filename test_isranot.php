@@ -1,6 +1,6 @@
 <?php
 //"callbackUrl": "https://payment.gobemark.info/apis/master/?account=IsracardNotify&process=index&"
-$gateway = 'http://localhost/psps/?account=IsracardNotifyTest&process=index&';
+$gateway = 'http://localhost/psps/?account=IsracardNotify&process=local&';
 
 $headers = [];
 

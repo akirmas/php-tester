@@ -1,0 +1,9 @@
+{
+  "request": {
+    "engine": {
+      "gateway": "http://localhost/exchange/index.php/{id:absolute}/result"
+    }
+  },
+  "response": {
+ }
+}

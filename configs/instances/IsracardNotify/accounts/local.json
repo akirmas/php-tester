@@ -1,0 +1,11 @@
+{
+  "request": {
+    "engine": {
+      "gateway": "http://localhost/exchange/index.php/{id:absolute:received}/result"
+    },
+    "fields": {
+      "tmstmp": "tmstmp"
+    }
+  },
+  "response": {}
+}

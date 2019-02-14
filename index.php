@@ -28,8 +28,9 @@ $input = json_decode(file_get_contents('php://input'), true);
 if (gettype($input) !== 'array')
   $input = [];
 //$input = json_decode(file_get_contents(__DIR__.'/index.test.json'))->tranz_instant[0];
-$input = (sizeof($_REQUEST) === 0 ? [] : $_REQUEST)
-+ (
+$input = (
+  sizeof($_REQUEST) === 0 ? [] : $_REQUEST
+) + (
   array_key_exists('argv', $_SERVER) && sizeof($_SERVER['argv']) > 1
   ? ((array) json_decode(preg_replace('/(^"|"$)/i', '', $_SERVER['argv'][1]), true))
   : []
@@ -137,6 +138,8 @@ forEach($steps as $step) {
         [
           CURLOPT_RETURNTRANSFER => true,
           CURLOPT_CUSTOMREQUEST => $request->engine->method,
+          CURLOPT_HEADER => 1,
+          //CURLOPT_VERBOSE => 1,
           CURLOPT_POSTFIELDS => json_encode($requestData),
           CURLOPT_HTTPHEADER => array_merge(
             [
@@ -152,7 +155,9 @@ forEach($steps as $step) {
       $responseText = curl_exec($ch);
       if ($responseText === false) 
         throw new Exception(curl_error($ch), curl_errno($ch));
-      $responseData = json_decode($responseText);
+      $header_size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
+      $responseData = json_decode(substr($responseText, $header_size));
+      $header = substr($responseText, 0, $header_size);
       if ($responseData === null || gettype($responseData) !== 'object') 
         $responseData = new \stdClass;
       $htmlResp = '<!doctype html>';
