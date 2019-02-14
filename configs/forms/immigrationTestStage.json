@@ -87,7 +87,7 @@
       "label": "Processor",
       "type": "list",
       "items": [
-        {"value": "Kaspit", "label": "Kaspit - action-button is better"},
+        {"value": "kaspit", "label": "Kaspit - action-button is better"},
         {"value": "Netpay_3d_secure", "label": "Netpay 3d"},
         {"value": "cascade", "label": "Cascade"},
         {"value": "Isracard_3d_secure", "label": "Isracard 3d"},
@@ -103,12 +103,12 @@
     "transaction:id": {
       "label": "Transaction number (id)",
       "type": "number",
-      "value": "000000"
+      "defaultValue": "000000"
     },      
     "transaction:receipt": {
       "label": "Receipt number (id)",
       "type": "number",
-      "value": "00000000"
+      "defaultValue": "000000"
     }
   }
 }

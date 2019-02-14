@@ -10,18 +10,14 @@
     "fields": {
       "id:absolute": "id:absolute",
       "transaction:id": "transaction:id",
-      "transaction:receipt": "transaction:receipt"
+      "transaction:receipt": "transaction:receipt",
+      "success": "success"
     },
-    "values": {
-      "success": {
-        "success": 1,
-        "error": 0
-      }
-    },
-    "defaults": {
+    "values": {},
+    "defaults": {},
+    "overrides": {
       "success": 1
-    },
-    "overrides": {}
+    }
   },
   "response": {
     "fields": {},
