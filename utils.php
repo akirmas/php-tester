@@ -1,5 +1,5 @@
 <?php
-
+//TODO: split into tematic modules
 function mkdir2(...$folders) {
   $dir = join(DIRECTORY_SEPARATOR, $folders);
   if (!file_exists($dir)) mkdir($dir, 0777, true);
@@ -125,4 +125,16 @@ function formatString($format, $obj) {
     array_values($obj),
     $format
   );
+}
+
+// Deletes in multiD array key if $fn(value) is true
+// Main proposal - 'is_null'
+function deleteRecursive(&$arr, $fn) {
+  if (is_array($arr))
+    foreach($arr as $key => $value)
+      if (is_array($value))
+        $arr[$key] = deleteRecursive($value, $fn);
+      elseif ($fn($value))
+        unset($arr[$key]);
+  return $arr;
 }
