@@ -92,11 +92,8 @@ forEach($steps as $step) {
 
   $request = (object) \assoc\merge($instance->request, $instanceEnv->request);
   $response = (object) \assoc\merge($instance->response, $instanceEnv->response);
-
+  
   $filled = (object) \assoc\merge(
-    (array) $output,
-    (array) $filled,
-    (array) $requestData,
     $request->defaults,
     $input,
     $request->overrides
@@ -104,12 +101,17 @@ forEach($steps as $step) {
 
   $event = 'Request';
   $phase = 'Filled';
-  $filled = fireEvent($filled);
+  
+  $request->engine = (object) $request->engine;
+  $filled = fireEvent(
+    (property_exists($request->engine, 'history') && $request->engine->history)
+    ? (object) \assoc\merge($requestData, $output, $filled)
+    : $filled
+  );
 
   $event = 'Request';
   $phase = 'Calced';
 
-  $request->engine = (object) $request->engine;
   //Keep unified vocabulary in schema keys
   $requestData = (property_exists($request->engine, 'sourceIsAPI') && $request->engine->sourceIsAPI)
   ? \assoc\mapValues(
