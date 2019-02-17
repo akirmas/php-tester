@@ -1,4 +1,8 @@
 {
-  "instance": "Netpay",
-  "account": "immigration"
+  "oneOf": [
+    {
+      "instance": "Netpay",
+      "account": "immigration"
+    }
+  ]
 }

@@ -1,6 +1,8 @@
-[
-  {
-    "instance": "Isracard",
-    "account": "test"
-  }
-]
+{
+  "oneOf": [
+    {
+      "instance": "Isracard",
+      "account": "test"
+    }
+  ]
+}

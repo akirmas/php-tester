@@ -1,4 +1,9 @@
 {
-  "instance": "Tranzila",
-  "account": "venus"
+  "oneOf": [
+    {
+      "instance": "Tranzila",
+      "account": "venus"
+    }
+  ]
 }
+  

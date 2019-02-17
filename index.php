@@ -56,6 +56,8 @@ $logDir = mkdir2($processDir, $input->tmstmp);
 $processDir = mkDir2($processDir, 'index');
 
 $steps = json_decode(file_get_contents($ConfigDir."/processes/$input->_account/$input->process.json"));
+$strategy = array_keys(get_object_vars($steps))[0];
+$steps = $steps->{$strategy};
 forEach($steps as $step) {
   $handler = $step->instance;
   //TODO: Move out from code
@@ -195,7 +197,7 @@ forEach($steps as $step) {
   $event = 'Response';
   $phase = 'Formed';
   $output = fireEvent($output, $filled);
-  if ($output->success === 1)
+  if ($strategy === 'oneOf' && $output->success === 1)
     break;
 }
 

@@ -1,10 +1,12 @@
-[
-  {
-    "instance": "Tranzila",
-    "account": "immigration"
-  },
-  {
-    "instance": "Isracard",
-    "account": "immigration"
-  }
-]
+{
+  "oneOf": [
+    {
+      "instance": "Tranzila",
+      "account": "immigration"
+    },
+    {
+      "instance": "Isracard",
+      "account": "immigration"
+    }
+  ]
+}

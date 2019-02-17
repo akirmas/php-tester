@@ -1,4 +1,8 @@
 {
-  "instance": "Netpay",
-  "account": "marketscap"
+  "oneOf": [
+    {
+      "instance": "Netpay",
+      "account": "marketscap"
+    }
+  ]
 }

@@ -1,6 +1,8 @@
-[
-  {
-    "instance": "IsracardNotify",
-    "account": "index"
-  }
-]
+{
+  "oneOf": [
+    {
+      "instance": "IsracardNotify",
+      "account": "index"
+    }
+  ]
+}
