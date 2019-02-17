@@ -58,6 +58,9 @@ $processDir = mkDir2($processDir, 'index');
 $steps = json_decode(file_get_contents($ConfigDir."/processes/$input->_account/$input->process.json"));
 $strategy = array_keys(get_object_vars($steps))[0];
 $steps = $steps->{$strategy};
+$output = [];
+$filled = [];
+$requestData = [];
 forEach($steps as $step) {
   $handler = $step->instance;
   //TODO: Move out from code
@@ -91,6 +94,9 @@ forEach($steps as $step) {
   $response = (object) \assoc\merge($instance->response, $instanceEnv->response);
 
   $filled = (object) \assoc\merge(
+    (array) $output,
+    (array) $filled,
+    (array) $requestData,
     $request->defaults,
     $input,
     $request->overrides
@@ -134,6 +140,7 @@ forEach($steps as $step) {
   );
 
   switch($request->engine->method) {
+    case 'PATCH':
     case 'POST':
       $ch = curl_init($request->engine->gateway);
       curl_setopt_array($ch,
@@ -176,7 +183,10 @@ forEach($steps as $step) {
       $responseData = (object) $responseData; 
       $responseData->gate = $gate;
       break;
-    default: exit('not impelemented');
+    default: {
+      http_response_code(501);
+      exit('not impelemented');
+    }
   }
   $event = 'Response';
   $phase = 'Raw';
@@ -197,7 +207,13 @@ forEach($steps as $step) {
   $event = 'Response';
   $phase = 'Formed';
   $output = fireEvent($output, $filled);
-  if ($strategy === 'oneOf' && $output->success === 1)
+  if (
+    // until first TRUE
+    $strategy === 'oneOf' && $output->success === 1
+    // until first FALSE
+    || $strategy === 'allOf' && $output->success === 0
+    // 'just do it' is 'anyOf' - and any value of $strategy (even 'Nike')
+  )
     break;
 }
 
