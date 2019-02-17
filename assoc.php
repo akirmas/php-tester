@@ -10,10 +10,20 @@ function mapKeys(
   $result = new \stdClass; // class{} or \stdClass 
   forEach((array) $assoc as $key0 => $value) {
     $key = (string) $key0;
-    if (property_exists($keyMap, $key))
-      $result->{$keyMap->{$key}} = $value;
-    elseif ($keepUnmet)
-      $result->{$key} = $value;
+    $key = property_exists($keyMap, $key)
+    ? $keyMap->{$key}
+    : ($keepUnmet
+      ? $key
+      : ''
+    );
+    if ($key === '')
+      continue;
+    $matches = [];
+    //Idea like \assoc.php:formatString but very different implementation
+    if (preg_match('|^{(.*)}$|', $key, $matches))
+      if (property_exists($assoc, $matches[1]))
+        $key = $assoc->{$matches[1]};
+    $result->{$key} = $value;
   }
   return $result;
 }
