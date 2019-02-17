@@ -82,7 +82,7 @@
     "save": {
       "label": "Send to stage",
       "type": "submit",
-      "action": "http://localhost/exchange/index.php/localteststagebank/",
+      "action": "http://localhost/exchange/index.php/teststagebank/",
       "method": "PATCH"
     },
     "pay": {

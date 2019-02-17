@@ -1,0 +1,8 @@
+{
+  "request": {
+    "engine": {
+      "gateway": "https://payment.gobemark.info/php/exchange/master/index.php/{id:absolute:received}/result"
+    }
+  },
+  "response": {}
+}

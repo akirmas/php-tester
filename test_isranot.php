@@ -1,5 +1,5 @@
 <?php
-//"callbackUrl": "https://payment.gobemark.info/apis/master/?account=IsracardNotify&process=index&"
+//"callbackUrl": "https://payment.gobemark.info/apis/master/?account=IsracardNotify&process=test&"
 $gateway = 'http://localhost/psps/?account=IsracardNotify&process=local&';
 
 $headers = [];
@@ -14,7 +14,7 @@ $options = (object) [
 ];
 
 $data = [
-  "transaction_id" => "test/test1902131743",
+  "transaction_id" => "test/test1902171400",
   "payme_status" => "success",
   "status_error_code" => "0",
   "status_code" => "0",

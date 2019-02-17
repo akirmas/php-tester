@@ -27,9 +27,6 @@
       "installments": 1,
       "sale_send_notification": false,
       "language": "en"
-    },
-    "overrides": {
-      "callbackUrl": "https://payment.gobemark.info/apis/master/?account=IsracardNotify&process=index&"
     }
   },
   "response": {

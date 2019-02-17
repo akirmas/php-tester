@@ -1,0 +1,25 @@
+{
+  "request": {
+    "engine": {
+      "method": "PATCH",
+      "headers": [
+        "Content-Type: application/json"
+      ]
+    },
+    "fields": {
+      "success": "{id:absolute:received}"
+    },
+    "values": {
+      "success": {
+        "1": null
+      }
+    },
+    "defaults": {}
+  },
+  "response": {
+    "fields": {},
+    "values": {},
+    "defaults": {},
+    "overrides": {}
+ }
+}

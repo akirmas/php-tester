@@ -1,0 +1,10 @@
+{
+  "request": {
+    "engine": {
+      "gateway": "http://localhost/exchange/index.php/teststagebank"
+    },
+    "overrides": {},
+    "defaults": {}
+  },
+  "response": {}
+}

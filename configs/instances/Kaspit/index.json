@@ -2,7 +2,6 @@
   "request": {
     "engine": {
       "method": "POST",
-      "sourceIsAPI": true,
       "headers": [
         "Content-Type: application/json"
       ]

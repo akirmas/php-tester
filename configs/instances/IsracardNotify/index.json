@@ -27,7 +27,9 @@
     "overrides": {}
   },
   "response": {
-    "fields": {},
+    "fields": {
+      "success": "success"
+    },
     "values": {},
     "defaults": {},
     "overrides": {}

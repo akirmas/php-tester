@@ -2,11 +2,11 @@
   "allOf": [
     {
       "instance": "IsracardNotify",
-      "account": "local"
+      "account": "test"
     },
     {
       "instance": "StageDelete",
-      "account": "local"
-    }
+      "account": "test"
+    }    
   ]
 }

@@ -2,7 +2,7 @@
   "oneOf": [
     {
       "instance": "Kaspit",
-      "account": "index"
+      "account": "test"
     }
   ]
 }
