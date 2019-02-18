@@ -1,0 +1,114 @@
+{
+  "name": "immigrationTestStage",
+  "account": "test",
+  "data$url": "https://payment.gobemark.info/php/exchange/master/index.php/",
+  "inputs": {
+    "title": {
+      "label": "Payment form"
+    },
+    "entityId": {
+      "type": "hidden"
+    },
+    "name:first": {
+      "label": "First name",
+      "type": "text"
+    },
+    "name:last": {
+      "label": "Last name",
+      "type": "text"
+    },
+    "address": {
+      "label": "Address",
+      "type": "textarea"
+    },
+    "email": {
+      "type": "hidden"
+    },
+    "phone": {
+      "type": "hidden"
+    },
+    "cc": {
+      "label": "Credit Card"
+    },
+    "cc:number": {
+      "label": "Number",
+      "type": "text",
+      "required": true
+    },  
+    "cc:expire:month": {
+      "label": "Expire month",
+      "type": "month",
+      "required": true
+    },  
+    "cc:expire:year": {
+      "label": "Expire year",
+      "type": "year",
+      "required": true
+    },
+    "cc:cvv": {
+      "label": "CVV2",
+      "type": "number",
+      "required": true
+    },
+    "deal": {
+      "label": "Deal"
+    },
+    "id": {
+      "label": "Deal Id",
+      "type": "text"
+    },
+    "description": {
+      "label": "Products",
+      "type": "textarea",
+      "rows": 4,
+      "required": true
+    },
+    "amount": {
+      "label": "Sum",
+      "type": "number",
+      "required": true,
+      "step": 0.01
+    },
+    "currency": {
+      "label": "Currency",
+      "type": "list",
+      "items": [
+        {"value": "GBP"},
+        {"value": "USD"},
+        {"value": "ILS"}
+      ],
+      "required": true
+    },
+    "account": {
+      "type": "hidden",
+      "value": "test"
+    },
+    "process": {
+      "label": "Processor",
+      "type": "list",
+      "items": [
+        {"value": "kaspit", "label": "Kaspit - action-button is better"},
+        {"value": "Netpay_3d_secure", "label": "Netpay 3d"},
+        {"value": "cascade", "label": "Cascade"},
+        {"value": "Isracard_3d_secure", "label": "Isracard 3d"},
+        {"value": "Tranzila_instant_charge", "label": "Tranzila instant"}        
+      ]
+    },
+    "pay": {
+      "label": "Pay",
+      "type": "submit",
+      "action":  "https://payment.gobemark.info/apis/master/",
+      "method": "POST"    
+    },
+    "transaction:id": {
+      "label": "Transaction number (id)",
+      "type": "number",
+      "defaultValue": "000000"
+    },      
+    "transaction:receipt": {
+      "label": "Receipt number (id)",
+      "type": "number",
+      "defaultValue": "000000"
+    }
+  }
+}
