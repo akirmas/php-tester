@@ -1,0 +1,8 @@
+{
+  "oneOf": [
+    {
+      "instance": "Airsoft_importlead",
+      "account": "marketscap_facebook"
+    }
+  ]
+}

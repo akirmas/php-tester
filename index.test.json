@@ -1,4 +1,18 @@
 {
+  "marketscap_import_lead": [
+    {
+      "email": "psps@gb,.test",
+      "name:first": "GBMApis",
+      "name:last": "Test",
+      "phone": "987654321",
+      "address:country:ISO": "NT",
+      "account": "marketscap",
+      "process": "importlead_test"
+    },
+    {
+      "success": 1
+    }
+  ],
   "cascade": [
     {
       "amount": 10,
