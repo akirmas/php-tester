@@ -62,7 +62,9 @@
     "overrides": {}
   },
   "response": {
-    "enigine": {},
+    "engine": {
+      "contentType": "application/x-www-form-urlencoded"
+    },
     "fields": {
       "return:message:0": "ReplyDesc",
       "return:code": "Reply",

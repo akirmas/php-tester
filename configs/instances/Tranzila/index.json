@@ -37,7 +37,9 @@
     }
   },
   "response": {
-    "engine": {},
+    "engine": {
+      "contentType": "application/x-www-form-urlencoded"
+    },
     "fields": {
       "cc:expire:month": "expmonth",
       "cc:expire:year": "expyear",

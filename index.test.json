@@ -10,7 +10,7 @@
       "process": "importlead_test"
     },
     {
-      "success": 1
+      "response": "{\"error\":{\"code\":\"3\",\"message\":\"email already exists\"}}"
     }
   ],
   "cascade": [

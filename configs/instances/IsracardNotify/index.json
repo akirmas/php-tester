@@ -27,6 +27,9 @@
     "overrides": {}
   },
   "response": {
+    "engine": {
+      "contentType": "application/json"
+    },
     "fields": {
       "success": "success"
     },

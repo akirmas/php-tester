@@ -15,7 +15,7 @@ forEach($scriptPaths as $scriptPath) {
     function($name) use ($scriptPath, $tests, &$failedScript) {
       //TODO: set up 'style' of test - CLI, HTTP/GET, HTTP/POST
       //$response = json_decode(callTest($scriptPath, $tests[$name][0])[0], true);
-      $response = json_decode(file_get_contents("http://localhost/psps/$scriptPath.php/?".http_build_query($tests[$name][0])), true);
+      $response = json_decode(file_get_contents("http://localhost/psps/$scriptPath.php?".http_build_query($tests[$name][0])), true);
       $expected = $tests[$name][1];
       $failedTest = $expected != array_intersect_assoc($response, $expected);
       $failedScript = $failedScript || $failedTest;

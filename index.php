@@ -27,7 +27,7 @@ if ($system['http:method'] === 'OPTIONS')
 $input = json_decode(file_get_contents('php://input'), true);
 if (gettype($input) !== 'array')
   $input = [];
-//$input = json_decode(file_get_contents(__DIR__.'/index.test.json'))->tranz_instant[0];
+
 $input = (
   sizeof($_REQUEST) === 0 ? [] : $_REQUEST
 ) + (
@@ -35,6 +35,8 @@ $input = (
   ? ((array) json_decode(preg_replace('/(^"|"$)/i', '', $_SERVER['argv'][1]), true))
   : []
 ) + $input;
+//$input = json_decode(file_get_contents(__DIR__.'/index.test.json'),true)['marketscap_import_lead'][0];
+
 
 // The only field to be hardcoded - key 'account' will be used as it in 3rd parties, avoid ambiguity
 $input['_account'] = $input['account'];
@@ -167,29 +169,43 @@ forEach($steps as $step) {
       if ($responseText === false) 
         throw new Exception(curl_error($ch), curl_errno($ch));
       $header_size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
-      $responseData = json_decode(substr($responseText, $header_size));
-      $header = substr($responseText, 0, $header_size);
-      if ($responseData === null || gettype($responseData) !== 'object') 
-        $responseData = new \stdClass;
+      curl_close($ch);
+      
+      //Despite declared content-type - APIs love to return .html pages on errors
       $htmlResp = '<!doctype html>';
       if ($htmlResp === strtolower(substr($responseText, 0, strlen($htmlResp))))
         file_put_contents("$processDir/error.html", $responseText);
-      curl_close($ch);
+
+      $header = substr($responseText, 0, $header_size);
+      $responseText = substr($responseText, $header_size);
       break;
     case 'GET':
-      $gate =$request->engine->gateway.'?'.http_build_query($requestData);
-      parse_str(
-        file_get_contents($gate),
-        $responseData
-      );
-      $responseData = (object) $responseData; 
-      $responseData->gate = $gate;
+      $request->engine->gateway = $request->engine->gateway.'?'.http_build_query($requestData);
+      $responseText = file_get_contents($request->engine->gateway);      
       break;
     default: {
       http_response_code(501);
       exit('not impelemented');
     }
   }
+
+  switch($response->engine->contentType) {
+    case 'application/x-www-form-urlencoded':
+      parse_str(
+        $responseText,
+        $responseData
+      );
+      break;
+    case 'application/json':
+      $responseData = json_decode($responseText);
+      if ($responseData !== null && gettype($responseData) === 'object') 
+        break;
+    case 'text/plain':
+    default:
+      $responseData = ['response' => $responseText];
+  }
+  $responseData = (object) $responseData; 
+
   $event = 'Response';
   $phase = 'Raw';
   $output = fireEvent($responseData, $requestData);

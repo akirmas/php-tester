@@ -18,6 +18,9 @@
     "defaults": {}
   },
   "response": {
+    "engine": {
+      "contentType": "application/json"
+    },
     "fields": {},
     "values": {},
     "defaults": {},

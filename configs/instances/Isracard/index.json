@@ -30,7 +30,9 @@
     }
   },
   "response": {
-    "enigine": {},
+    "engine": {
+      "contentType": "application/json"
+    },
     "fields": {
       "quizUrl:raw": "sale_url",
       "amountInt": "price",

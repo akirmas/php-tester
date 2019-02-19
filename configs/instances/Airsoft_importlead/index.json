@@ -23,7 +23,11 @@
     "values": {}
   },
   "response": {
+    "engine": {
+      "contentType": "text/plain"
+    },
     "fields": {
+      "response": "response",  
       "error": "error",
       "return:code": "error:code",
       "return:message": "error:message",

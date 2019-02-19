@@ -1,12 +1,14 @@
 {
   "request": {
+    "defaults": {
+      "campaign:id": 29
+    },
     "overrides": {
       "key": "J25quiltvx",
       "api:method": "createLead",
-      "campaign:id": 29,
       "crm:isLead": 0,
       "notify": 1,
-      "currency": "USDT"
+      "currency": "USDT"      
     }
   },
   "response": {}
