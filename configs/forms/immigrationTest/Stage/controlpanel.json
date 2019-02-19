@@ -1,7 +1,7 @@
 {
-  "storageUrl": "https://payment.gobemark.info/php/exchange/index.php/teststagebank/",
+  "storageUrl": "https://payment.gobemark.info/php/exchange/master/index.php/teststagebank/",
   "paymentform": {
-    "origin": "https://gobemarketing.github.io",
+    "origin": "https://akirmas.github.io",
     "pathname": "/paymentform/",
     "schema$url": "https://payment.gobemark.info/apis/master/forms/?json=immigrationTest/Stage/form",
     "data$url$placement": "https://payment.gobemark.info/php/exchange/index.php/"
