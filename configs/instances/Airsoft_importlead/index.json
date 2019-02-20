@@ -24,15 +24,14 @@
   },
   "response": {
     "engine": {
-      "contentType": "text/plain"
+      "contentType": "application/json"
     },
     "fields": {
-      "response": "response",  
-      "error": "error",
       "return:code": "error:code",
       "return:message": "error:message",
-      "success": "createLead",
-      "lead:id": "createLead:client_id"
+      "lead:id": "createLead:client_id",
+      "success": "createLead"
+      
     },
     "values": {}
   }

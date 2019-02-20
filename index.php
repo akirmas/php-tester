@@ -35,7 +35,7 @@ $input = (
   ? ((array) json_decode(preg_replace('/(^"|"$)/i', '', $_SERVER['argv'][1]), true))
   : []
 ) + $input;
-//$input = json_decode(file_get_contents(__DIR__.'/index.test.json'),true)['marketscap_import_lead'][0];
+//$input = json_decode(file_get_contents(__DIR__.'/index.test.json'),true)['marketscap_autologin_cached'][0];
 
 
 // The only field to be hardcoded - key 'account' will be used as it in 3rd parties, avoid ambiguity

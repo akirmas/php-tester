@@ -16,15 +16,12 @@
   },
   "response": {
     "engine": {
-      "contentType": "text/plain"
+      "contentType": "application/json"
     },
     "fields": {
-      "response": "response",  
-      "error": "error",
       "return:code": "error:code",
       "return:message": "error:message",
-      "success": "autologinClient",
-      "url:redirect": "autologinClient:link"
+      "url:redirect": "autoLoginClient:link"
     },
     "values": {}
   }

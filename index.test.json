@@ -6,7 +6,7 @@
       "process": "autologin_test"
     },
     {
-      "response": "{\"autoLoginClient\":{\"link\":\"https:\\\/\\\/www.marketscap.com\\\/trade.php\\\/trader\\\/connection\\\/autoLogin?key=CppaLlsKKQ1njN7tPF7JaVZXUuPiDYwmyo89QFc3shHILEk0TMk5e27X02M1KVDxK2OTj2dYODmWbASjEfAkEgCMS%2B5WXcJXZn0iIAlE2WI3mGLsiHvz0B8W%2BUm1zp%2BP&r=%2Ftrade.php%2Fcrypto%2Fdeposit%2F\"}}"
+      "url:redirect": "https:\/\/www.marketscap.com\/trade.php\/trader\/connection\/autoLogin?key=CppaLlsKKQ1njN7tPF7JaVZXUuPiDYwmyo89QFc3shHILEk0TMk5e27X02M1KVDxK2OTj2dYODmWbASjEfAkEgCMS%2B5WXcJXZn0iIAlE2WI3mGLsiHvz0B8W%2BUm1zp%2BP&r=%2Ftrade.php%2Fcrypto%2Fdeposit%2F"
     }
   ],
   "marketscap_import_lead": [
@@ -20,7 +20,8 @@
       "process": "importlead_test"
     },
     {
-      "response": "{\"error\":{\"code\":\"3\",\"message\":\"email already exists\"}}"
+      "return:code": "3",
+      "return:message": "email already exists"
     }
   ],
   "cascade": [
