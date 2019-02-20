@@ -1,7 +1,7 @@
 {
   "request": {
     "engine": {
-      "gateway": "http://marketscap.com/back.php/affiliate/externalSorce/api",
+      "gateway": "https://marketscap.com/back.php/affiliate/externalSorce/api",
       "method": "GET",
       "cache": true
     },
