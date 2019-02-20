@@ -104,7 +104,7 @@
       "description": "API could request own form to client",
       "type": "string"
     },
-    "quizUrl:next": {
+    "url:next": {
       "description": "After submiting API's form/iframe user will forward here",
       "type": "string"
     },

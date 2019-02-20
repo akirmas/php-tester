@@ -159,12 +159,12 @@
                 }
               }
             },
-              "quizUrl:next": {
+              "url:next": {
               "type": "object",
               "$filters": {
                 "$func": "match",
                 "$vars": {
-                  "value": { "$ref": "2/fields/quizUrl:next" }
+                  "value": { "$ref": "2/fields/url:next" }
                 }
               }
             }

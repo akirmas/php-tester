@@ -18,7 +18,7 @@
       "address:city": "BillingCity",
       "address:0": "BillingAddress1",
       "address:1": "BillingAddress2",
-      "quizUrl:next": "RetURL"
+      "url:next": "RetURL"
     },
     "values": {
       "currency:final": {

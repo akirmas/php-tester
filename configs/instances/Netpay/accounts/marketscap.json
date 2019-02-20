@@ -6,7 +6,7 @@
       "account": 9804345,
       "verify": 0,
       "salt": "5Y2KDRBY6Q",
-      "quizUrl:next": "https://www.marketscap.com/back.php"
+      "url:next": "https://www.marketscap.com/back.php"
     },
     "defaults": {}
   },
