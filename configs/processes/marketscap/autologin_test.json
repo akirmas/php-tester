@@ -1,0 +1,8 @@
+{
+  "oneOf": [
+    {
+      "instance": "Airsoft_autologin",
+      "account": "marketscap_test"
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "request": {
+    "engine": {
+      "gateway": "http://marketscap.com/back.php/affiliate/externalSorce/api",
+      "method": "GET",
+      "cache": true
+    },
+    "fields": {
+      "url:next": "redirect_url",
+      "email": "client_login",
+      "key": "key",
+      "api:method": "method"
+    },
+    "defaults": {},
+    "values": {}
+  },
+  "response": {
+    "engine": {
+      "contentType": "text/plain"
+    },
+    "fields": {
+      "response": "response",  
+      "error": "error",
+      "return:code": "error:code",
+      "return:message": "error:message",
+      "success": "autologinClient",
+      "url:redirect": "autologinClient:link"
+    },
+    "values": {}
+  }
+}

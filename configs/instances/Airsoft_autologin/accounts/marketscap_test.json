@@ -1,0 +1,10 @@
+{
+  "request": {
+    "overrides": {
+      "key": "N14evNaI7s",
+      "api:method": "autoLoginClient",
+      "url:next": "/trade.php/crypto/deposit/"
+    }
+  },
+  "response": {}
+}
