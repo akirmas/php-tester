@@ -53,7 +53,7 @@ if (!property_exists($input, 'id')) $input->id = $input->tmstmp;
 
 $ConfigDir = mkdir2(__DIR__, 'configs');
 
-$processDir = mkdir2(__DIR__, '..', 'processes', $input->_account, $input->id, $input->process);
+$processDir = mkdir2(__DIR__, '..', 'processes', $input->_account,  $input->process, $input->id);
 $logDir = mkdir2($processDir, $input->tmstmp);
 $processDir = mkDir2($processDir, 'index');
 
