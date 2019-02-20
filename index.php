@@ -143,6 +143,17 @@ forEach($steps as $step) {
     $requestData), $filled
   );
 
+  $cachePath = '';
+  if (property_exists($request->engine, 'cache') && $request->engine->cache) {
+    $cacheDir = mkdir2(__DIR__, '..', 'cached', $input->_account, $input->process);
+    $cachePath = "{$cacheDir}/"
+    .hash("md5",
+      json_encode($request->engine)
+      .json_encode($requestData)
+    );
+    if (file_exists($cachePath))
+      $request->engine->method = 'useCached';
+  }
   switch($request->engine->method) {
     case 'PATCH':
     case 'POST':
@@ -183,12 +194,19 @@ forEach($steps as $step) {
       $request->engine->gateway = $request->engine->gateway.'?'.http_build_query($requestData);
       $responseText = file_get_contents($request->engine->gateway);      
       break;
+    case 'useCached':
+      http_response_code(304);
+      $responseText = file_get_contents($cachePath);      
+      break;
     default: {
       http_response_code(501);
       exit('not impelemented');
     }
   }
 
+  if ($cachePath !== '' && $request->engine->method !== 'useCached')
+    file_put_contents($cachePath, $responseText);
+  
   switch($response->engine->contentType) {
     case 'application/x-www-form-urlencoded':
       parse_str(
