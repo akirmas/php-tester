@@ -35,7 +35,8 @@
     },
     "cc:number": {
       "label": "Number",
-      "type": "text"
+      "type": "text",
+      "validator": "luhn"
     },  
     "cc:expire:month": {
       "label": "Expire month",
@@ -76,14 +77,18 @@
       "value": "test"
     },
     "process": {
-      "type": "hidden",
-      "value": "cascade"
+      "type": "list",
+      "items": [
+        {"value": "cascade", "label": "Tranzilas"},
+        {"value": "Isracard_3d_secure", "label": "Isracard 3d"}        
+      ]
     },
     "save": {
       "label": "Send to stage",
       "type": "submit",
       "action": "https://payment.gobemark.info/php/exchange/master/index.php/teststagebank/",
-      "method": "PATCH"
+      "method": "PATCH",
+      "alert": true
     },
     "pay": {
       "label": "Pay",

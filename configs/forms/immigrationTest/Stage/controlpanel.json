@@ -1,5 +1,6 @@
 {
   "storageUrl": "https://payment.gobemark.info/php/exchange/master/index.php/teststagebank/",
+  "storageAlert": true,
   "paymentform": {
     "origin": "https://akirmas.github.io",
     "pathname": "/paymentform/",
