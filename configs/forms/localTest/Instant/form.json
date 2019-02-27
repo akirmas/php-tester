@@ -35,19 +35,24 @@
     },
     "cc:number": {
       "label": "Number",
-      "type": "text"
+      "type": "text",
+      "validate": "luhn",
+      "required": true
     },  
     "cc:expire:month": {
       "label": "Expire month",
-      "type": "month"
+      "type": "month",
+      "required": true
     },  
     "cc:expire:year": {
       "label": "Expire year",
-      "type": "year"
+      "type": "year",
+      "required": true
     },
     "cc:cvv": {
       "label": "CVV2",
-      "type": "number"
+      "type": "number",
+      "required": true
     },
     "deal": {
       "label": "Deal"
@@ -68,16 +73,21 @@
     },
     "currency": {
       "label": "Currency",
+      "type": "list",
       "disabled": true,
-      "value": "GBP"
+      "items": [
+        {"value": "GBP"}
+      ]
     },
     "account": {
       "type": "hidden",
       "value": "test"
     },
     "process": {
-      "type": "hidden",
-      "value": "cascade"
+      "label": "process",
+      "type": "text",
+      "value": "cascade",
+      "disabled": true
     },
     "save": {
       "label": "Send to stage",
