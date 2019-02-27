@@ -22,7 +22,7 @@ class CommonHandler extends CycleHandler {
     );
     $names = explode(' ', $name_full);
     $name_last = array_pop($names);
-    $name_first = sizeof($names) > 0 ? array_shift($names) : '';
+    $name_first = count($names) > 0 ? array_shift($names) : '';
     $name_last = join(' ', array_merge($names, [$name_last]));
     //</Names>
     //<Amount and currency>
@@ -77,8 +77,12 @@ class CommonHandler extends CycleHandler {
   
   static function onResponseFormed(object $env, object $output, object $input) : object {
     $success = property_exists($output, 'success:ing')
-    ? (int) $output->{'success:ing'}
-    : (
+    ? (
+      gettype($output->{'success:ing'}) !== 'integer'
+      || abs($output->{'success:ing'}) > 1
+      ? 0
+      : $output->{'success:ing'}
+    ) : (
       property_exists($output, 'return:code') 
       ? (
         // intermediate action - therefore for await (-1) shoud be good (0)
