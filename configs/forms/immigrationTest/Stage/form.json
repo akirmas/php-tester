@@ -103,12 +103,12 @@
     "transaction:id": {
       "label": "Transaction number (id)",
       "type": "number",
-      "defaultValue": "000000"
+      "value": "000000"
     },      
     "transaction:receipt": {
       "label": "Receipt number (id)",
       "type": "number",
-      "defaultValue": "000000"
+      "value": "000000"
     }
   }
 }
