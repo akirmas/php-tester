@@ -24,6 +24,30 @@
       "return:message": "email already exists"
     }
   ],
+  "immi_cascade": [
+    {
+      "amount": 10,
+      "name:full": "First Lastname",
+      "cc:cvv": "123",
+      "cc:expire:date": "0120",
+      "cc:number": "4242424242424242",
+      "cc:system": "None",
+      "company": "company",
+      "currency": "USD",
+      "description": "test",
+      "email": "andrii@gobe-mark.com",
+      "entity": "lead",
+      "account": "immigration",
+      "process": "cascade",
+      "id": "test1",
+      "phone": "987654321",
+      "leadId": "1426917"
+    },
+    {
+      "success": -1,
+      "amountInt": 1000
+    }    
+  ], 
   "cascade": [
     {
       "amount": 10,
@@ -104,7 +128,7 @@
       "cc:number": "12312312",
       "cc:system": "None",
       "company": "company",
-      "currency": "GBP",
+      "currency": "ILS",
       "description": "test",
       "email": "andrii@gobe-mark.com",
       "entity": "lead",
@@ -115,7 +139,8 @@
       "leadId": "1426917"
     },    
     {
-      "return:code": "000"
+      "return:code": "000",
+      "success": 1
     }
   ],
   "netpay" : [
