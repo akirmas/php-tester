@@ -35,8 +35,7 @@ $input = (
   ? ((array) json_decode(preg_replace('/(^"|"$)/i', '', $_SERVER['argv'][1]), true))
   : []
 ) + $input;
-$input = json_decode(file_get_contents(__DIR__.'/index.test.json'),true)['immi_cascade'][0];
-
+//$input = json_decode(file_get_contents(__DIR__.'/index.test.json'),true)['immi_cascade'][0];
 
 // The only field to be hardcoded - key 'account' will be used as it in 3rd parties, avoid ambiguity
 $input['_account'] = $input['account'];
