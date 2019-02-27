@@ -47,7 +47,8 @@
       "return:code": "Response",
       "return:message": "ResponseClone",
       "success:ing": "ResponseClone2",
-      "event:id": "Tempref"
+      "event:id": "Tempref",
+      "success:code": "ConfirmationCode"
     },
     "verify": {},
     "defaults": {
