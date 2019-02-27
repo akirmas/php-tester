@@ -29,13 +29,13 @@ if (gettype($input) !== 'array')
   $input = [];
 
 $input = (
-  sizeof($_REQUEST) === 0 ? [] : $_REQUEST
+  count($_REQUEST) === 0 ? [] : $_REQUEST
 ) + (
-  array_key_exists('argv', $_SERVER) && sizeof($_SERVER['argv']) > 1
+  array_key_exists('argv', $_SERVER) && count($_SERVER['argv']) > 1
   ? ((array) json_decode(preg_replace('/(^"|"$)/i', '', $_SERVER['argv'][1]), true))
   : []
 ) + $input;
-//$input = json_decode(file_get_contents(__DIR__.'/index.test.json'),true)['marketscap_autologin_cached'][0];
+$input = json_decode(file_get_contents(__DIR__.'/index.test.json'),true)['immi_cascade'][0];
 
 
 // The only field to be hardcoded - key 'account' will be used as it in 3rd parties, avoid ambiguity

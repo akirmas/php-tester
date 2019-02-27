@@ -18,14 +18,14 @@ function mapKeys(
       
     } while (
       !property_exists($keyMap, $key)
-      && $lastIndex < sizeof($row)
+      && $lastIndex < count($row)
     );
     if (property_exists($keyMap, $key))
       $key = $keyMap->{$key};
     else {
       if (!$keepUnmet)
         continue;
-      $lastIndex = sizeof($row) - 1;
+      $lastIndex = count($row) - 1;
       $key = join($delimiter, array_slice($row, 0, $lastIndex));
     }
     $value = join($delimiter, array_slice($row, $lastIndex));
@@ -102,7 +102,7 @@ function assoc2table(array $assoc) {
 }
 
 function row2assoc(array $row) {
-  $len = sizeof($row);
+  $len = count($row);
   $result = [$row[$len - 2] => $row[$len - 1]];
   foreach(array_slice(array_reverse($row), 2) as $key)
     $result = [$key => $result];
