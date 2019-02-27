@@ -29,6 +29,7 @@
       "amount": 10,
       "name:full": "First Lastname",
       "cc:cvv": "123",
+      "entity:id": "test_cascade_11111",
       "cc:expire:date": "0120",
       "cc:number": "4242424242424242",
       "cc:system": "None",
@@ -40,8 +41,7 @@
       "account": "immigration",
       "process": "cascade",
       "id": "test1",
-      "phone": "987654321",
-      "leadId": "1426917"
+      "phone": "987654321"
     },
     {
       "success": -1,
@@ -52,6 +52,7 @@
     {
       "amount": 10,
       "name:full": "First Lastname",
+      "entity:id": "test_cascade1111",
       "cc:cvv": "123",
       "cc:expire:date": "0120",
       "cc:number": "4242424242424242",
@@ -64,8 +65,7 @@
       "account": "test",
       "process": "cascade",
       "id": "test1",
-      "phone": "987654321",
-      "leadId": "1426917"
+      "phone": "987654321"
     },
     {
       "success": -1,
@@ -89,7 +89,7 @@
       "process": "Isracard_3d_secure",
       "id": "test1",
       "phone": "987654321",
-      "leadId": "1426917"
+      "entity:id": "1426917"
     },
     {
       "return:code": "0",
@@ -112,7 +112,7 @@
       "process": "Isracard_3d_secure",
       "name:full": "andrii test",
       "phone": "987654321",
-      "leadId": "1426917"
+      "entity:id": "1426917"
     },    
     {
       "return:message:0": "Invalid price, out of min-max bounds",
@@ -133,10 +133,10 @@
       "email": "andrii@gobe-mark.com",
       "entity": "lead",
       "account": "test",
+      "entity:id": "test_cascade_11111",
       "process": "Tranzila_instant_charge",
       "full_name": "andrii test",
-      "phone": "987654321",
-      "leadId": "1426917"
+      "phone": "987654321"
     },    
     {
       "return:code": "000",

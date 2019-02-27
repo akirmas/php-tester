@@ -5,6 +5,7 @@
       "method": "GET"
     },  
     "fields": {
+      "entity:id": "myid",
       "address": "address",
       "email": "email",
       "currency:final": "currency",
