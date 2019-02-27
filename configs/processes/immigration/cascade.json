@@ -2,11 +2,15 @@
   "oneOf": [
     {
       "instance": "Tranzila",
-      "account": "immigration"
+      "account": "goodadvise1"
     },
     {
-      "instance": "Isracard",
-      "account": "immigration"
-    }
+      "instance": "Tranzila",
+      "account": "gclusa1"
+    },
+    {
+      "instance": "Tranzila",
+      "account": "exca"
+    }    
   ]
 }
