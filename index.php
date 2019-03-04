@@ -160,6 +160,7 @@ forEach($steps as $step) {
       curl_setopt_array($ch,
         [
           CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_FRESH_CONNECT => true,
           CURLOPT_CUSTOMREQUEST => $request->engine->method,
           CURLOPT_HEADER => 1,
           //CURLOPT_VERBOSE => 1,
@@ -194,7 +195,6 @@ forEach($steps as $step) {
       $responseText = file_get_contents($request->engine->gateway);      
       break;
     case 'useCached':
-      http_response_code(304);
       $responseText = file_get_contents($cachePath);      
       break;
     default: {
