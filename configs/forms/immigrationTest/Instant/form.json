@@ -77,12 +77,7 @@
       "value": "test"
     },
     "process": {
-      "label": "Processor",
-      "type": "list",
-      "items": [
-        {"value": "cascade", "label": "Tranzilas"},
-        {"value": "Isracard_3d_secure", "label": "Isracard 3d"}        
-      ]
+      "type": "hidden"
     },
     "save": {
       "label": "Send to stage",
