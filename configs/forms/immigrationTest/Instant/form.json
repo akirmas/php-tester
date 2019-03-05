@@ -68,9 +68,12 @@
       "step": 0.01
     },
     "currency": {
+      "type": "list",
       "label": "Currency",
       "disabled": true,
-      "value": "GBP"
+      "items": [
+        {"value": "GBP"}
+      ]
     },
     "account": {
       "type": "hidden",
