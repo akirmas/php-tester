@@ -81,6 +81,54 @@ function merge(...$objects) {
   return $base;
 }
 
+function mergeJsons(...$paths) {
+  return merge(
+    ...array_map(
+      function($path) {
+        return !file_exists($path)
+        ? []
+        : json_decode(file_get_contents($path));
+      },
+      $paths
+    )
+  );
+}
+
+function pathsResolver($baseDir, $path, $filename = '') {
+  if (!is_array($path))
+    $path = explode('/', (string) $path);
+  $output = array_reduce(
+    array_merge(
+      [''],
+      $path
+    ),
+    function ($acc, $folder) use ($filename) {
+      $path = $acc['path']
+      .($folder === '' ? '' : '/')
+      .$folder;
+      return [
+        'path' => $path,
+        'files' => array_merge(
+          $acc['files'],
+          array_merge(
+            ["{$path}.json", "{$path}/index.json"],
+            $filename === '' ? [] : ["{$path}/{$filename}.json"]
+          )
+        )
+      ];
+    },
+    [
+      'path' => is_array($baseDir) ? join('/', $baseDir) : $baseDir,
+      'files' => []
+    ]
+  );
+  return $output['files'];
+}
+
+function mergeJsonPaths($baseDir, $path, $filename = '') {
+  return mergeJsons(...pathsResolver($baseDir, $path, $filename));
+}
+
 function flip($obj) :object {
   return (object) array_flip((array) $obj);
 }
