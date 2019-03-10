@@ -38,8 +38,9 @@ $input = (
 //$input = json_decode(file_get_contents(__DIR__.'/index.test.json'),true)['immi_cascade'][0];
 
 // The only field to be hardcoded - key 'account' will be used as it in 3rd parties, avoid ambiguity
-$input['_account'] = $input['account'];
+$system['_account'] = $input['account'];
 unset($input['account']);
+$system['process'] = $input['process'];
 
 $input = $system + $input;
 
