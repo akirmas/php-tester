@@ -68,6 +68,7 @@
     "description": {
       "label": "Products",
       "type": "textarea",
+      "hidden": true,
       "rows": 4
     },
     "amount": {

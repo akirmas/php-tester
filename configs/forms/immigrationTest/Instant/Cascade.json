@@ -72,7 +72,8 @@
       "label": "Products",
       "type": "textarea",
       "rows": 4,
-      "required": true
+      "required": true,
+      "hidden": true
     },
     "amount": {
       "label": "Sum",
