@@ -4,7 +4,7 @@
   "data$url": "https://payment.gobemark.info/php/exchange/master/index.php/",
   "inputs": {
     "title": {
-      "label": "Payment form - Isracard 3d"
+      "label": "Payment form - Cascade"
     },
     "entityId": {
       "label": "Entity Id",
@@ -23,8 +23,7 @@
     },
     "address": {
       "label": "Address",
-      "type": "textarea",
-      "required": true
+      "type": "textarea"
     },
     "email": {
       "label": "Email",
@@ -37,20 +36,24 @@
       "required": true
     },
     "cc": {
-      "label": "Credit Card"
+      "label": "Credit Card",
+      "required": true
     },
     "cc:number": {
       "label": "Number",
       "type": "text",
-      "validator": "luhn"
+      "validator": "luhn",
+      "required": true
     },  
     "cc:expire:month": {
       "label": "Expire month",
-      "type": "month"
+      "type": "month",
+      "required": true
     },  
     "cc:expire:year": {
       "label": "Expire year",
-      "type": "year"
+      "type": "year",
+      "required": true
     },
     "cc:cvv": {
       "label": "CVV2",
@@ -68,7 +71,8 @@
     "description": {
       "label": "Products",
       "type": "textarea",
-      "rows": 4
+      "rows": 4,
+      "required": true
     },
     "amount": {
       "label": "Sum",
@@ -90,7 +94,7 @@
     },
     "process": {
       "type": "hidden",
-      "value": "Isracard3d"
+      "value": "Cascade"
     },
     "save": {
       "label": "Send to stage",
