@@ -15,7 +15,9 @@
       "return:code": "status_error_code",
       "return:message": "status_error_details",
       "success": "payme_status",
-      "id:absolute:received": "transaction_id"
+      "id:absolute:received": "transaction_id",
+      "process": "process",
+      "_account": "_account"
     },
     "values": {
       "success": {
