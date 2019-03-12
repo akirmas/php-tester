@@ -166,7 +166,7 @@ forEach($steps as $step) {
           CURLOPT_CUSTOMREQUEST => $request->engine->method,
           CURLOPT_HEADER => 1,
           //CURLOPT_VERBOSE => 1,
-          CURLOPT_POSTFIELDS => json_encode($requestData),
+          CURLOPT_POSTFIELDS => json_encode($requestData, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE),
           CURLOPT_HTTPHEADER => array_merge(
             [
               'Request-Date: '. gmdate('D, d M Y H:i:s T'),
@@ -254,7 +254,7 @@ forEach($steps as $step) {
     break;
 }
 
-echo json_encode($output);
+echo json_encode($output, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
 
 function fireEvent(...$data) :object {
   global $event, $phase, $handler, $logDir, $processDir, $commonHandler, $step;
