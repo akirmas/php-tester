@@ -1,7 +1,7 @@
 {
   "marketscap_autologin_cached": [
     {
-      "email": "psps@gb,.test",
+      "email": "psps@gb.test",
       "account": "marketscap",
       "process": "autologin_test"
     },
@@ -44,8 +44,7 @@
       "phone": "987654321"
     },
     {
-      "success": -1,
-      "amountInt": 1000
+      "success": 0
     }    
   ], 
   "cascade": [
@@ -68,8 +67,7 @@
       "phone": "987654321"
     },
     {
-      "success": -1,
-      "amountInt": 1000
+      "success": 0
     }    
   ], 
   "isra_frame_good": [
@@ -109,7 +107,7 @@
       "email": "andrii@gobe-mark.com",
       "entity": "lead",
       "account": "test",
-      "process": "Isracard_3d_secure",
+      "process": "Isracard3d",
       "name:full": "andrii test",
       "phone": "987654321",
       "entity:id": "1426917"
