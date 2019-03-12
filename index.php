@@ -18,6 +18,7 @@ if (!isset($_SERVER['REQUEST_METHOD']))
 $system = [
   'tmstmp' => tmstmp(),
   'http:ip' => getClientIp(),
+  'http:port' => !array_key_exists('SERVER_PORT', $_SERVER) ? '' : $_SERVER['SERVER_PORT'],
   'http:method' => $_SERVER['REQUEST_METHOD']
 ];
 
