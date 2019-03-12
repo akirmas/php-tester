@@ -272,7 +272,7 @@ function fireEvent(...$data) :object {
     $data[0]
   );
   $dirs = [$logDir, $processDir];
-  $dataJson = json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+  $dataJson = json_encode($data, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
   foreach ($dirs as $dir) {
     file_put_contents(
       mkdir2($dir, $handler)."/$event$phase.json",
