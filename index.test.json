@@ -86,7 +86,7 @@
       "email": "andrii@gobe-mark.com",
       "entity": "lead",
       "account": "test",
-      "process": "Isracard_3d_secure",
+      "process": "Isracard3d",
       "id": "test1",
       "phone": "987654321",
       "entity:id": "1426917"
