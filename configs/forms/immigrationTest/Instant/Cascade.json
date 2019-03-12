@@ -9,7 +9,8 @@
     "entityId": {
       "label": "Entity Id",
       "type": "number",
-      "required": true
+      "required": true,
+      "disabled": true
     },
     "name:first": {
       "label": "First name",
@@ -66,20 +67,22 @@
     "id": {
       "label": "Deal Id",
       "type": "text",
-      "required": true
+      "required": true,
+      "disabled": true
     },
     "description": {
       "label": "Products",
       "type": "textarea",
       "rows": 4,
       "required": true,
-      "hidden": true
+      "disabled": true
     },
     "amount": {
       "label": "Sum",
       "type": "number",
       "step": 0.01,
-      "required": true
+      "required": true,
+      "disabled": true
     },
     "currency": {
       "type": "list",
