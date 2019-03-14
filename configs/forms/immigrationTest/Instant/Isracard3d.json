@@ -7,20 +7,20 @@
       "label": "Payment form - Isracard 3d"
     },
     "entityId": {
-      "label": "Entity Id",
+      "label": "Entity ID",
       "type": "number",
       "required": true,
       "disabled": true
     },
     "user:name:full": {
       "label": "Agent name",
-      "type": "string",
+      "type": "text",
       "required": true,
       "disabled": true
     },
     "user:email": {
       "label": "Agent email",
-      "type": "string",
+      "type": "text",
       "required": true,
       "disabled": true
     },
