@@ -12,6 +12,27 @@
       "required": true,
       "disabled": true
     },
+    "user:name:full": {
+      "label": "Agent name",
+      "type": "string",
+      "required": true,
+      "disabled": true
+    },
+    "user:email": {
+      "label": "Agent email",
+      "type": "string",
+      "required": true,
+      "disabled": true
+    },
+    "user:id": {
+      "label": "Agent ID",
+      "type": "number",
+      "required": true,
+      "disabled": true
+    },
+    "details": {
+      "label": "Contact information"
+    },
     "name:first": {
       "label": "First name",
       "type": "text",
