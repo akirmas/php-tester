@@ -106,11 +106,6 @@
       "type": "submit",
       "action": "https://payment.gobemark.info/php/psps/master/",
       "method": "POST"    
-    },
-    "send:email": {
-      "label": "Send via EMAIL",
-      "type": "submit",
-      "disabled": true
-    }    
+    } 
   }
 }

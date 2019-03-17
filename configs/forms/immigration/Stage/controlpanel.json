@@ -1,0 +1,10 @@
+{
+  "storageUrl": "https://payment.gobemark.info/php/exchange/master/index.php/stagebank/",
+  "storageAlert": true,
+  "paymentform": {
+    "origin": "https://payment.gobemark.info",
+    "pathname": "/react/paymentform/v1.0.1/",
+    "schema$url": "https://payment.gobemark.info/apis/master/configs/forms/?json=immigration/Stage/form",
+    "data$url$placement": "https://payment.gobemark.info/php/exchange/master/index.php/"
+  }
+}
