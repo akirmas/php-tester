@@ -1,5 +1,5 @@
 {
-  "name": "immigrationTest",
+  "name": "test/Instant/Isracard3d",
   "account": "test",
   "data$url": "https://payment.gobemark.info/php/exchange/master/index.php/",
   "inputs": {
@@ -90,7 +90,8 @@
     },
     "account": {
       "type": "hidden",
-      "value": "test"
+      "value": "test",
+      "disabled": true
     },
     "process": {
       "type": "hidden",
@@ -99,7 +100,7 @@
     "save": {
       "label": "Send to stage",
       "type": "submit",
-      "action": "https://payment.gobemark.info/php/exchange/master/index.php/teststagebank/",
+      "action": "https://payment.gobemark.info/php/exchange/master/index.php/stagebank/",
       "method": "PATCH",
       "alert": true
     },
@@ -108,6 +109,6 @@
       "type": "submit",
       "action": "https://payment.gobemark.info/php/psps/master/",
       "method": "POST"    
-    }
+    } 
   }
 }

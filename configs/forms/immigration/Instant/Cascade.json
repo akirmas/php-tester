@@ -1,6 +1,6 @@
 {
-  "name": "test/Instant/Cascade",
-  "account": "test",
+  "name": "immigration/Instant/Cascade",
+  "account": "immigration",
   "data$url": "https://payment.gobemark.info/php/exchange/master/index.php/",
   "inputs": {
     "title": {
@@ -8,53 +8,50 @@
     },
     "entityId": {
       "label": "Entity ID",
-      "type": "number",
+      "type": "hidden",
       "required": true,
       "disabled": true
     },
     "user:name:full": {
       "label": "Agent name",
-      "type": "text",
+      "type": "hidden",
       "required": true,
       "disabled": true
     },
     "user:email": {
       "label": "Agent email",
-      "type": "text",
+      "type": "hidden",
       "required": true,
       "disabled": true
     },
     "user:id": {
       "label": "Agent ID",
-      "type": "number",
+      "type": "hidden",
       "required": true,
       "disabled": true
     },
-    "details": {
-      "label": "Contact information"
-    },
     "name:first": {
       "label": "First name",
-      "type": "text",
+      "type": "hidden",
       "required": true
     },
     "name:last": {
       "label": "Last name",
-      "type": "text",
+      "type": "hidden",
       "required": true
     },
     "address": {
       "label": "Address",
-      "type": "textarea"
+      "type": "hidden"
     },
     "email": {
       "label": "Email",
-      "type": "email",
+      "type": "hidden",
       "required": true
     },
     "phone": {
       "label": "Phone",
-      "type": "tel",
+      "type": "hidden",
       "required": true
     },
     "cc": {
@@ -87,7 +84,7 @@
     },
     "id": {
       "label": "Deal Id",
-      "type": "text",
+      "type": "hidden",
       "required": true,
       "disabled": true
     },
@@ -115,8 +112,8 @@
     },
     "account": {
       "type": "hidden",
-      "disabled": true,
-      "value": "test"
+      "value": "immigration",
+      "disabled": true
     },
     "process": {
       "type": "hidden",
@@ -125,7 +122,7 @@
     "save": {
       "label": "Send to stage",
       "type": "submit",
-      "action": "https://payment.gobemark.info/php/exchange/master/index.php/stagebank/",
+      "action": "https://payment.gobemark.info/php/exchange/master/index.php/teststagebank/",
       "method": "PATCH",
       "alert": true
     },
