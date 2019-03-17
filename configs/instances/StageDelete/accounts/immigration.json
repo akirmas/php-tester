@@ -1,7 +1,7 @@
 {
   "request": {
     "engine": {
-      "gateway": "https://payment.gobemark.info/php/exchange/master/index.php/teststagebank/"
+      "gateway": "https://payment.gobemark.info/php/exchange/master/index.php/stagebank/"
     },
     "overrides": {},
     "defaults": {}

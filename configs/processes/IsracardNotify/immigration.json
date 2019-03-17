@@ -1,0 +1,12 @@
+{
+  "allOf": [
+    {
+      "instance": "IsracardNotify",
+      "account": "immigration"
+    },
+    {
+      "instance": "StageDelete",
+      "account": "immigration"
+    }    
+  ]
+}
