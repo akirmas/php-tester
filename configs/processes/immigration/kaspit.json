@@ -2,11 +2,11 @@
   "allOf": [
     {
       "instance": "Kaspit",
-      "account": "local"
+      "account": "immigration"
     },
     {
       "instance": "StageDelete",
-      "account": "local"
+      "account": "immigration"
     }    
   ]
 }

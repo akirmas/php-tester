@@ -4,7 +4,8 @@
       "gateway": "https://payment.gobemark.info/php/exchange/master/index.php/{id:absolute}/result"
     },
     "overrides": {
-      "success": 1
+      "success": 0,
+      "return:message": "Kaspit decline"
     }
   },
   "response": {

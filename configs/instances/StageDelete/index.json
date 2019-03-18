@@ -8,11 +8,13 @@
       "history": true
     },
     "fields": {
-      "success": "{id:absolute:received}"
+      "success": "{id:absolute:received}",
+      "return:message": "return:message"
     },
     "values": {
       "success": {
-        "1": null
+        "1": null,
+        "0": null
       }
     },
     "defaults": {}
@@ -21,7 +23,9 @@
     "engine": {
       "contentType": "application/json"
     },
-    "fields": {},
+    "fields": {
+      "return:message": "return:message"
+    },
     "values": {},
     "defaults": {},
     "overrides": {}

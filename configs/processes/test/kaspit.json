@@ -1,8 +1,12 @@
 {
-  "oneOf": [
+  "allOf": [
     {
       "instance": "Kaspit",
       "account": "test"
-    }
+    },
+    {
+      "instance": "StageDelete",
+      "account": "test"
+    }    
   ]
 }

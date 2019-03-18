@@ -32,23 +32,19 @@
     },
     "cc:number": {
       "label": "Number",
-      "type": "text",
-      "required": true
+      "type": "text"
     },  
     "cc:expire:month": {
       "label": "Expire month",
-      "type": "month",
-      "required": true
+      "type": "month"
     },  
     "cc:expire:year": {
       "label": "Expire year",
-      "type": "year",
-      "required": true
+      "type": "year"
     },
     "cc:cvv": {
       "label": "CVV2",
-      "type": "number",
-      "required": true
+      "type": "number"
     },
     "deal": {
       "label": "Deal"
@@ -60,13 +56,11 @@
     "description": {
       "label": "Products",
       "type": "textarea",
-      "rows": 4,
-      "required": true
+      "rows": 4
     },
     "amount": {
       "label": "Sum",
       "type": "number",
-      "required": true,
       "step": 0.01
     },
     "currency": {
@@ -76,8 +70,7 @@
         {"value": "GBP"},
         {"value": "USD"},
         {"value": "ILS"}
-      ],
-      "required": true
+      ]
     },
     "account": {
       "type": "hidden",
@@ -98,8 +91,17 @@
       "label": "Pay",
       "type": "submit",
       "action":  "https://payment.gobemark.info/apis/master/",
-      "method": "POST"    
+      "method": "POST"
     },
+    "reject": {
+      "label": "Reject",
+      "type": "submit",
+      "action":  "https://payment.gobemark.info/apis/master/",
+      "method": "POST",
+      "data": {
+        "process": "reject"
+      }
+    },    
     "transaction:id": {
       "label": "Transaction number (id)",
       "type": "number",

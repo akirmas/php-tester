@@ -14,9 +14,7 @@
     },
     "values": {},
     "defaults": {},
-    "overrides": {
-      "success": 1
-    }
+    "overrides": {}
   },
   "response": {
     "engine": {
