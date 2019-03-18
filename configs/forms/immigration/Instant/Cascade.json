@@ -55,8 +55,7 @@
       "required": true
     },
     "cc": {
-      "label": "Credit Card",
-      "required": true
+      "label": "Credit Card"
     },
     "cc:number": {
       "label": "Number",
