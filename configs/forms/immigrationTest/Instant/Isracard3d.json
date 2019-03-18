@@ -58,6 +58,31 @@
       "type": "tel",
       "required": true
     },
+    "cc": {
+      "label": "Credit Card",
+      "required": true
+    },
+    "cc:number": {
+      "label": "Number",
+      "type": "text",
+      "validator": "luhn",
+      "required": true
+    },  
+    "cc:expire:month": {
+      "label": "Expire month",
+      "type": "month",
+      "required": true
+    },  
+    "cc:expire:year": {
+      "label": "Expire year",
+      "type": "year",
+      "required": true
+    },
+    "cc:cvv": {
+      "label": "CVV2",
+      "type": "number",
+      "required": true
+    },
     "deal": {
       "label": "Deal"
     },
