@@ -116,7 +116,7 @@
     },
     "process": {
       "type": "hidden",
-      "value": "Cascade"
+      "value": "cascade"
     },
     "save": {
       "label": "Send to stage",
