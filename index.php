@@ -38,6 +38,10 @@ $input = (
 ) + $input;
 //$input = json_decode(file_get_contents(__DIR__.'/index.test.json'),true)['immi_cascade'][0];
 
+//NB! HARDCODE
+if (array_key_exists('cc:number', $input))
+  $input['cc:number'] = preg_replace('/[^0-9]+/', '', $input['cc:number']);
+
 // The only field to be hardcoded - key 'account' will be used as it in 3rd parties, avoid ambiguity
 $system['_account'] = $input['account'];
 unset($input['account']);
