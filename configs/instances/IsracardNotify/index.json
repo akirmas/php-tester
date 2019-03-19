@@ -16,6 +16,7 @@
       "return:message": "status_error_details",
       "success": "payme_status",
       "id:absolute:received": "transaction_id",
+      "amountInt": "price",
       "process": "process",
       "tmstmp": "tmstmp",
       "_account": "_account"

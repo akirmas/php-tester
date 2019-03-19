@@ -49,7 +49,8 @@
       "success:ing": "ResponseClone2",
       "event:id": "Tempref",
       "success:code": "ConfirmationCode",
-      "account": "supplier"
+      "account": "supplier",
+      "amount": "sum"
     },
     "verify": {},
     "defaults": {
