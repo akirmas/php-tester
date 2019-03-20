@@ -6,6 +6,21 @@
     "title": {
       "label": "Payment form"
     },
+    "user:name:full": {
+      "title": "Agent",
+      "type": "text",
+      "required": true
+    },
+    "user:email": {
+      "title": "Agent email",
+      "type": "text",
+      "required": true
+    },
+    "user:id": {
+      "title": "Agent ID",
+      "type": "number",
+      "required": true
+    },    
     "entityId": {
       "label": "Entity Id",
       "type": "number"
