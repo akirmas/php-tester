@@ -5,7 +5,7 @@
     },
     "overrides": {
       "success": 0,
-      "return:message": "Kaspit decline"
+      "return:message": "Declined by Stage"
     }
   },
   "response": {
