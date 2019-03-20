@@ -15,12 +15,11 @@ $options = (object) [
 
 $data = [
   "transaction_id" => "test/test1902171400",
-  "payme_status" => "success",
-  "status_error_code" => "0",
-  "status_code" => "0",
-  "payme_sale_status" => "completed",
-  "sale_status" => "completed",
-  "payme_status" => "success",
+  "payme_status" => "error", // success error
+  "status_error_code" => "0", // 0 *
+  "status_code" => "0", // 0 1
+  "payme_sale_status" => "completed", // completed failed
+  "sale_status" => "failed", // completed failed
   "id" => "20190213-154602_1152845431"
 ];
 
