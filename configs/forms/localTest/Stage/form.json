@@ -3,23 +3,18 @@
   "account": "test",
   "data$url": "http://localhost/exchange/index.php/",
   "inputs": {
-    "title": {
-      "label": "Payment form"
-    },
+    "title": {},
     "entityId": {
       "type": "hidden"
     },
     "name:first": {
-      "label": "First name",
-      "type": "text"
+      "type": "hidden"
     },
     "name:last": {
-      "label": "Last name",
-      "type": "text"
+      "type": "hidden"
     },
     "address": {
-      "label": "Address",
-      "type": "textarea"
+      "type": "hidden"
     },
     "email": {
       "type": "hidden"
@@ -27,62 +22,40 @@
     "phone": {
       "type": "hidden"
     },
-    "cc": {
-      "label": "Credit Card"
-    },
+    "cc": {},
     "cc:number": {
-      "label": "Number",
-      "type": "text",
-      "required": true
+      "type": "hidden"
     },  
     "cc:expire:month": {
-      "label": "Expire month",
-      "type": "month",
-      "required": true
+      "type": "hidden"
     },  
     "cc:expire:year": {
-      "label": "Expire year",
-      "type": "year",
-      "required": true
+      "type": "hidden"
     },
     "cc:cvv": {
-      "label": "CVV2",
-      "type": "number",
-      "required": true
+      "type": "hidden"
     },
-    "deal": {
-      "label": "Deal"
-    },
+    "deal": {},
     "id": {
-      "label": "Deal Id",
-      "type": "text"
+      "type": "hidden"
     },
     "description": {
-      "label": "Products",
-      "type": "textarea",
-      "rows": 4,
-      "required": true
+      "type": "hidden"
     },
     "amount": {
       "label": "Sum",
       "type": "number",
-      "required": true,
       "step": 0.01
     },
     "currency": {
       "label": "Currency",
-      "type": "list",
-      "items": [
-        {"value": "GBP"},
-        {"value": "USD"},
-        {"value": "ILS"}
-      ],
-      "required": true
+      "type": "hidden",
+      "value": "GBP"
     },
     "account": {
       "type": "hidden",
-      "value": "test"
-    },
+      "value": "local"
+    },    
     "process": {
       "label": "Processor",
       "type": "list",
@@ -90,7 +63,7 @@
         {"value": "kaspit_local", "label": "Kaspit - action-button is better"},
         {"value": "Netpay_3d_secure", "label": "Netpay 3d"},
         {"value": "cascade", "label": "Cascade"},
-        {"value": "Isracard_3d_secure", "label": "Isracard 3d"},
+        {"value": "Isracard3d", "label": "Isracard 3d"},
         {"value": "Tranzila_instant_charge", "label": "Tranzila instant"}        
       ]
     },
@@ -100,6 +73,15 @@
       "action": "http://localhost/psps/",
       "method": "POST"    
     },
+    "reject": {
+      "label": "Reject",
+      "type": "submit",
+      "action": "http://localhost/psps/",
+      "method": "POST",
+      "data": {
+        "process": "reject"
+      }
+    },    
     "transaction:id": {
       "label": "Transaction number (id)",
       "type": "number",

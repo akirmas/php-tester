@@ -81,7 +81,7 @@
     },
     "account": {
       "type": "hidden",
-      "value": "test"
+      "value": "immigration"
     },
     "process": {
       "label": "Processor",
@@ -90,7 +90,7 @@
         {"value": "kaspit", "label": "Kaspit - action-button is better"},
         {"value": "Netpay_3d_secure", "label": "Netpay 3d"},
         {"value": "cascade", "label": "Cascade"},
-        {"value": "Isracard_3d_secure", "label": "Isracard 3d"},
+        {"value": "Isracard3d", "label": "Isracard 3d"},
         {"value": "Tranzila_instant_charge", "label": "Tranzila instant"}        
       ]
     },
@@ -100,6 +100,15 @@
       "action":  "https://payment.gobemark.info/apis/master/",
       "method": "POST"    
     },
+    "reject": {
+      "label": "Reject",
+      "type": "submit",
+      "action":  "https://payment.gobemark.info/apis/master/",
+      "method": "POST",
+      "data": {
+        "process": "reject"
+      }
+    },    
     "transaction:id": {
       "label": "Transaction number (id)",
       "type": "number",

@@ -3,23 +3,18 @@
   "account": "test",
   "data$url": "https://payment.gobemark.info/php/exchange/master/index.php/",
   "inputs": {
-    "title": {
-      "label": "Payment form"
-    },
+    "title": {},
     "entityId": {
       "type": "hidden"
     },
     "name:first": {
-      "label": "First name",
-      "type": "text"
+      "type": "hidden"
     },
     "name:last": {
-      "label": "Last name",
-      "type": "text"
+      "type": "hidden"
     },
     "address": {
-      "label": "Address",
-      "type": "textarea"
+      "type": "hidden"
     },
     "email": {
       "type": "hidden"
@@ -27,36 +22,25 @@
     "phone": {
       "type": "hidden"
     },
-    "cc": {
-      "label": "Credit Card"
-    },
+    "cc": {},
     "cc:number": {
-      "label": "Number",
-      "type": "text"
+      "type": "hidden"
     },  
     "cc:expire:month": {
-      "label": "Expire month",
-      "type": "month"
+      "type": "hidden"
     },  
     "cc:expire:year": {
-      "label": "Expire year",
-      "type": "year"
+      "type": "hidden"
     },
     "cc:cvv": {
-      "label": "CVV2",
-      "type": "number"
+      "type": "hidden"
     },
-    "deal": {
-      "label": "Deal"
-    },
+    "deal": {},
     "id": {
-      "label": "Deal Id",
-      "type": "text"
+      "type": "hidden"
     },
     "description": {
-      "label": "Products",
-      "type": "textarea",
-      "rows": 4
+      "type": "hidden"
     },
     "amount": {
       "label": "Sum",
@@ -65,12 +49,8 @@
     },
     "currency": {
       "label": "Currency",
-      "type": "list",
-      "items": [
-        {"value": "GBP"},
-        {"value": "USD"},
-        {"value": "ILS"}
-      ]
+      "type": "hidden",
+      "value": "GBP"
     },
     "account": {
       "type": "hidden",
@@ -83,7 +63,7 @@
         {"value": "kaspit", "label": "Kaspit - action-button is better"},
         {"value": "Netpay_3d_secure", "label": "Netpay 3d"},
         {"value": "cascade", "label": "Cascade"},
-        {"value": "Isracard_3d_secure", "label": "Isracard 3d"},
+        {"value": "Isracard", "label": "Isracard 3d"},
         {"value": "Tranzila_instant_charge", "label": "Tranzila instant"}        
       ]
     },
