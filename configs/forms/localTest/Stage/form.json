@@ -6,11 +6,8 @@
     "reject": {
       "label": "Reject",
       "type": "submit",
-      "action": "http://localhost/psps/",
-      "method": "POST",
-      "data": {
-        "process": "reject_local"
-      }
+      "action": "http://localhost/exchange/index.php/teststagebank/",
+      "method": "PATCH"
     },
     "user:name:full": {
       "title": "Agent",
@@ -119,14 +116,11 @@
         {"value": "kaspit"}
       ]
     },
-    "pay": {
+    "approve": {
       "label": "Approve",
       "type": "submit",
-      "action": "http://localhost/psps/",
-      "method": "POST",
-      "data": {
-        "process": "kaspit"
-      }
+      "action": "http://localhost/exchange/index.php/teststagebank/",
+      "method": "PATCH"
     },
     "transaction:id": {
       "title": "Transaction id",

@@ -6,11 +6,8 @@
     "reject": {
       "label": "Reject",
       "type": "submit",
-      "action": "https://payment.gobemark.info/apis/master/",
-      "method": "POST",
-      "data": {
-        "process": "reject"
-      }
+      "action": "https://payment.gobemark.info/php/exchange/master/index.php/teststagebank/",
+      "method": "PATCH"
     },
     "user:name:full": {
       "title": "Agent",
@@ -122,11 +119,8 @@
     "pay": {
       "label": "Approve",
       "type": "submit",
-      "action": "https://payment.gobemark.info/apis/master/",
-      "method": "POST",
-      "data": {
-        "process": "kaspit"
-      }
+      "action": "https://payment.gobemark.info/php/exchange/master/index.php/",
+      "method": "PATCH"
     },
     "transaction:id": {
       "title": "Transaction id",
