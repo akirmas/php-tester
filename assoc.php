@@ -26,9 +26,9 @@ function mapKeys(
       if (!$keepUnmet)
         continue;
       $lastIndex = count($row) - 1;
-      $key = join($delimiter, array_slice($row, 0, $lastIndex));
+      $key = join2($delimiter, array_slice($row, 0, $lastIndex));
     }
-    $value = join($delimiter, array_slice($row, $lastIndex));
+    $value = join2($delimiter, array_slice($row, $lastIndex));
 
     $matches = [];
     //Idea like \assoc.php:formatString but very different implementation
@@ -41,6 +41,17 @@ function mapKeys(
   return $result;
 }
  
+function join2($delimiter, $arr) {
+  switch(sizeof($arr)) {
+    case 0:
+      return null;
+    case 1:
+      return $arr[0];
+    default:
+      return join($delimiter, $arr);
+  }
+}
+
 function mapValues(
   object $assoc,
   object $valuesMap,

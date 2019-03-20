@@ -8,7 +8,7 @@
       "history": true
     },
     "fields": {
-      "success": "{id:absolute:received}",
+      "success": "{id:absolute}",
       "return:message": "return:message"
     },
     "values": {
