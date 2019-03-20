@@ -3,7 +3,47 @@
   "account": "test",
   "data$url": "https://payment.gobemark.info/php/exchange/master/index.php/",
   "inputs": {
-    "title": {},
+    "reject": {
+      "label": "Reject",
+      "type": "submit",
+      "action":  "https://payment.gobemark.info/apis/master/",
+      "method": "POST",
+      "data": {
+        "process": "reject"
+      }
+    },      
+    "amount": {
+      "type": "number",
+      "step": 0.01
+    },
+    "currency": {
+      "type": "text",
+      "value": "GBP",
+      "disabled": true
+    },
+    "account": {
+      "type": "hidden",
+      "value": "test"
+    },
+    "pay": {
+      "label": "Kaspit",
+      "type": "submit",
+      "action":  "https://payment.gobemark.info/apis/master/",
+      "method": "POST",
+      "data": {
+        "process": "kaspit"
+      }
+    },  
+    "transaction:id": {
+      "type": "number",
+      "placeholder": "000000",
+      "pattern": "[0-9]{5}"
+    },      
+    "transaction:receipt": {
+      "type": "number",
+      "placeholder": "00000000",
+      "pattern": "[0-9]{7}"
+    },
     "entityId": {
       "type": "hidden"
     },
@@ -41,56 +81,6 @@
     },
     "description": {
       "type": "hidden"
-    },
-    "amount": {
-      "label": "Sum",
-      "type": "number",
-      "step": 0.01
-    },
-    "currency": {
-      "label": "Currency",
-      "type": "hidden",
-      "value": "GBP"
-    },
-    "account": {
-      "type": "hidden",
-      "value": "test"
-    },
-    "process": {
-      "label": "Processor",
-      "type": "list",
-      "items": [
-        {"value": "kaspit", "label": "Kaspit - action-button is better"},
-        {"value": "Netpay_3d_secure", "label": "Netpay 3d"},
-        {"value": "cascade", "label": "Cascade"},
-        {"value": "Isracard", "label": "Isracard 3d"},
-        {"value": "Tranzila_instant_charge", "label": "Tranzila instant"}        
-      ]
-    },
-    "pay": {
-      "label": "Pay",
-      "type": "submit",
-      "action":  "https://payment.gobemark.info/apis/master/",
-      "method": "POST"
-    },
-    "reject": {
-      "label": "Reject",
-      "type": "submit",
-      "action":  "https://payment.gobemark.info/apis/master/",
-      "method": "POST",
-      "data": {
-        "process": "reject"
-      }
-    },    
-    "transaction:id": {
-      "label": "Transaction number (id)",
-      "type": "number",
-      "value": "000000"
-    },      
-    "transaction:receipt": {
-      "label": "Receipt number (id)",
-      "type": "number",
-      "value": "000000"
     }
   }
 }
