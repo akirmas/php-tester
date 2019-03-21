@@ -163,5 +163,27 @@
     {
       "return:code": "503"
     } 
+  ],
+  "tranz_instant_1" : [
+    { "amount": "10",
+      "verify": 0,
+      "cc:cvv": "000",
+      "cc:expire:date": "0115",
+      "cc:number": "4580000000000000",
+      "cc:system": "None",
+      "company": "company",
+      "currency": "EUR",
+      "description": "test",
+      "email": "banderlog17@gmail.com",
+      "entity": "lead",
+      "account": "express-canada.com",
+      "entity:id": "test_cascade_11111",
+      "process": "payment/en",
+      "full_name": "AndriiTEST ShykovTEST",
+      "phone": "987654321"
+    },
+    {
+      "return:code": "036"
+    }
   ]
 }
