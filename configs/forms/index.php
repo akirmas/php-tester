@@ -6,4 +6,4 @@ $json = !array_key_exists('json', $_GET)
   ? '..'
   : $_GET['json'].'.json';
 fileDelivery(__DIR__, $json, 'application/json');
-exit;
+closeAndExit();

@@ -23,7 +23,7 @@ $system = [
 ];
 
 if ($system['http:method'] === 'OPTIONS')
-  exit;
+  closeAndExit();
 
 $input = json_decode(file_get_contents('php://input'), true);
 if (gettype($input) !== 'array')
@@ -205,7 +205,7 @@ forEach($steps as $step) {
       break;
     default: {
       http_response_code(501);
-      exit('not impelemented');
+      closeAndExit('not impelemented');
     }
   }
 

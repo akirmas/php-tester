@@ -126,3 +126,8 @@ function formatString($format, $obj) {
     $format
   );
 }
+
+function closeAndExit($code = 0) {
+  session_write_close();
+  exit($code);
+}
