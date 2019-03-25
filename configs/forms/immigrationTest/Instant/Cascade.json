@@ -8,40 +8,37 @@
     },
     "entityId": {
       "label": "Entity ID",
-      "type": "number",
+      "type": "hidden",
       "required": true,
       "disabled": true
     },
     "user:name:full": {
       "label": "Agent name",
-      "type": "text",
+      "type": "hidden",
       "required": true,
       "disabled": true
     },
     "user:email": {
       "label": "Agent email",
-      "type": "text",
+      "type": "hidden",
       "required": true,
       "disabled": true
     },
     "user:id": {
       "label": "Agent ID",
-      "type": "number",
+      "type": "hidden",
       "required": true,
       "disabled": true
-    },
-    "details": {
-      "label": "Contact information"
     },
     "name:first": {
       "label": "First name",
       "type": "text",
-      "required": true
+      "disabled": true
     },
     "name:last": {
       "label": "Last name",
       "type": "text",
-      "required": true
+      "disabled": true
     },
     "address": {
       "label": "Address",
@@ -50,12 +47,12 @@
     "email": {
       "label": "Email",
       "type": "email",
-      "required": true
+      "disabled": true
     },
     "phone": {
       "label": "Phone",
       "type": "tel",
-      "required": true
+      "disabled": true
     },
     "cc": {
       "label": "Credit Card",
@@ -87,7 +84,7 @@
     },
     "id": {
       "label": "Deal Id",
-      "type": "text",
+      "type": "hidden",
       "required": true,
       "disabled": true
     },

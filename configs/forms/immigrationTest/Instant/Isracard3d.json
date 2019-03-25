@@ -8,55 +8,51 @@
     },
     "entityId": {
       "label": "Entity ID",
-      "type": "number",
+      "type": "hidden",
       "required": true,
       "disabled": true
     },
     "user:name:full": {
       "label": "Agent name",
-      "type": "text",
+      "type": "hidden",
       "required": true,
       "disabled": true
     },
     "user:email": {
       "label": "Agent email",
-      "type": "text",
+      "type": "hidden",
       "required": true,
       "disabled": true
     },
     "user:id": {
       "label": "Agent ID",
-      "type": "number",
+      "type": "hidden",
       "required": true,
       "disabled": true
-    },
-    "details": {
-      "label": "Contact information"
     },
     "name:first": {
       "label": "First name",
       "type": "text",
-      "required": true
+      "disabled": true
     },
     "name:last": {
       "label": "Last name",
       "type": "text",
-      "required": true
+      "disabled": true
     },
     "address": {
       "label": "Address",
-      "type": "textarea",
-      "required": true
+      "type": "textarea"
     },
     "email": {
       "label": "Email",
       "type": "email",
-      "required": true
+      "disabled": true
     },
     "phone": {
       "label": "Phone",
       "type": "tel",
-      "required": true
+      "disabled": true
     },
     "cc": {
       "label": "Credit Card",
@@ -88,22 +84,23 @@
     },
     "id": {
       "label": "Deal Id",
-      "type": "text",
+      "type": "hidden",
       "required": true,
       "disabled": true
     },
     "description": {
       "label": "Products",
       "type": "textarea",
-      "disabled": true,
-      "rows": 4
+      "rows": 4,
+      "required": true,
+      "disabled": true
     },
     "amount": {
       "label": "Sum",
       "type": "number",
       "step": 0.01,
-      "disabled": true,      
-      "required": true
+      "required": true,
+      "disabled": true
     },
     "currency": {
       "type": "list",
@@ -115,8 +112,8 @@
     },
     "account": {
       "type": "hidden",
-      "value": "test",
-      "disabled": true
+      "disabled": true,
+      "value": "test"
     },
     "process": {
       "type": "hidden",
