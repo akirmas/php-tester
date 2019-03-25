@@ -56,17 +56,20 @@
     },  
     "cc:expire:month": {
       "label": "Expire month",
+      "validate": ["required"],
       "type": "month",
       "required": true
     },  
     "cc:expire:year": {
       "label": "Expire year",
+      "validate": "required",
       "type": "year",
       "required": true
     },
     "cc:cvv": {
       "label": "CVV2",
       "type": "number",
+      "validate": ["required"],
       "required": true
     },
     "deal": {

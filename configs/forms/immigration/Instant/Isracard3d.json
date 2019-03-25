@@ -61,7 +61,7 @@
     "cc:number": {
       "label": "Number",
       "type": "text",
-      "validator": "luhn",
+      "validate": "luhn",
       "required": true
     },  
     "cc:expire:month": {

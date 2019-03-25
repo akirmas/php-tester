@@ -60,23 +60,27 @@
     },
     "cc:number": {
       "label": "Number",
-      "type": "text",
-      "validator": "luhn",
-      "required": true
+      "type": "number",
+      "validate": "luhn",
+      "required": true,
+      "validate": "required"
     },  
     "cc:expire:month": {
       "label": "Expire month",
       "type": "month",
-      "required": true
+      "required": true,
+      "validate": "required"
     },  
     "cc:expire:year": {
       "label": "Expire year",
       "type": "year",
+      "validate": "required",
       "required": true
     },
     "cc:cvv": {
       "label": "CVV2",
       "type": "number",
+      "validate": "required",
       "required": true
     },
     "deal": {
@@ -100,7 +104,8 @@
       "type": "number",
       "step": 0.01,
       "required": true,
-      "disabled": true
+      "disabled": true,
+      "validate": "required"
     },
     "currency": {
       "type": "list",
