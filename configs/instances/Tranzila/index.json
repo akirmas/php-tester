@@ -48,7 +48,7 @@
       "return:message": "ResponseClone",
       "success:ing": "ResponseClone2",
       "event:id": "Tempref",
-      "success:code": "ConfirmationCode",
+      "transaction:receipt": "ConfirmationCode",
       "account": "supplier",
       "amount": "sum"
     },
