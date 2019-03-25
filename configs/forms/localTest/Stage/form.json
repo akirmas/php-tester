@@ -102,12 +102,12 @@
       "value": "GBP",
       "size": 3,
       "disabled": true
-    },    
-
+    },
     "account": {
       "label": "PSP",
       "type": "list",
       "items": [
+        {"value": "", "label": ""},
         {"value": "kaspit", "label": "Kaspit"},
         {"value": "isracard", "label": "Isracard"},
         {"value": "sabadel", "label": "Sabadel"},        
@@ -125,14 +125,14 @@
       "label": "Transaction Id",
       "type": "number",
       "size": 5,
-      "placeholder": "000000",
+      "placeholder": "xxxxx",
       "pattern": "[0-9]{5}"
     },      
     "transaction:receipt": {
       "title": "Confirmation number",
       "label": "Confirmation number",
       "type": "number",
-      "placeholder": "00000000",
+      "placeholder": "xxxxxxx",
       "size": 7,
       "pattern": "[0-9]{7}",
       "required": true

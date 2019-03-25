@@ -24,8 +24,8 @@
     "name:first": {
       "label": "First name",
       "title": "Customer first name",
-      "type": "text",
-      "disabled": true
+      "disabled": true,
+      "type": "text"
     },
     "name:last": {
       "label": "Last name",
@@ -36,9 +36,15 @@
     "entityId": {
       "label": "Entity Id",
       "title": "Entity Id",
-      "type": "text",
+      "type": "hidden",
       "disabled": true
     },
+    "id": {
+      "label": "Entity Full Id",
+      "title": "Entity Full Id",
+      "type": "text",
+      "disabled": true
+    },        
     "address": {
       "type": "hidden"
     },
@@ -82,12 +88,6 @@
       "disabled": true,
       "size": 3
     },
-    "id": {
-      "type": "text",
-      "disabled": true,
-      "label": "Deal Id",
-      "size": 3
-    },    
     "amount": {
       "label": "Sum",
       "title": "Sum",
@@ -103,11 +103,11 @@
       "size": 3,
       "disabled": true
     },    
-
     "account": {
       "label": "PSP",
       "type": "list",
       "items": [
+        {"value": "", "label": ""},
         {"value": "kaspit", "label": "Kaspit"},
         {"value": "isracard", "label": "Isracard"},
         {"value": "sabadel", "label": "Sabadel"},        
@@ -125,14 +125,14 @@
       "label": "Transaction Id",
       "type": "number",
       "size": 5,
-      "placeholder": "000000",
+      "placeholder": "xxxxx",
       "pattern": "[0-9]{5}"
     },      
     "transaction:receipt": {
       "title": "Confirmation number",
       "label": "Confirmation number",
       "type": "number",
-      "placeholder": "00000000",
+      "placeholder": "xxxxxxx",
       "size": 7,
       "pattern": "[0-9]{7}",
       "required": true
