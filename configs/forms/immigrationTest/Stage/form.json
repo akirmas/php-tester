@@ -3,12 +3,6 @@
   "account": "test",
   "data$url": "https://payment.gobemark.info/php/exchange/master/index.php/",
   "inputs": {
-    "reject": {
-      "label": "Reject",
-      "type": "submit",
-      "action": "https://payment.gobemark.info/php/exchange/master/index.php/teststagebank/",
-      "method": "PATCH"
-    },
     "user:name:full": {
       "title": "Agent",
       "label": "Agent",
@@ -27,29 +21,6 @@
       "type": "hidden",
       "required": true
     },    
-    "amount": {
-      "label": "Sum",
-      "title": "Sum",
-      "type": "number",
-      "step": 0.01
-    },
-    "currency": {
-      "label": "Currency",
-      "title": "Currency",
-      "type": "text",
-      "value": "GBP",
-      "disabled": true
-    },
-    "account": {
-      "type": "hidden",
-      "value": "test"
-    },
-    "entityId": {
-      "label": "Entity Id",
-      "title": "Entity Id",
-      "type": "text",
-      "disabled": true
-    },
     "name:first": {
       "label": "First name",
       "title": "Customer first name",
@@ -59,6 +30,12 @@
     "name:last": {
       "label": "Last name",
       "title": "Customer last name",
+      "type": "text",
+      "disabled": true
+    },
+    "entityId": {
+      "label": "Entity Id",
+      "title": "Entity Id",
       "type": "text",
       "disabled": true
     },
@@ -77,55 +54,77 @@
       "type": "tel",
       "disabled": true
     },
-    "cc": {},
     "cc:number": {
       "title": "Credit Card number",
-      "label": "Credit Card number",
+      "label": "CC Number",
       "type": "number",
-      "disabled": true
+      "disabled": true,
+      "size": 16
     },  
     "cc:expire:month": {
       "title": "Credit Card Expire Month",
-      "label": "Credit Card Expire Month",
+      "label": "CC Month",
       "type": "number",
-      "disabled": true
+      "disabled": true,
+      "size": 2
     },  
     "cc:expire:year": {
       "title": "Credit Card Expire Year",
-      "label": "Credit Card Expire Year",
+      "label": "CC Year",
       "type": "number",
-      "disabled": true
+      "disabled": true,
+      "size": 4
     },
     "cc:cvv": {
       "title": "Credit Card CVV",
-      "label": "Credit Card CVV",
+      "label": "CVV",
       "type": "text",
-      "disabled": true
+      "disabled": true,
+      "size": 3
     },
-    "deal": {},
     "id": {
-      "type": "hidden"
+      "type": "text",
+      "disabled": true,
+      "label": "Deal Id",
+      "size": 3
+    },    
+    "amount": {
+      "label": "Sum",
+      "title": "Sum",
+      "type": "number",
+      "size": 4,
+      "step": 0.01
     },
-    "description": {
-      "type": "hidden"
-    },
-    "process": {
-      "label": "process",
+    "currency": {
+      "label": "Currency",
+      "title": "Currency",
+      "type": "text",
+      "value": "GBP",
+      "size": 3,
+      "disabled": true
+    },    
+
+    "account": {
+      "label": "PSP",
       "type": "list",
       "items": [
-        {"value": "kaspit"}
-      ]
+        {"value": "kaspit", "label": "Kaspit"},
+        {"value": "isracard", "label": "Isracard"},
+        {"value": "sabadel", "label": "Sabadel"},        
+        {"value": "payfinder", "label": "Payfinder"}
+      ]      
     },
-    "pay": {
-      "label": "Approve",
+    "reject": {
+      "label": "Reject",
       "type": "submit",
-      "action": "https://payment.gobemark.info/php/exchange/master/index.php/",
+      "action": "https://payment.gobemark.info/php/exchange/master/index.php/teststagebank/",
       "method": "PATCH"
-    },
+    },        
     "transaction:id": {
-      "title": "Transaction id",
-      "label": "Transaction id",
+      "title": "Transaction Id",
+      "label": "Transaction Id",
       "type": "number",
+      "size": 5,
       "placeholder": "000000",
       "pattern": "[0-9]{5}"
     },      
@@ -134,7 +133,16 @@
       "label": "Confirmation number",
       "type": "number",
       "placeholder": "00000000",
-      "pattern": "[0-9]{7}"
+      "size": 7,
+      "pattern": "[0-9]{7}",
+      "required": true
+    },
+    "approve": {
+      "label": "Approve",
+      "type": "submit",
+      "action": "https://payment.gobemark.info/php/exchange/master/index.php/teststagebank",
+      "method": "PATCH",
+      "required": true
     }
   }
 }

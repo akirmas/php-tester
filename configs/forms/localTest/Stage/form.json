@@ -54,40 +54,45 @@
       "type": "tel",
       "disabled": true
     },
-    "cc": {},
     "cc:number": {
       "title": "Credit Card number",
-      "label": "Credit Card number",
+      "label": "CC Number",
       "type": "number",
-      "disabled": true
+      "disabled": true,
+      "size": 16
     },  
     "cc:expire:month": {
       "title": "Credit Card Expire Month",
-      "label": "Exp Month",
+      "label": "CC Month",
       "type": "number",
-      "disabled": true
+      "disabled": true,
+      "size": 2
     },  
     "cc:expire:year": {
       "title": "Credit Card Expire Year",
-      "label": "Exp Year",
+      "label": "CC Year",
       "type": "number",
-      "disabled": true
+      "disabled": true,
+      "size": 4
     },
     "cc:cvv": {
       "title": "Credit Card CVV",
       "label": "CVV",
       "type": "text",
-      "disabled": true
+      "disabled": true,
+      "size": 3
     },
     "id": {
       "type": "text",
       "disabled": true,
-      "label": "Deal Id"
+      "label": "Deal Id",
+      "size": 3
     },    
     "amount": {
       "label": "Sum",
       "title": "Sum",
       "type": "number",
+      "size": 4,
       "step": 0.01
     },
     "currency": {
@@ -95,6 +100,7 @@
       "title": "Currency",
       "type": "text",
       "value": "GBP",
+      "size": 3,
       "disabled": true
     },    
 
@@ -102,9 +108,9 @@
       "label": "PSP",
       "type": "list",
       "items": [
-        {"value": "sabadel", "label": "Sabadel"},
         {"value": "kaspit", "label": "Kaspit"},
         {"value": "isracard", "label": "Isracard"},
+        {"value": "sabadel", "label": "Sabadel"},        
         {"value": "payfinder", "label": "Payfinder"}
       ]      
     },
@@ -118,6 +124,7 @@
       "title": "Transaction Id",
       "label": "Transaction Id",
       "type": "number",
+      "size": 5,
       "placeholder": "000000",
       "pattern": "[0-9]{5}"
     },      
@@ -126,6 +133,7 @@
       "label": "Confirmation number",
       "type": "number",
       "placeholder": "00000000",
+      "size": 7,
       "pattern": "[0-9]{7}",
       "required": true
     },
@@ -136,6 +144,5 @@
       "method": "PATCH",
       "required": true
     }
-
   }
 }
