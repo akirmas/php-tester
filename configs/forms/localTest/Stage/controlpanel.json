@@ -3,7 +3,6 @@
   "paymentform": {
     "origin": "http://localhost:3000",
     "pathname": "/",
-    "schema$url": "http://localhost/psps/configs/forms/?json=localTest/Stage/form",
-    "data$url$placement": "http://localhost/exchange/index.php/"
+    "schema$url": "http://localhost/psps/configs/forms/?json=localTest/Stage/form"
   }
 }

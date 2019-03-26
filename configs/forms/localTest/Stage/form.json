@@ -1,7 +1,6 @@
 {
   "name": "localTestStage",
   "account": "test",
-  "data$url": "http://localhost/exchange/index.php/",
   "inputs": {
     "user:name:full": {
       "title": "Agent",
@@ -10,17 +9,6 @@
       "required": true,
       "disabled": true
     },
-    "user:email": {
-      "label": "Agent email",
-      "title": "Agent email",
-      "type": "hidden"
-    },
-    "user:id": {
-      "label": "Agent ID",
-      "title": "Agent ID",
-      "type": "hidden",
-      "required": true
-    },    
     "name:first": {
       "label": "First name",
       "title": "Customer first name",
@@ -30,12 +18,6 @@
     "name:last": {
       "label": "Last name",
       "title": "Customer last name",
-      "type": "text",
-      "disabled": true
-    },
-    "entityId": {
-      "label": "Entity Id",
-      "title": "Entity Id",
       "type": "text",
       "disabled": true
     },
@@ -85,7 +67,8 @@
     "id": {
       "type": "text",
       "disabled": true,
-      "label": "Deal Id",
+      "label": "CRM Id",
+      "title": "CRM Id",
       "size": 3
     },    
     "amount": {
@@ -102,7 +85,7 @@
       "value": "GBP",
       "size": 3,
       "disabled": true
-    },
+    },    
     "account": {
       "label": "PSP",
       "type": "list",
@@ -119,15 +102,7 @@
       "type": "submit",
       "action": "http://localhost/exchange/index.php/teststagebank/",
       "method": "PATCH"
-    },        
-    "transaction:id": {
-      "title": "Transaction Id",
-      "label": "Transaction Id",
-      "type": "number",
-      "size": 5,
-      "placeholder": "xxxxx",
-      "pattern": "[0-9]{5}"
-    },      
+    },   
     "transaction:receipt": {
       "title": "Confirmation number",
       "label": "Confirmation number",

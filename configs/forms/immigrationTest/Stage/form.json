@@ -1,7 +1,6 @@
 {
   "name": "immigrationTestStage",
   "account": "test",
-  "data$url": "https://payment.gobemark.info/php/exchange/master/index.php/",
   "inputs": {
     "user:name:full": {
       "title": "Agent",
@@ -9,18 +8,7 @@
       "type": "text",
       "required": true,
       "disabled": true
-    },
-    "user:email": {
-      "label": "Agent email",
-      "title": "Agent email",
-      "type": "hidden"
-    },
-    "user:id": {
-      "label": "Agent ID",
-      "title": "Agent ID",
-      "type": "hidden",
-      "required": true
-    },    
+    },  
     "name:first": {
       "label": "First name",
       "title": "Customer first name",
@@ -32,19 +20,7 @@
       "title": "Customer last name",
       "type": "text",
       "disabled": true
-    },
-    "entityId": {
-      "label": "Entity Id",
-      "title": "Entity Id",
-      "type": "hidden",
-      "disabled": true
-    },
-    "id": {
-      "label": "Entity Full Id",
-      "title": "Entity Full Id",
-      "type": "text",
-      "disabled": true
-    },        
+    },    
     "address": {
       "type": "hidden"
     },
@@ -88,6 +64,13 @@
       "disabled": true,
       "size": 3
     },
+    "id": {
+      "type": "text",
+      "disabled": true,
+      "label": "CRM Id",
+      "title": "CRM Id",
+      "size": 3
+    },    
     "amount": {
       "label": "Sum",
       "title": "Sum",
@@ -119,15 +102,7 @@
       "type": "submit",
       "action": "https://payment.gobemark.info/php/exchange/master/index.php/teststagebank/",
       "method": "PATCH"
-    },        
-    "transaction:id": {
-      "title": "Transaction Id",
-      "label": "Transaction Id",
-      "type": "number",
-      "size": 5,
-      "placeholder": "xxxxx",
-      "pattern": "[0-9]{5}"
-    },      
+    },           
     "transaction:receipt": {
       "title": "Confirmation number",
       "label": "Confirmation number",

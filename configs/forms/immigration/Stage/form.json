@@ -1,7 +1,6 @@
 {
   "name": "immigration/Stage/form",
   "account": "immigration",
-  "data$url": "https://payment.gobemark.info/php/exchange/master/index.php/",
   "inputs": {
     "title": {
       "label": "Payment form"

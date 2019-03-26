@@ -3,7 +3,6 @@
   "paymentform": {
     "origin": "https://akirmas.github.io",
     "pathname": "/paymentform/",
-    "schema$url": "https://payment.gobemark.info/apis/master/configs/forms/?json=immigrationTest/Stage/form",
-    "data$url$placement": "https://payment.gobemark.info/php/exchange/master/index.php/"
+    "schema$url": "https://payment.gobemark.info/apis/master/configs/forms/?json=immigrationTest/Stage/form"
   }
 }

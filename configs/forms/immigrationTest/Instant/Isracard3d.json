@@ -62,8 +62,7 @@
       "label": "Number",
       "type": "number",
       "validate": "luhn",
-      "required": true,
-      "validate": "required"
+      "required": true
     },  
     "cc:expire:month": {
       "label": "Expire month",
