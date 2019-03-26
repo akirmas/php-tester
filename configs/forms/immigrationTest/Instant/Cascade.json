@@ -113,10 +113,6 @@
       "disabled": true,
       "value": "test"
     },
-    "process": {
-      "type": "hidden",
-      "value": "Cascade"
-    },
     "share": {
       "label": "Send to stage",
       "type": "submit",
@@ -128,7 +124,11 @@
       "label": "Pay",
       "type": "submit",
       "action": "https://payment.gobemark.info/php/psps/master/",
-      "method": "POST"    
+      "method": "POST",
+      "data": {
+        "process": "cascade",
+        "account": "test"
+      }
     }
   }
 }

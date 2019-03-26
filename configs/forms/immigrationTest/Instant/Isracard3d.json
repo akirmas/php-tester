@@ -2,6 +2,7 @@
   "name": "test/Instant/Isracard3d",
   "account": "test",
   "data$url": "https://payment.gobemark.info/php/exchange/master/index.php/",
+  "iframeInWindow": true,
   "cancelDelay": 1000,
   "inputs": {
     "title": {
@@ -130,7 +131,11 @@
       "label": "Pay",
       "type": "submit",
       "action": "https://payment.gobemark.info/php/psps/master/",
-      "method": "POST"    
+      "method": "POST",
+      "data": {
+        "process": "Isracard3d",
+        "account": "test"
+      }
     },
     "send:email": {
       "label": "Send via EMAIL",

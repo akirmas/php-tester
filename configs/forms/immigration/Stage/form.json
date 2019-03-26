@@ -1,123 +1,124 @@
 {
-  "name": "immigration/Stage/form",
+  "name": "immigrationStage",
   "account": "immigration",
   "data$url": "https://payment.gobemark.info/php/exchange/master/index.php/",
   "inputs": {
-    "title": {
-      "label": "Payment form"
-    },
-    "entityId": {
-      "type": "hidden"
-    },
+    "user:name:full": {
+      "title": "Agent",
+      "label": "Agent",
+      "type": "text",
+      "disabled": true
+    },  
     "name:first": {
       "label": "First name",
+      "title": "Customer first name",
+      "disabled": true,
       "type": "text"
     },
     "name:last": {
       "label": "Last name",
-      "type": "text"
-    },
+      "title": "Customer last name",
+      "type": "text",
+      "disabled": true
+    },    
     "address": {
-      "label": "Address",
-      "type": "textarea"
+      "type": "hidden"
     },
     "email": {
-      "type": "hidden"
+      "label": "Email",
+      "title": "Customer Email",
+      "type": "email",
+      "disabled": true
     },
     "phone": {
-      "type": "hidden"
-    },
-    "cc": {
-      "label": "Credit Card"
+      "label": "Phone",
+      "title": "Customer Phone",
+      "type": "tel",
+      "disabled": true
     },
     "cc:number": {
-      "label": "Number",
-      "type": "text",
-      "required": true
+      "title": "Credit Card number",
+      "label": "CC Number",
+      "type": "number",
+      "disabled": true,
+      "size": 16
     },  
     "cc:expire:month": {
-      "label": "Expire month",
-      "type": "month",
-      "required": true
+      "title": "Credit Card Expire Month",
+      "label": "CC Month",
+      "type": "number",
+      "disabled": true,
+      "size": 2
     },  
     "cc:expire:year": {
-      "label": "Expire year",
-      "type": "year",
-      "required": true
+      "title": "Credit Card Expire Year",
+      "label": "CC Year",
+      "type": "number",
+      "disabled": true,
+      "size": 4
     },
     "cc:cvv": {
-      "label": "CVV2",
-      "type": "number",
-      "required": true
-    },
-    "deal": {
-      "label": "Deal"
+      "title": "Credit Card CVV",
+      "label": "CVV",
+      "type": "text",
+      "disabled": true,
+      "size": 3
     },
     "id": {
-      "label": "Deal Id",
-      "type": "text"
-    },
-    "description": {
-      "label": "Products",
-      "type": "textarea",
-      "rows": 4,
-      "required": true
-    },
+      "type": "text",
+      "disabled": true,
+      "label": "CRM Id",
+      "title": "CRM Id",
+      "size": 3
+    },    
     "amount": {
       "label": "Sum",
+      "title": "Sum",
       "type": "number",
-      "required": true,
+      "size": 4,
       "step": 0.01
     },
     "currency": {
       "label": "Currency",
-      "type": "list",
-      "items": [
-        {"value": "GBP"},
-        {"value": "USD"},
-        {"value": "ILS"}
-      ],
-      "required": true
-    },
+      "title": "Currency",
+      "type": "text",
+      "value": "GBP",
+      "size": 3,
+      "disabled": true
+    },    
     "account": {
-      "type": "hidden",
-      "value": "immigration"
-    },
-    "process": {
-      "label": "Processor",
+      "label": "PSP",
       "type": "list",
       "items": [
-        {"value": "kaspit", "label": "Kaspit - action-button is better"},
-        {"value": "Netpay_3d_secure", "label": "Netpay 3d"},
-        {"value": "cascade", "label": "Cascade"},
-        {"value": "Isracard3d", "label": "Isracard 3d"},
-        {"value": "Tranzila_instant_charge", "label": "Tranzila instant"}        
-      ]
-    },
-    "pay": {
-      "label": "Pay",
-      "type": "submit",
-      "action":  "https://payment.gobemark.info/apis/master/",
-      "method": "POST"    
+        {"value": "", "label": ""},
+        {"value": "kaspit", "label": "Kaspit"},
+        {"value": "isracard", "label": "Isracard"},
+        {"value": "sabadel", "label": "Sabadel"},        
+        {"value": "payfinder", "label": "Payfinder"},
+        {"value": "tranzila", "label": "Tranzila"}
+      ]      
     },
     "reject": {
       "label": "Reject",
       "type": "submit",
-      "action":  "https://payment.gobemark.info/apis/master/",
-      "method": "POST",
-      "data": {
-        "process": "reject"
-      }
-    },    
-    "transaction:id": {
-      "label": "Transaction number (id)",
-      "type": "number",
-      "value": "000000"
-    },      
+      "action": "https://payment.gobemark.info/php/exchange/master/index.php/stagebank/",
+      "method": "PATCH"
+    },           
     "transaction:receipt": {
-      "label": "Receipt number (id)",
+      "title": "Confirmation number",
+      "label": "Confirmation number",
       "type": "number",
-      "value": "000000"
+      "placeholder": "xxxxxxx",
+      "size": 7,
+      "pattern": "[0-9]{7}",
+      "required": true
+    },
+    "approve": {
+      "label": "Approve",
+      "type": "submit",
+      "action": "https://payment.gobemark.info/php/exchange/master/index.php/stagebank",
+      "method": "PATCH",
+      "required": true
     }
   }
 }

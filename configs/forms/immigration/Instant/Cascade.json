@@ -9,73 +9,72 @@
     "entityId": {
       "label": "Entity ID",
       "type": "hidden",
-      "required": true,
       "disabled": true
     },
     "user:name:full": {
       "label": "Agent name",
       "type": "hidden",
-      "required": true,
       "disabled": true
     },
     "user:email": {
       "label": "Agent email",
       "type": "hidden",
-      "required": true,
       "disabled": true
     },
     "user:id": {
       "label": "Agent ID",
       "type": "hidden",
-      "required": true,
       "disabled": true
     },
     "name:first": {
       "label": "First name",
-      "type": "hidden",
-      "required": true
+      "type": "text",
+      "disabled": true
     },
     "name:last": {
       "label": "Last name",
-      "type": "hidden",
-      "required": true
+      "type": "text",
+      "disabled": true
     },
     "address": {
       "label": "Address",
-      "type": "hidden"
+      "type": "textarea"
     },
     "email": {
       "label": "Email",
-      "type": "hidden",
-      "required": true
+      "type": "email",
+      "disabled": true
     },
     "phone": {
       "label": "Phone",
-      "type": "hidden",
-      "required": true
+      "type": "tel",
+      "disabled": true
     },
     "cc": {
       "label": "Credit Card"
     },
     "cc:number": {
       "label": "Number",
-      "type": "text",
+      "type": "number",
       "validate": "luhn",
       "required": true
     },  
     "cc:expire:month": {
       "label": "Expire month",
       "type": "month",
-      "required": true
+      "required": true,
+      "validate": "require"
     },  
     "cc:expire:year": {
       "label": "Expire year",
       "type": "year",
+      "validate": "require",
       "required": true
     },
     "cc:cvv": {
       "label": "CVV2",
       "type": "number",
+      "validate": "require",
       "required": true
     },
     "deal": {
@@ -111,12 +110,8 @@
     },
     "account": {
       "type": "hidden",
-      "value": "immigration",
-      "disabled": true
-    },
-    "process": {
-      "type": "hidden",
-      "value": "cascade"
+      "disabled": true,
+      "value": "test"
     },
     "share": {
       "label": "Send to stage",
@@ -129,7 +124,11 @@
       "label": "Pay",
       "type": "submit",
       "action": "https://payment.gobemark.info/php/psps/master/",
-      "method": "POST"    
+      "method": "POST",
+      "data": {
+        "process": "cascade",
+        "account": "immigration"
+      }
     }
   }
 }

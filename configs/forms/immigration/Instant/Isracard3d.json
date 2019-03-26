@@ -1,7 +1,8 @@
 {
-  "name": "immigration/Instant/Isracard3d",
+  "name": "test/Instant/Isracard3d",
   "account": "immigration",
   "data$url": "https://payment.gobemark.info/php/exchange/master/index.php/",
+  "iframeInWindow": true,
   "cancelDelay": 60000,
   "inputs": {
     "title": {
@@ -10,74 +11,72 @@
     "entityId": {
       "label": "Entity ID",
       "type": "hidden",
-      "required": true,
       "disabled": true
     },
     "user:name:full": {
       "label": "Agent name",
       "type": "hidden",
-      "required": true,
       "disabled": true
     },
     "user:email": {
       "label": "Agent email",
       "type": "hidden",
-      "required": true,
       "disabled": true
     },
     "user:id": {
       "label": "Agent ID",
       "type": "hidden",
-      "required": true,
       "disabled": true
     },
     "name:first": {
       "label": "First name",
-      "type": "hidden",
-      "required": true
+      "type": "text",
+      "disabled": true
     },
     "name:last": {
       "label": "Last name",
-      "type": "hidden",
-      "required": true
+      "type": "text",
+      "disabled": true
     },
     "address": {
       "label": "Address",
-      "type": "hidden",
-      "required": true
+      "type": "textarea"
     },
     "email": {
       "label": "Email",
-      "type": "hidden",
-      "required": true
+      "type": "email",
+      "disabled": true
     },
     "phone": {
       "label": "Phone",
-      "type": "hidden",
-      "required": true
+      "type": "tel",
+      "disabled": true
     },
     "cc": {
       "label": "Credit Card"
     },
     "cc:number": {
       "label": "Number",
-      "type": "text",
+      "type": "number",
       "validate": "luhn",
       "required": true
     },  
     "cc:expire:month": {
       "label": "Expire month",
       "type": "month",
-      "required": true
+      "required": true,
+      "validate": "required"
     },  
     "cc:expire:year": {
       "label": "Expire year",
       "type": "year",
+      "validate": "required",
       "required": true
     },
     "cc:cvv": {
       "label": "CVV2",
       "type": "number",
+      "validate": "required",
       "required": true
     },
     "deal": {
@@ -92,15 +91,17 @@
     "description": {
       "label": "Products",
       "type": "textarea",
-      "disabled": true,
-      "rows": 4
+      "rows": 4,
+      "required": true,
+      "disabled": true
     },
     "amount": {
       "label": "Sum",
       "type": "number",
       "step": 0.01,
-      "disabled": true,      
-      "required": true
+      "required": true,
+      "disabled": true,
+      "validate": "required"
     },
     "currency": {
       "type": "list",
@@ -112,8 +113,8 @@
     },
     "account": {
       "type": "hidden",
-      "value": "immigration",
-      "disabled": true
+      "disabled": true,
+      "value": "immigration"
     },
     "process": {
       "type": "hidden",
@@ -130,7 +131,16 @@
       "label": "Pay",
       "type": "submit",
       "action": "https://payment.gobemark.info/php/psps/master/",
-      "method": "POST"    
-    } 
+      "method": "POST",
+      "data": {
+        "account": "immigration",
+        "process": "Isracard3d"
+      }
+    },
+    "send:email": {
+      "label": "Send via EMAIL",
+      "type": "submit",
+      "disabled": true
+    }    
   }
 }
