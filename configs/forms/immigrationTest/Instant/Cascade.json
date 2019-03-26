@@ -9,25 +9,21 @@
     "entityId": {
       "label": "Entity ID",
       "type": "hidden",
-      "required": true,
       "disabled": true
     },
     "user:name:full": {
       "label": "Agent name",
       "type": "hidden",
-      "required": true,
       "disabled": true
     },
     "user:email": {
       "label": "Agent email",
       "type": "hidden",
-      "required": true,
       "disabled": true
     },
     "user:id": {
       "label": "Agent ID",
       "type": "hidden",
-      "required": true,
       "disabled": true
     },
     "name:first": {
@@ -55,8 +51,7 @@
       "disabled": true
     },
     "cc": {
-      "label": "Credit Card",
-      "required": true
+      "label": "Credit Card"
     },
     "cc:number": {
       "label": "Number",
