@@ -2,6 +2,7 @@
   "name": "immigration/Instant/Isracard3d",
   "account": "immigration",
   "data$url": "https://payment.gobemark.info/php/exchange/master/index.php/",
+  "cancelDelay": 60000,
   "inputs": {
     "title": {
       "label": "Payment form - Isracard 3d"

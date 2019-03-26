@@ -2,6 +2,7 @@
   "name": "test/Instant/Isracard3d",
   "account": "test",
   "data$url": "https://payment.gobemark.info/php/exchange/master/index.php/",
+  "cancelDelay": 1000,
   "inputs": {
     "title": {
       "label": "Payment form - Isracard 3d"

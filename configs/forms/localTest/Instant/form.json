@@ -2,6 +2,7 @@
   "name": "localTest",
   "account": "test",
   "data$url": "http://localhost/exchange/index.php/",
+  "cancelDelay": 1000,
   "inputs": {
     "title": {
       "label": "Payment form"
