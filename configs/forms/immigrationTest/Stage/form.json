@@ -1,6 +1,7 @@
 {
   "name": "immigrationTestStage",
   "account": "test",
+  "data$url": "https://payment.gobemark.info/php/exchange/master/index.php/",
   "inputs": {
     "user:name:full": {
       "title": "Agent",

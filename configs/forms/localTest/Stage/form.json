@@ -1,6 +1,7 @@
 {
   "name": "localTestStage",
   "account": "test",
+  "data$url": "http://localhost/exchange/index.php/",
   "inputs": {
     "user:name:full": {
       "title": "Agent",
