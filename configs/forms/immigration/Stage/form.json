@@ -85,6 +85,12 @@
       "value": "GBP",
       "size": 3,
       "disabled": true
+    },
+    "company": {
+      "label": "CId",
+      "title": "CId",
+      "type": "text",
+      "disabled": true
     },    
     "account": {
       "label": "PSP",

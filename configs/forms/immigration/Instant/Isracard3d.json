@@ -111,6 +111,10 @@
         {"value": "USD"}
       ]
     },
+    "company": {
+      "type": "hidden",
+      "disabled": true
+    },
     "account": {
       "type": "hidden",
       "disabled": true,
