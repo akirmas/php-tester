@@ -131,7 +131,8 @@
       "method": "POST",
       "data": {
         "process": "cascade",
-        "account": "immigration"
+        "account": "immigration",
+        "currency": "USD"
       }
     }
   }

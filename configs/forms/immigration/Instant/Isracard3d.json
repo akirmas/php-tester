@@ -144,7 +144,8 @@
     "send:email": {
       "label": "Send via EMAIL",
       "type": "submit",
-      "disabled": true
+      "disabled": true,
+      "currency": "USD"
     }    
   }
 }
