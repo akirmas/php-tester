@@ -105,7 +105,7 @@
       "label": "Currency",
       "disabled": true,
       "items": [
-        {"value": "GBP"}
+        {"value": "USD"}
       ]
     },
     "account": {
