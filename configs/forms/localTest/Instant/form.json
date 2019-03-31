@@ -3,24 +3,22 @@
   "account": "test",
   "data$url": "http://localhost/exchange/index.php/",
   "cancelDelay": 1000,
+  "interval": 1000,
   "inputs": {
     "title": {
       "label": "Payment form"
     },
     "user:name:full": {
       "title": "Agent",
-      "type": "text",
-      "required": true
+      "type": "text"
     },
     "user:email": {
       "title": "Agent email",
-      "type": "text",
-      "required": true
+      "type": "text"
     },
     "user:id": {
       "title": "Agent ID",
-      "type": "number",
-      "required": true
+      "type": "number"
     },    
     "entityId": {
       "label": "Entity Id",
@@ -52,26 +50,21 @@
     "cc:number": {
       "label": "Number",
       "type": "text",
-      "validate": "luhn",
-      "required": true
+      "validate": ["luhn", "required"]
     },  
     "cc:expire:month": {
       "label": "Expire month",
-      "validate": ["required"],
       "type": "month",
-      "required": true
+      "validate": "required"
     },  
     "cc:expire:year": {
       "label": "Expire year",
-      "validate": "required",
       "type": "year",
-      "required": true
+      "validate": "required"
     },
     "cc:cvv": {
       "label": "CVV2",
-      "type": "number",
-      "validate": ["required"],
-      "required": true
+      "type": "number"
     },
     "deal": {
       "label": "Deal"

@@ -2,6 +2,7 @@
   "name": "test/Instant/Cascade",
   "account": "test",
   "data$url": "https://payment.gobemark.info/php/exchange/master/index.php/",
+  "interval": 1000,
   "inputs": {
     "title": {
       "label": "Payment form - Cascade"
@@ -56,26 +57,22 @@
     "cc:number": {
       "label": "Number",
       "type": "number",
-      "validate": "luhn",
-      "required": true
+      "validate": "luhn"
     },  
     "cc:expire:month": {
       "label": "Expire month",
       "type": "month",
-      "required": true,
       "validate": "require"
     },  
     "cc:expire:year": {
       "label": "Expire year",
       "type": "year",
-      "validate": "require",
-      "required": true
+      "validate": "require"
     },
     "cc:cvv": {
       "label": "CVV2",
       "type": "number",
-      "validate": "require",
-      "required": true
+      "validate": "require"
     },
     "deal": {
       "label": "Deal"
@@ -83,22 +80,21 @@
     "id": {
       "label": "Deal Id",
       "type": "hidden",
-      "required": true,
       "disabled": true
     },
     "description": {
       "label": "Products",
       "type": "textarea",
       "rows": 4,
-      "required": true,
+      "validate": "require",
       "disabled": true
     },
     "amount": {
       "label": "Sum",
       "type": "number",
       "step": 0.01,
-      "required": true,
-      "disabled": true
+      "disabled": true,
+      "validate": "require"
     },
     "currency": {
       "type": "list",
