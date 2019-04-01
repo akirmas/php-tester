@@ -3,7 +3,8 @@
   "account": "immigration",
   "data$url": "https://payment.gobemark.info/php/exchange/master/index.php/",
   "iframeInWindow": true,
-  "cancelDelay": 30000,
+  "cancelText": "Cancel Isracard3d payment method and proceed to next",  
+  "cancelDelay": 20000,
   "inputs": {
     "title": {
       "label": "Payment form - Isracard 3d"
