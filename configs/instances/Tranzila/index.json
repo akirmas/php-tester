@@ -59,10 +59,10 @@
     "overrides": {},
     "values": {
       "currency:final": {
-        "ILS": 1,
-        "USD": 2,
-        "EUR": 978,
-        "GBP": 826
+        "1": "ILS",
+        "2": "USD",
+        "978": "EUR",
+        "826": "GBP"
       },
       "success:ing": {
         "000": 1
