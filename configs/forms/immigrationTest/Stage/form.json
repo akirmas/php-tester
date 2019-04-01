@@ -103,7 +103,7 @@
       "label": "Reject",
       "type": "submit",
       "action": "https://payment.gobemark.info/php/exchange/master/index.php/teststagebank/",
-      "method": "PATCH"
+      "method": "PATCH",
       "data": {
         "transaction:receipt": "0000000"
       }

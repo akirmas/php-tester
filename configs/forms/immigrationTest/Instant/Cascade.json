@@ -87,7 +87,7 @@
       "label": "Products",
       "type": "textarea",
       "rows": 4,
-      "validate": "required"
+      "validate": "required",
       "disabled": true
     },
     "amount": {
