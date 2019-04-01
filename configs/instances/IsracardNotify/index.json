@@ -16,10 +16,11 @@
       "return:message": "status_error_details",
       "success": "payme_status",
       "id:absolute:received": "transaction_id",
-      "amountInt": "price",
+      "amountInt:final": "price",
       "process": "process",
       "tmstmp": "tmstmp",
-      "_account": "_account"
+      "_account": "_account",
+      "transaction:receipt": "payme_transaction_auth_number"
     },
     "values": {
       "success": {
