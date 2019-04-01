@@ -102,13 +102,18 @@
         {"value": "sabadel", "label": "Sabadel"},        
         {"value": "payfinder", "label": "Payfinder"},
         {"value": "tranzila", "label": "Tranzila"}
-      ]      
+      ],
+      "validate": "required"
     },
     "reject": {
       "label": "Reject",
       "type": "submit",
       "action": "https://payment.gobemark.info/php/exchange/master/index.php/stagebank/",
-      "method": "PATCH"
+      "method": "PATCH",
+      "data": {
+        "transaction:receipt": "0000000",
+        "account": "reject"
+      }
     },           
     "transaction:receipt": {
       "title": "Confirmation number",
@@ -116,15 +121,13 @@
       "type": "number",
       "placeholder": "xxxxxxx",
       "size": 7,
-      "pattern": "[0-9]{7}",
-      "required": true
+      "validate": "required"
     },
     "approve": {
       "label": "Approve",
       "type": "submit",
       "action": "https://payment.gobemark.info/php/exchange/master/index.php/stagebank",
-      "method": "PATCH",
-      "required": true
+      "method": "PATCH"
     }
   }
 }

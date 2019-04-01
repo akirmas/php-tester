@@ -13,8 +13,8 @@
     "name:first": {
       "label": "First name",
       "title": "Customer first name",
-      "type": "text",
-      "disabled": true
+      "disabled": true,
+      "type": "text"
     },
     "name:last": {
       "label": "Last name",
@@ -87,17 +87,24 @@
       "size": 3,
       "disabled": true
     },    
+    "company": {
+      "label": "CId",
+      "title": "CId",
+      "type": "text",
+      "disabled": true
+    },    
     "account": {
       "label": "PSP",
       "type": "list",
-      "validate": "required",
       "items": [
         {"value": "", "label": ""},
         {"value": "kaspit", "label": "Kaspit"},
         {"value": "isracard", "label": "Isracard"},
         {"value": "sabadel", "label": "Sabadel"},        
         {"value": "payfinder", "label": "Payfinder"}
-      ]      
+        {"value": "tranzila", "label": "Tranzila"}
+      ],
+      "validate": "required"
     },
     "reject": {
       "label": "Reject",
