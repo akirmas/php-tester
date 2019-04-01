@@ -120,7 +120,9 @@
       "method": "POST",
       "data": {
         "process": "Isracard3d",
-        "account": "test"
+        "account": "test",
+        "currency": "USD",
+        "fee": 0.5
       }
     }
   }

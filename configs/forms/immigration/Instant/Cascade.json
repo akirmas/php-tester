@@ -112,11 +112,6 @@
         {"value": "USD"}
       ]
     },
-    "account": {
-      "type": "hidden",
-      "disabled": true,
-      "value": "test"
-    },
     "share": {
       "label": "Send to stage",
       "type": "submit",
@@ -132,7 +127,8 @@
       "data": {
         "process": "cascade",
         "account": "immigration",
-        "currency": "USD"
+        "currency": "USD",
+        "fee": 0.5        
       }
     }
   }

@@ -115,15 +115,6 @@
       "type": "hidden",
       "disabled": true
     },
-    "account": {
-      "type": "hidden",
-      "disabled": true,
-      "value": "immigration"
-    },
-    "process": {
-      "type": "hidden",
-      "value": "Isracard3d"
-    },
     "share": {
       "label": "Send to stage",
       "type": "submit",
@@ -138,14 +129,10 @@
       "method": "POST",
       "data": {
         "account": "immigration",
-        "process": "Isracard3d"
+        "process": "Isracard3d",
+        "currency": "USD",
+        "fee": 0.5
       }
-    },
-    "send:email": {
-      "label": "Send via EMAIL",
-      "type": "submit",
-      "disabled": true,
-      "currency": "USD"
     }    
   }
 }

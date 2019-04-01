@@ -94,16 +94,6 @@
         {"value": "GBP"}
       ]
     },
-    "account": {
-      "type": "hidden",
-      "value": "test"
-    },
-    "process": {
-      "label": "process",
-      "type": "text",
-      "value": "cascade",
-      "disabled": true
-    },
     "share": {
       "label": "Send to stage",
       "type": "submit",
@@ -114,7 +104,13 @@
       "label": "Pay",
       "type": "submit",
       "action": "http://localhost/psps/",
-      "method": "POST"    
+      "method": "POST",
+      "data": {
+        "currency": "USD",
+        "fee": 0.5,
+        "process": "instant",
+        "account": "test"
+      }
     }
   }
 }
