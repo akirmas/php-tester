@@ -109,8 +109,13 @@
       "label": "Currency",
       "disabled": true,
       "items": [
-        {"value": "USD"}
+        {"value": "GBP"}
       ]
+    },
+    "account": {
+      "value": "immigration",
+      "type": "hidden",
+      "disabled": true
     },
     "share": {
       "label": "Send to stage",

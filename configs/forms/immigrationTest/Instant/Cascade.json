@@ -112,6 +112,11 @@
       "method": "PATCH",
       "alert": true
     },
+    "account": {
+      "value": "test",
+      "type": "hidden",
+      "disabled": true
+    },
     "pay": {
       "label": "Pay",
       "type": "submit",

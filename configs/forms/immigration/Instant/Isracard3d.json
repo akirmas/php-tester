@@ -108,10 +108,15 @@
       "label": "Currency",
       "disabled": true,
       "items": [
-        {"value": "USD"}
+        {"value": "GBP"}
       ]
     },
     "company": {
+      "type": "hidden",
+      "disabled": true
+    },
+    "account": {
+      "value": "immigration",
       "type": "hidden",
       "disabled": true
     },
