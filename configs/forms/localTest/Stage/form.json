@@ -2,12 +2,12 @@
   "name": "localTestStage",
   "account": "test",
   "data$url": "http://localhost/exchange/index.php/",
+  "interval": 1000,
   "inputs": {
     "user:name:full": {
       "title": "Agent",
       "label": "Agent",
       "type": "text",
-      "required": true,
       "disabled": true
     },
     "name:first": {
@@ -90,6 +90,7 @@
     "account": {
       "label": "PSP",
       "type": "list",
+      "validate": "required",
       "items": [
         {"value": "", "label": ""},
         {"value": "kaspit", "label": "Kaspit"},
@@ -102,7 +103,10 @@
       "label": "Reject",
       "type": "submit",
       "action": "http://localhost/exchange/index.php/teststagebank/",
-      "method": "PATCH"
+      "method": "PATCH",
+      "data": {
+        "transaction:receipt": "0000000"
+      }
     },   
     "transaction:receipt": {
       "title": "Confirmation number",
@@ -110,15 +114,13 @@
       "type": "number",
       "placeholder": "xxxxxxx",
       "size": 7,
-      "pattern": "[0-9]{7}",
-      "required": true
+      "validate": "required"
     },
     "approve": {
       "label": "Approve",
       "type": "submit",
       "action": "http://localhost/exchange/index.php/teststagebank/",
-      "method": "PATCH",
-      "required": true
+      "method": "PATCH"
     }
   }
 }

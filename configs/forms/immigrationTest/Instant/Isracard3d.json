@@ -82,15 +82,14 @@
     "id": {
       "label": "Deal Id",
       "type": "hidden",
-      "validate": "required",
       "disabled": true
     },
     "description": {
       "label": "Products",
       "type": "textarea",
       "rows": 4,
-      "disabled": true,
       "validate": "required"
+      "disabled": true
     },
     "amount": {
       "label": "Sum",
@@ -106,15 +105,6 @@
       "items": [
         {"value": "GBP"}
       ]
-    },
-    "account": {
-      "type": "hidden",
-      "disabled": true,
-      "value": "test"
-    },
-    "process": {
-      "type": "hidden",
-      "value": "Isracard3d"
     },
     "share": {
       "label": "Send to stage",
@@ -132,11 +122,6 @@
         "process": "Isracard3d",
         "account": "test"
       }
-    },
-    "send:email": {
-      "label": "Send via EMAIL",
-      "type": "submit",
-      "disabled": true
-    }    
+    }
   }
 }

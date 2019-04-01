@@ -2,6 +2,7 @@
   "name": "immigrationTestStage",
   "account": "test",
   "data$url": "https://payment.gobemark.info/php/exchange/master/index.php/",
+  "interval": 1000,
   "inputs": {
     "user:name:full": {
       "title": "Agent",
@@ -12,8 +13,8 @@
     "name:first": {
       "label": "First name",
       "title": "Customer first name",
-      "disabled": true,
-      "type": "text"
+      "type": "text",
+      "disabled": true
     },
     "name:last": {
       "label": "Last name",
@@ -89,6 +90,7 @@
     "account": {
       "label": "PSP",
       "type": "list",
+      "validate": "required",
       "items": [
         {"value": "", "label": ""},
         {"value": "kaspit", "label": "Kaspit"},
@@ -102,6 +104,9 @@
       "type": "submit",
       "action": "https://payment.gobemark.info/php/exchange/master/index.php/teststagebank/",
       "method": "PATCH"
+      "data": {
+        "transaction:receipt": "0000000"
+      }
     },           
     "transaction:receipt": {
       "title": "Confirmation number",
@@ -109,16 +114,13 @@
       "type": "number",
       "placeholder": "xxxxxxx",
       "size": 7,
-      "pattern": "[0-9]{7}",
-      "validate": "required",
-      "defaultValue": "0000000"
+      "validate": "required"
     },
     "approve": {
       "label": "Approve",
       "type": "submit",
       "action": "https://payment.gobemark.info/php/exchange/master/index.php/teststagebank",
-      "method": "PATCH",
-      "required": true
+      "method": "PATCH"
     }
   }
 }

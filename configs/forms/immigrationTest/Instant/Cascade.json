@@ -2,6 +2,7 @@
   "name": "test/Instant/Cascade",
   "account": "test",
   "data$url": "https://payment.gobemark.info/php/exchange/master/index.php/",
+  "cancelDelay": 1000,
   "interval": 1000,
   "inputs": {
     "title": {
@@ -62,17 +63,17 @@
     "cc:expire:month": {
       "label": "Expire month",
       "type": "month",
-      "validate": "require"
+      "validate": "required"
     },  
     "cc:expire:year": {
       "label": "Expire year",
       "type": "year",
-      "validate": "require"
+      "validate": "required"
     },
     "cc:cvv": {
       "label": "CVV2",
       "type": "number",
-      "validate": "require"
+      "validate": "required"
     },
     "deal": {
       "label": "Deal"
@@ -86,7 +87,7 @@
       "label": "Products",
       "type": "textarea",
       "rows": 4,
-      "validate": "require",
+      "validate": "required"
       "disabled": true
     },
     "amount": {
@@ -94,7 +95,7 @@
       "type": "number",
       "step": 0.01,
       "disabled": true,
-      "validate": "require"
+      "validate": "required"
     },
     "currency": {
       "type": "list",
@@ -103,11 +104,6 @@
       "items": [
         {"value": "GBP"}
       ]
-    },
-    "account": {
-      "type": "hidden",
-      "disabled": true,
-      "value": "test"
     },
     "share": {
       "label": "Send to stage",
