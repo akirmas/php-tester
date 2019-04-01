@@ -56,26 +56,22 @@
     "cc:number": {
       "label": "Number",
       "type": "number",
-      "validate": "luhn",
-      "required": true
+      "validate": "luhn"
     },  
     "cc:expire:month": {
       "label": "Expire month",
       "type": "month",
-      "required": true,
-      "validate": "require"
+      "validate": "required"
     },  
     "cc:expire:year": {
       "label": "Expire year",
       "type": "year",
-      "validate": "require",
-      "required": true
+      "validate": "required"
     },
     "cc:cvv": {
       "label": "CVV2",
       "type": "number",
-      "validate": "require",
-      "required": true
+      "validate": "required"
     },
     "deal": {
       "label": "Deal"
@@ -83,21 +79,21 @@
     "id": {
       "label": "Deal Id",
       "type": "hidden",
-      "required": true,
+      "validate": "required",
       "disabled": true
     },
     "description": {
       "label": "Products",
       "type": "textarea",
       "rows": 4,
-      "required": true,
+      "validate": "required",
       "disabled": true
     },
     "amount": {
       "label": "Sum",
       "type": "number",
       "step": 0.01,
-      "required": true,
+      "validate": "required",
       "disabled": true
     },
     "company": {

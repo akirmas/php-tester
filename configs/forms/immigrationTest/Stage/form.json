@@ -101,7 +101,7 @@
         {"value": "kaspit", "label": "Kaspit"},
         {"value": "isracard", "label": "Isracard"},
         {"value": "sabadel", "label": "Sabadel"},        
-        {"value": "payfinder", "label": "Payfinder"}
+        {"value": "payfinder", "label": "Payfinder"},
         {"value": "tranzila", "label": "Tranzila"}
       ],
       "validate": "required"
