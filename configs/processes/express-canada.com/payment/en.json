@@ -1,1 +1,8 @@
-../../immigration/cascade2.json
+{
+  "oneOf": [
+    {
+      "instance": "Tranzila",
+      "account": "exca"
+    }
+  ]
+}
