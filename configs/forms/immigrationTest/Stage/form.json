@@ -4,6 +4,12 @@
   "data$url": "https://payment.gobemark.info/php/exchange/master/index.php/",
   "interval": 1000,
   "inputs": {
+    "company": {
+      "label": "Client Id",
+      "title": "Client Id",
+      "type": "text",
+      "disabled": true
+    },    
     "user:name:full": {
       "title": "Agent",
       "label": "Agent",
@@ -21,10 +27,14 @@
       "title": "Customer last name",
       "type": "text",
       "disabled": true
-    },    
-    "address": {
-      "type": "hidden"
     },
+    "id": {
+      "type": "text",
+      "disabled": true,
+      "label": "CRM Id",
+      "title": "CRM Id",
+      "size": 3
+    },    
     "email": {
       "label": "Email",
       "title": "Customer Email",
@@ -64,14 +74,7 @@
       "type": "text",
       "disabled": true,
       "size": 3
-    },
-    "id": {
-      "type": "text",
-      "disabled": true,
-      "label": "CRM Id",
-      "title": "CRM Id",
-      "size": 3
-    },    
+    },  
     "amount": {
       "label": "Sum",
       "title": "Sum",
@@ -85,12 +88,6 @@
       "type": "text",
       "value": "GBP",
       "size": 3,
-      "disabled": true
-    },    
-    "company": {
-      "label": "CId",
-      "title": "CId",
-      "type": "text",
       "disabled": true
     },    
     "account": {
