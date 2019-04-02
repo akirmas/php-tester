@@ -2,6 +2,7 @@
   "name": "immigrationStage",
   "account": "immigration",
   "data$url": "https://payment.gobemark.info/php/exchange/master/index.php/",
+  "interval": 1000,
   "inputs": {
     "user:name:full": {
       "title": "Agent",
