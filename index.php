@@ -12,17 +12,17 @@ require_once(__DIR__.'/utils.php');
 require_once(__DIR__.'/handler.php');
 $commonHandler = 'CommonHandler';
 
-if (!isset($_SERVER['REQUEST_METHOD']))
-  $_SERVER['REQUEST_METHOD'] = 'CLI';
-
 $system = [
   'tmstmp' => tmstmp(),
-  'http:ip' => getClientIp(),
-  'http:port' => !array_key_exists('SERVER_PORT', $_SERVER) ? '' : $_SERVER['SERVER_PORT'],
-  'http:method' => $_SERVER['REQUEST_METHOD']
+  'scriptPath' => tryGet($_SERVER, 'SCRIPT_FILENAME', ''),
+  'referer:ip' => getClientIp(),
+  'referer:port' => tryGet($_SERVER, 'SERVER_PORT', ''),
+  'referer:method' => tryGet($_SERVER, 'REQUEST_METHOD', 'CLI'),
+  'referer:host' => tryGet($_SERVER, 'HTTP_HOST', ''),
+  'referer:url' => tryGet($_SERVER, 'HTTP_REFERER', '')
 ];
 
-if ($system['http:method'] === 'OPTIONS')
+if ($system['referer:method'] === 'OPTIONS')
   closeAndExit();
 
 $input = json_decode(file_get_contents('php://input'), true);

@@ -131,3 +131,12 @@ function closeAndExit($code = 0) {
   session_write_close();
   exit($code);
 }
+
+function tryGet($source, $key, $defaultValue = null) {
+  return gettype($source) === 'array' && array_key_exists($key, $source)
+  ? $source[$key]
+  : (gettype($source) === 'object' && property_exists($source, $key)
+  ? $source->{$key}
+  : $defaultValue
+  );
+}
