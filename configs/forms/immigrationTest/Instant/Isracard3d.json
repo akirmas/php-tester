@@ -85,6 +85,10 @@
       "type": "hidden",
       "disabled": true
     },
+    "dataId": {
+      "type": "hidden",
+      "disabled": true
+    },
     "description": {
       "label": "Products",
       "type": "textarea",
