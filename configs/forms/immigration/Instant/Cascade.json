@@ -1,7 +1,7 @@
 {
   "name": "immigration/Instant/Cascade",
   "account": "immigration",
-  "data$url": "https://payment.gobemark.info/php/exchange/master/index.php/",
+  "data$url": "https://payment.gobemark.info/php/exchange/v0.0.2/index.php/",
   "interval": 1000,
   "inputs": {
     "title": {
@@ -121,14 +121,14 @@
     "share": {
       "label": "Send to stage",
       "type": "submit",
-      "action": "https://payment.gobemark.info/php/exchange/master/index.php/stagebank/",
+      "action": "https://payment.gobemark.info/php/exchange/v0.0.2/index.php/stagebank/",
       "method": "PATCH",
       "alert": true
     },
     "pay": {
       "label": "Pay",
       "type": "submit",
-      "action": "https://payment.gobemark.info/php/psps/master/",
+      "action": "https://payment.gobemark.info/php/psps/v1.0.3/",
       "method": "POST",
       "data": {
         "process": "cascade",

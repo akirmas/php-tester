@@ -1,7 +1,7 @@
 {
   "name": "immigrationStage",
   "account": "immigration",
-  "data$url": "https://payment.gobemark.info/php/exchange/master/index.php/",
+  "data$url": "https://payment.gobemark.info/php/exchange/v0.0.2/index.php/",
   "interval": 1000,
   "inputs": {
     "company": {
@@ -106,7 +106,7 @@
     "reject": {
       "label": "Reject",
       "type": "submit",
-      "action": "https://payment.gobemark.info/php/exchange/master/index.php/stagebank/",
+      "action": "https://payment.gobemark.info/php/exchange/v0.0.2/index.php/stagebank/",
       "method": "PATCH",
       "data": {
         "transaction:receipt": "0000000",
@@ -124,7 +124,7 @@
     "approve": {
       "label": "Approve",
       "type": "submit",
-      "action": "https://payment.gobemark.info/php/exchange/master/index.php/stagebank",
+      "action": "https://payment.gobemark.info/php/exchange/v0.0.2/index.php/stagebank",
       "method": "PATCH"
     }
   }
