@@ -60,22 +60,26 @@
     "cc:number": {
       "label": "Number",
       "type": "number",
-      "validate": "luhn"
+      "validate": "luhn",
+      "autocomplete": "new-password"
     },  
     "cc:expire:month": {
       "label": "Expire month",
       "type": "month",
-      "validate": "required"
+      "validate": "required",
+      "autocomplete": "new-password"
     },  
     "cc:expire:year": {
       "label": "Expire year",
       "type": "year",
-      "validate": "required"
+      "validate": "required",
+      "autocomplete": "new-password"
     },
     "cc:cvv": {
       "label": "CVV2",
       "type": "number",
-      "validate": "required"
+      "validate": "required",
+      "autocomplete": "new-password"
     },
     "deal": {
       "label": "Deal"
