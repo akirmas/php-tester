@@ -8,8 +8,9 @@ header('Access-Control-Allow-Methods: POST, GET');
 header('Access-Control-Allow-Headers: origin, x-requested-with, Content-Type, Date, Request-Date');
 
 require_once(__DIR__.'/assoc.php');
-require_once(__DIR__.'/utils.php');
-require_once(__DIR__.'/handler.php');
+$ConfigDir = __DIR__.'/../configs';
+require_once($ConfigDir.'/handler.php');
+
 $commonHandler = 'CommonHandler';
 
 $system = [
@@ -56,8 +57,6 @@ $phase = 'Raw';
 
 if (!property_exists($input, 'id')) $input->id = $input->tmstmp;
 
-$ConfigDir = mkdir2(__DIR__, 'configs');
-
 $processDir = mkdir2(__DIR__, '..', 'processes', $input->_account,  $input->process, $input->id);
 $logDir = mkdir2($processDir, $input->tmstmp);
 $processDir = mkDir2($processDir, 'index');
@@ -92,7 +91,7 @@ forEach($steps as $step) {
     require_once($handlerPath);
   else {
     $handler = 'CycleHandler';
-    require_once(__DIR__."/$handler.php");
+    require_once($ConfigDir."/$handler.php");
   }
 
   $instanceEnv = json_decode(file_get_contents($ConfigDir."/instances/$step->instance/accounts/$step->account.json"));

@@ -1,9 +1,0 @@
-{
-  "storageUrl": "http://localhost/exchange/index.php/teststagebank/",
-  "interval": 1000,
-  "paymentform": {
-    "origin": "http://localhost:3000",
-    "pathname": "/",
-    "schema$url": "http://localhost/psps/configs/forms/?json=localTest/Stage/form"
-  }
-}
