@@ -230,7 +230,14 @@ forEach($steps as $step) {
 
   $event = 'Response';
   $phase = 'Raw';
-  $output = fireEvent($responseData, $requestData);
+  
+  $output = (object) \assoc\merge(
+    $response->defaults,
+    $responseData,
+    $response->overrides
+  );
+
+  $output = fireEvent($output, $output);
 
   $output = \assoc\mapValues(
     \assoc\mapKeys(
@@ -241,6 +248,8 @@ forEach($steps as $step) {
     (object) $response->values,
     true
   );
+
+  $output = fillValues($output, \assoc\merge($output, $filled));
 
   $output = (object) ($system + (array) $output);
 
