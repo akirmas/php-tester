@@ -16,6 +16,7 @@ forEach($scriptPaths as $scriptPath) {
       //TODO: set up 'style' of test - CLI, HTTP/GET, HTTP/POST
       //$response = json_decode(callTest($scriptPath, $tests[$name][0])[0], true);
       $response = json_decode(file_get_contents("http://localhost/psps/$scriptPath.php?".http_build_query($tests[$name][0])), true);
+      //$response = json_decode(file_get_contents("https://payment.gobemark.info/apis/master/$scriptPath.php?".http_build_query($tests[$name][0])), true);
       $expected = $tests[$name][1];
       $failedTest = $expected != array_intersect_assoc($response, $expected);
       $failedScript = $failedScript || $failedTest;
@@ -40,6 +41,7 @@ exit;
 function callTest($php, $params) {
   $params = preg_replace('/(")/', '\\\\$0', json_encode($params));
   $php = preg_replace('/\.php/', '', $php).'.php';
+  $output;
   exec("php $php ".escapeshellarg($params), $output);
   return $output;
 }

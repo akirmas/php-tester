@@ -8,19 +8,18 @@ header('Access-Control-Allow-Methods: POST, GET');
 header('Access-Control-Allow-Headers: origin, x-requested-with, Content-Type, Date, Request-Date');
 
 require_once(__DIR__.'/utils/assoc.php');
-$ConfigDir = __DIR__.'/../configs';
-require_once($ConfigDir.'/handler.php');
+require_once(__DIR__.'/handler.php');
 
 $commonHandler = 'CommonHandler';
 
 $system = [
   'tmstmp' => tmstmp(),
-  'scriptPath' => tryGet($_SERVER, 'SCRIPT_FILENAME', ''),
+  'scriptPath' => \assoc\getValue($_SERVER, 'SCRIPT_FILENAME', ''),
   'referer:ip' => getClientIp(),
-  'referer:port' => tryGet($_SERVER, 'SERVER_PORT', ''),
-  'referer:method' => tryGet($_SERVER, 'REQUEST_METHOD', 'CLI'),
-  'referer:host' => tryGet($_SERVER, 'HTTP_HOST', ''),
-  'referer:url' => tryGet($_SERVER, 'HTTP_REFERER', '')
+  'referer:port' => \assoc\getValue($_SERVER, 'SERVER_PORT', ''),
+  'referer:method' => \assoc\getValue($_SERVER, 'REQUEST_METHOD', 'CLI'),
+  'referer:host' => \assoc\getValue($_SERVER, 'HTTP_HOST', ''),
+  'referer:url' => \assoc\getValue($_SERVER, 'HTTP_REFERER', '')
 ];
 
 if ($system['referer:method'] === 'OPTIONS')
@@ -33,14 +32,14 @@ if (gettype($input) !== 'array')
 $input = (
   count($_REQUEST) === 0 ? [] : $_REQUEST
 ) + (
-  array_key_exists('argv', $_SERVER) && count($_SERVER['argv']) > 1
-  ? ((array) json_decode(preg_replace('/(^"|"$)/i', '', $_SERVER['argv'][1]), true))
+  \assoc\keyExists($_SERVER, 'argv') && count($_SERVER['argv']) > 1
+  ? (json_decode(preg_replace('/(^"|"$)/i', '', $_SERVER['argv'][1]), true))
   : []
 ) + $input;
-//$input = json_decode(file_get_contents(__DIR__.'/index.test.json'),true)['immi_cascade'][0];
+//$input = json_decode(file_get_contents(__DIR__.'/index.test.json'), true)['isra_frame_good'][0];
 
 //NB! HARDCODE
-if (array_key_exists('cc:number', $input))
+if (\assoc\keyExists($input, 'cc:number'))
   $input['cc:number'] = preg_replace('/[^0-9]+/', '', $input['cc:number']);
 
 // The only field to be hardcoded - key 'account' will be used as it in 3rd parties, avoid ambiguity
@@ -50,68 +49,67 @@ $system['process'] = $input['process'];
 
 $input = $system + $input;
 
-$input = (object) $input;
-
 $event = 'Request';
 $phase = 'Raw';
 
-if (!property_exists($input, 'id')) $input->id = $input->tmstmp;
+if (!\assoc\keyExists($input, 'id')) $input['id'] = $input['tmstmp'];
 
-$processDir = mkdir2(__DIR__, '..', 'processes', $input->_account,  $input->process, $input->id);
-$logDir = mkdir2($processDir, $input->tmstmp);
+$processDir = mkdir2(__DIR__, '..', 'processes', $input['_account'],  $input['process'], $input['id']);
+$logDir = mkdir2($processDir, $input['tmstmp']);
 $processDir = mkDir2($processDir, 'index');
 
-$steps = json_decode(file_get_contents($ConfigDir."/processes/$input->_account/$input->process.json"));
-$strategy = array_keys(get_object_vars($steps))[0];
-$steps = $steps->{$strategy};
+$ConfigDir = __DIR__.'/../configs';
+$steps = json_decode(file_get_contents(join('/', [
+  $ConfigDir, 'processes', $input['_account'], $input['process'].'.json'
+])), true);
+$strategy = \assoc\keys($steps)[0];
+$steps = $steps[$strategy];
 $output = [];
 $filled = [];
 $requestData = [];
 forEach($steps as $step) {
-  $handler = $step->instance;
+  $handler = $step['instance'];
   //TODO: Move out from code
   $directionSchema = [
-      "fields" => new \stdClass,
-      "values" => new \stdClass,
-      "defaults" => new \stdClass,
-      "overrides" => new \stdClass
+      "fields" => [],
+      "values" => [],
+      "defaults" => [],
+      "overrides" => []
   ];
   $schema = [
-    "engine" => new \stdClass,
-    "request" => $directionSchema,
-    "response" => $directionSchema
+    "engine" => [],
+    "request" => [],
+    "response" => []
   ];
   $instance = json_decode(file_get_contents($ConfigDir."/instances/$handler/index.json"), true)
     + $schema;
   // Awfull
-  $instance = json_decode(json_encode($instance));
-  
-  $handlerPath = $ConfigDir."/instances/$handler/handler.php";
+    
+  $handlerPath = __DIR__."/instances/$handler/handler.php";
   if (file_exists($handlerPath))
     require_once($handlerPath);
   else {
     $handler = 'CycleHandler';
-    require_once($ConfigDir."/$handler.php");
+    require_once(__DIR__."/$handler.php");
   }
 
-  $instanceEnv = json_decode(file_get_contents($ConfigDir."/instances/$step->instance/accounts/$step->account.json"));
+  $instanceEnv = json_decode(file_get_contents(join('/', [$ConfigDir, 'instances', $step['instance'], 'accounts', $step['account'].'.json'])), true);
 
-  $request = (object) \assoc\merge($instance->request, $instanceEnv->request);
-  $response = (object) \assoc\merge($instance->response, $instanceEnv->response);
+  $request = \assoc\merge($instance['request'], $instanceEnv['request']);
+  $response = \assoc\merge($instance['response'], $instanceEnv['response']);
   
-  $filled = (object) \assoc\merge(
-    $request->defaults,
+  $filled = \assoc\merge(
+    $request['defaults'],
     $input,
-    $request->overrides
+    $request['overrides']
   );
 
   $event = 'Request';
   $phase = 'Filled';
   
-  $request->engine = (object) $request->engine;
   $filled = fireEvent(
-    (property_exists($request->engine, 'history') && $request->engine->history)
-    ? (object) \assoc\merge($requestData, $output, $filled)
+    (\assoc\getValue($request['engine'], 'history', false))
+    ? \assoc\merge($requestData, $output, $filled)
     : $filled
   );
 
@@ -119,54 +117,54 @@ forEach($steps as $step) {
   $phase = 'Calced';
 
   //Keep unified vocabulary in schema keys
-  $requestData = (property_exists($request->engine, 'sourceIsAPI') && $request->engine->sourceIsAPI)
+  $requestData = (\assoc\getValue($request['engine'], 'sourceIsAPI', false))
   ? \assoc\mapValues(
     \assoc\mapKeys(
       $filled,
-      (object) array_flip((array) $request->fields),
+      array_flip($request['fields']),
       false
     ),
-    (object) $request->values,
+    $request['values'],
     true
   )
   : \assoc\mapKeys(
     \assoc\mapValues(
       $filled,
-      (object) $request->values,
+      $request['values'],
       true
     ),
-    (object) $request->fields,
+    $request['fields'],
     false
   );
 
   $event = 'Request';
   $phase = 'Formed';
 
-  $request->engine->gateway = formatString(formatString(
-    $request->engine->gateway,
+  $request['engine']['gateway'] = formatString(formatString(
+    $request['engine']['gateway'],
     $requestData), $filled
   );
 
   $cachePath = '';
-  if (property_exists($request->engine, 'cache') && $request->engine->cache) {
-    $cacheDir = mkdir2(__DIR__, '..', 'cached', $input->_account, $input->process);
+  if (\assoc\getValue($request['engine'], 'cache', false)) {
+    $cacheDir = mkdir2(__DIR__, '..', 'cached', $input['_account'], $input['process']);
     $cachePath = "{$cacheDir}/"
     .hash("md5",
-      json_encode($request->engine)
+      json_encode($request['engine'])
       .json_encode($requestData)
     );
     if (file_exists($cachePath))
-      $request->engine->method = 'useCached';
+      $request['engine']['method'] = 'useCached';
   }
-  switch($request->engine->method) {
+  switch($request['engine']['method']) {
     case 'PATCH':
     case 'POST':
-      $ch = curl_init($request->engine->gateway);
+      $ch = curl_init($request['engine']['gateway']);
       curl_setopt_array($ch,
         [
           CURLOPT_RETURNTRANSFER => true,
           CURLOPT_FRESH_CONNECT => true,
-          CURLOPT_CUSTOMREQUEST => $request->engine->method,
+          CURLOPT_CUSTOMREQUEST => $request['engine']['method'],
           CURLOPT_HEADER => 1,
           //CURLOPT_VERBOSE => 1,
           CURLOPT_POSTFIELDS => json_encode($requestData, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE),
@@ -175,9 +173,7 @@ forEach($steps as $step) {
               'Request-Date: '. gmdate('D, d M Y H:i:s T'),
               'Date: '. gmdate('D, d M Y H:i:s T')
             ],
-            property_exists($request->engine, 'headers')
-            ? $request->engine->headers
-            : []
+            \assoc\getValue($request['engine'], 'headers', [])
           )
         ]
       );
@@ -196,8 +192,8 @@ forEach($steps as $step) {
       $responseText = substr($responseText, $header_size);
       break;
     case 'GET':
-      $request->engine->gateway = $request->engine->gateway.'?'.http_build_query($requestData);
-      $responseText = file_get_contents($request->engine->gateway);      
+      $request['engine']['gateway'] = $request['engine']['gateway'].'?'.http_build_query($requestData);
+      $responseText = file_get_contents($request['engine']['gateway']);      
       break;
     case 'useCached':
       $responseText = file_get_contents($cachePath);      
@@ -208,10 +204,10 @@ forEach($steps as $step) {
     }
   }
 
-  if ($cachePath !== '' && $request->engine->method !== 'useCached')
+  if ($cachePath !== '' && $request['engine']['method'] !== 'useCached')
     file_put_contents($cachePath, $responseText);
   
-  switch($response->engine->contentType) {
+  switch($response['engine']['contentType']) {
     case 'application/x-www-form-urlencoded':
       parse_str(
         $responseText,
@@ -219,22 +215,21 @@ forEach($steps as $step) {
       );
       break;
     case 'application/json':
-      $responseData = json_decode($responseText);
-      if ($responseData !== null && gettype($responseData) === 'object') 
+      $responseData = json_decode($responseText, true);
+      if ($responseData !== null && \assoc\isESObject($responseData)) 
         break;
     case 'text/plain':
     default:
       $responseData = ['response' => $responseText];
   }
-  $responseData = (object) $responseData; 
 
   $event = 'Response';
   $phase = 'Raw';
   
-  $output = (object) \assoc\merge(
-    $response->defaults,
+  $output = \assoc\merge(
+    $response['defaults'],
     $responseData,
-    $response->overrides
+    $response['overrides']
   );
 
   $output = fireEvent($output, $output);
@@ -242,25 +237,23 @@ forEach($steps as $step) {
   $output = \assoc\mapValues(
     \assoc\mapKeys(
       $output,    
-      \assoc\flip($response->fields),
+      \assoc\flip($response['fields']),
       false
     ),
-    (object) $response->values,
+    $response['values'],
     true
   );
 
-  $output = fillValues($output, \assoc\merge($output, $filled));
-
-  $output = (object) ($system + (array) $output);
+  $output = $system + fillValues($output, \assoc\merge($output, $filled));
 
   $event = 'Response';
   $phase = 'Formed';
   $output = fireEvent($output, $filled);
   if (
     // until first TRUE
-    $strategy === 'oneOf' && $output->success === 1
+    $strategy === 'oneOf' && $output['success'] === 1
     // until first FALSE
-    || $strategy === 'allOf' && $output->success === 0
+    || $strategy === 'allOf' && $output['success'] === 0
     // 'just do it' is 'anyOf' - and any value of $strategy (even 'Nike')
   )
     break;
@@ -268,16 +261,16 @@ forEach($steps as $step) {
 
 echo json_encode($output, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
 
-function fireEvent(...$data) :object {
+function fireEvent(...$data) {
   global $event, $phase, $handler, $logDir, $processDir, $commonHandler, $step;
-  $data[0] = (object) \assoc\merge(
+  $data[0] = \assoc\merge(
     call_user_func(
       ["\\$commonHandler", "on$event$phase"],
       ...array_merge([$step], $data)
     ),
     $data[0]
   );
-  $data[0] = (object) \assoc\merge(
+  $data[0] = \assoc\merge(
     call_user_func(
       ["\\$handler", "on$event$phase"],
       ...array_merge([$step], $data)
@@ -298,5 +291,5 @@ function fireEvent(...$data) :object {
       $dataJson
     );
   }
-  return (object) $data[0];
+  return $data[0];
 }
