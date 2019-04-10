@@ -105,3 +105,31 @@ class CommonHandler extends CycleHandler {
     ];
   }
 }
+
+function signatureRedSys($data) {
+  $id = \assoc\getValue($data, 'id::compress', '');
+  $key = \assoc\getValue($data, 'key', '');
+  \assoc\deleteKey($data, 'key');
+  $len = strlen($id);
+  $baseRoot = 8;
+  $l = ceil($len / $baseRoot) * $baseRoot;
+  return base64_encode(
+    hash_hmac(
+      'sha256',
+      base64_encode(json_encode($data)),
+      substr(
+        openssl_encrypt(
+          $id
+          . str_repeat("\0", $l - $len),
+          'des-ede3-cbc',
+          base64_decode($key),
+          OPENSSL_RAW_DATA,
+          str_repeat("\0", $baseRoot)
+        ),
+        0,
+        $baseRoot
+      ),
+      true
+    )
+  );
+}
