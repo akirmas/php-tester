@@ -257,7 +257,7 @@ forEach($steps as $step) {
   $output = fireEvent($output, $filled);
   if (
     // until first TRUE
-    $strategy === 'oneOf' && $output['success'] === 1
+    in_array($strategy, ['anyOf', 'oneOf']) && $output['success'] === 1
     // until first FALSE
     || $strategy === 'allOf' && $output['success'] === 0
     // 'just do it' is 'anyOf' - and any value of $strategy (even 'Nike')
