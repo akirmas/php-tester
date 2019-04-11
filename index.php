@@ -42,11 +42,17 @@ $input = (
 if (\assoc\keyExists($input, 'cc:number'))
   $input['cc:number'] = preg_replace('/[^0-9]+/', '', $input['cc:number']);
 
+$processPath = preg_replace('%(^/+|/+$)%', '',
+  \assoc\getValue($_SERVER, 'PATH_INFO',
+    \assoc\join2('/',
+     \assoc\getValues($input, ['account', 'process'])
+    )
+  )
+);
 // The only field to be hardcoded - key 'account' will be used as it in 3rd parties, avoid ambiguity
-$processPath = join('/', [$input['account'],  $input['process']]);
-$system['_account'] = $input['account'];
 unset($input['account']);
-$system['process'] = $input['process'];
+$system['_account'] = $processPath;
+$system['process'] = $processPath;
 
 $input = $system + $input;
 
@@ -69,7 +75,7 @@ $output = [];
 $filled = [];
 $requestData = [];
 forEach($steps as $step) {
-  $stepPath = is_array($step)
+  $processor = is_array($step)
   ? join('/', [$step['instance'], 'accounts', $step['account']])
   : $step;
   $handler = \assoc\getValue($step, 'instance', explode('/', $step)[0]);
@@ -85,8 +91,10 @@ forEach($steps as $step) {
     "request" => [],
     "response" => []
   ];
-  $instance = json_decode(file_get_contents($ConfigDir."/instances/$handler/index.json"), true)
-    + $schema;
+  $instance = json_decode(
+    file_get_contents($ConfigDir."/instances/$handler/index.json"),
+    true
+  ) + $schema;
   // Awfull
     
   $handlerPath = __DIR__."/instances/$handler/handler.php";
@@ -97,7 +105,12 @@ forEach($steps as $step) {
     require_once(__DIR__."/$handler.php");
   }
 
-  $instanceEnv = json_decode(file_get_contents(join('/', [$ConfigDir, 'instances', $stepPath.'.json'])), true);
+  $instanceEnv = json_decode(
+    file_get_contents(
+      join('/', [$ConfigDir, 'instances', $processor.'.json'])
+    ),
+    true
+  );
 
   $request = \assoc\merge($instance['request'], $instanceEnv['request']);
   $response = \assoc\merge($instance['response'], $instanceEnv['response']);
@@ -254,7 +267,9 @@ forEach($steps as $step) {
     true
   );
 
-  $output = $system + fillValues($output, \assoc\merge($output, $filled));
+  $output = $system
+  + ['processor' => $processor]
+  + fillValues($output, \assoc\merge($output, $filled));
 
   $event = 'Response';
   $phase = 'Formed';
