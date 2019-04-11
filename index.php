@@ -49,6 +49,10 @@ $processPath = preg_replace('%(^/+|/+$)%', '',
     )
   )
 );
+if (empty($processPath)) {
+  echo 1;
+  exit;
+}
 // The only field to be hardcoded - key 'account' will be used as it in 3rd parties, avoid ambiguity
 unset($input['account']);
 $system['_account'] = $processPath;
