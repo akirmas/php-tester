@@ -198,6 +198,9 @@ forEach($steps as $step) {
     case 'useCached':
       $responseText = file_get_contents($cachePath);      
       break;
+    case 'no_curl':
+      $response['engine']['contentType'] = $request['engine']['method'];
+      break;
     default: {
       http_response_code(501);
       closeAndExit('not impelemented');
@@ -213,6 +216,9 @@ forEach($steps as $step) {
         $responseText,
         $responseData
       );
+      break;
+    case 'no_curl':
+      $responseData = $requestData;
       break;
     case 'application/json':
       $responseData = json_decode($responseText, true);
