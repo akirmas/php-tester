@@ -36,13 +36,14 @@ $input = (
   ? (json_decode(preg_replace('/(^"|"$)/i', '', $_SERVER['argv'][1]), true))
   : []
 ) + $input;
-//$input = json_decode(file_get_contents(__DIR__.'/index.test.json'), true)['isra_frame_good'][0];
+//$input = json_decode(file_get_contents(__DIR__.'/index.test.json'), true)['tranz_instant'][0];
 
 //NB! HARDCODE
 if (\assoc\keyExists($input, 'cc:number'))
   $input['cc:number'] = preg_replace('/[^0-9]+/', '', $input['cc:number']);
 
 // The only field to be hardcoded - key 'account' will be used as it in 3rd parties, avoid ambiguity
+$processPath = join('/', [$input['account'],  $input['process']]);
 $system['_account'] = $input['account'];
 unset($input['account']);
 $system['process'] = $input['process'];
@@ -54,13 +55,13 @@ $phase = 'Raw';
 
 if (!\assoc\keyExists($input, 'id')) $input['id'] = $input['tmstmp'];
 
-$processDir = mkdir2(__DIR__, '..', 'processes', $input['_account'],  $input['process'], $input['id']);
+$processDir = mkdir2(__DIR__, '..', 'processes', $processPath, $input['id']);
 $logDir = mkdir2($processDir, $input['tmstmp']);
 $processDir = mkDir2($processDir, 'index');
 
 $ConfigDir = __DIR__.'/../configs';
 $steps = json_decode(file_get_contents(join('/', [
-  $ConfigDir, 'processes', $input['_account'], $input['process'].'.json'
+  $ConfigDir, 'processes', $processPath.'.json'
 ])), true);
 $strategy = \assoc\keys($steps)[0];
 $steps = $steps[$strategy];
@@ -68,7 +69,10 @@ $output = [];
 $filled = [];
 $requestData = [];
 forEach($steps as $step) {
-  $handler = $step['instance'];
+  $stepPath = is_array($step)
+  ? join('/', [$step['instance'], 'accounts', $step['account']])
+  : $step;
+  $handler = \assoc\getValue($step, 'instance', explode('/', $step)[0]);
   //TODO: Move out from code
   $directionSchema = [
       "fields" => [],
@@ -93,7 +97,7 @@ forEach($steps as $step) {
     require_once(__DIR__."/$handler.php");
   }
 
-  $instanceEnv = json_decode(file_get_contents(join('/', [$ConfigDir, 'instances', $step['instance'], 'accounts', $step['account'].'.json'])), true);
+  $instanceEnv = json_decode(file_get_contents(join('/', [$ConfigDir, 'instances', $stepPath.'.json'])), true);
 
   $request = \assoc\merge($instance['request'], $instanceEnv['request']);
   $response = \assoc\merge($instance['response'], $instanceEnv['response']);
@@ -147,7 +151,7 @@ forEach($steps as $step) {
 
   $cachePath = '';
   if (\assoc\getValue($request['engine'], 'cache', false)) {
-    $cacheDir = mkdir2(__DIR__, '..', 'cached', $input['_account'], $input['process']);
+    $cacheDir = mkdir2(__DIR__, '..', 'cached', $processPath);
     $cachePath = "{$cacheDir}/"
     .hash("md5",
       json_encode($request['engine'])
