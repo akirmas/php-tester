@@ -82,7 +82,7 @@ forEach($steps as $step) {
   $processor = is_array($step)
   ? join('/', [$step['instance'], 'accounts', $step['account']])
   : $step;
-  $handler = \assoc\getValue($step, 'instance', explode('/', $step)[0]);
+  $handler = \assoc\getValue($step, 'instance', explode('/', $processor)[0]);
   //TODO: Move out from code
   $directionSchema = [
       "fields" => [],
