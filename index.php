@@ -82,10 +82,6 @@ forEach($steps as $step) {
   ? join('/', [$step['instance'], 'accounts', $step['account']])
   : $step;
   $handler = \assoc\getValue($step, 'instance', explode('/', $processor)[0]);
-  $instance = json_decode(
-    file_get_contents($ConfigDir."/instances/$handler/index.json"),
-    true
-  );
     
   //$handlerPath = $ConfigDir."/instances/$handler/handler.php";
   $handlerPath2 = __DIR__."/instances/$handler/handler.php";
@@ -98,21 +94,10 @@ forEach($steps as $step) {
     require_once(__DIR__."/$handler.php");
   }
 
-  $instanceEnv = json_decode(
-    file_get_contents(
-      join('/', [$ConfigDir, 'instances', $processor.'.json'])
-    ),
-    true
-  );
+  $instance = \assoc\mergeJsonPaths("{$ConfigDir}/instances", $processor);
 
-  $request = \assoc\merge(
-    \assoc\getValue($instance, 'request', []),
-    \assoc\getValue($instanceEnv, 'request', [])
-  );
-  $response = \assoc\merge(
-    \assoc\getValue($instance, 'response', []),
-    \assoc\getValue($instanceEnv, 'response', [])
-  );
+  $request = \assoc\getValue($instance, 'request', []);
+  $response = \assoc\getValue($instance, 'response', []);
   
   $filled = \assoc\merge(
     \assoc\getValue($request, 'defaults', []),
