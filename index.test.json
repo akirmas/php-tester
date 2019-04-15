@@ -90,7 +90,7 @@
       "entity:id": "1426917"
     },
     {
-      "return:code": "0",
+      "success": "-1",
       "amountInt": 1000
     }    
   ],
@@ -130,39 +130,18 @@
       "description": "test",
       "email": "andrii@gobe-mark.com",
       "entity": "lead",
-      "account": "test",
       "entity:id": "test_cascade_11111",
       "process": "Tranzila_instant_charge",
+      "account": "test",
       "full_name": "andrii test",
-      "phone": "987654321"
+      "phone": "987654321",
+      "supplier": "exca"
     },    
     {
       "return:code": "000",
-      "success": 1
+      "success": 1,
+      "processor": 1
     }
-  ],
-  "netpay" : [
-    {
-      "account": "test",
-      "process": "Netpay_3d_secure",
-      "verify": 0,
-      "amount": 1,
-      "currency": "USD",
-      "cc:number": "",
-      "cc:expire:month": "01",
-      "cc:expire:year": 2020,
-      "cc:cvv": 123,
-      "phone": 123123123,
-      "email": "andrii@gobe-mark.com",
-      "name:full": "Andrii Kirmas",
-      "address:0": "shfjlsgh",
-      "address:city": "Bat Yam",
-      "address:zip": 5910000,
-      "address:country:ISO": "IL"
-    },
-    {
-      "return:code": "503"
-    } 
   ],
   "tranz_instant_1" : [
     { "amount": "10",

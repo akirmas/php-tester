@@ -77,27 +77,25 @@ class CommonHandler extends CycleHandler {
   }
   
   static function onResponseFormed($env, $output, $input) {
-    $success = \assoc\keyExists($output, 'success:ing')
+    $successing = \assoc\getValue($output, 'success:ing');
+
+    $success = !is_null($successing)
     ? (
-      !is_integer($output['success:ing'])
-      || abs($output['success:ing']) > 1
+      !is_integer($successing)
+      || abs($successing) > 1
       ? 0
-      : $output['success:ing']
+      : $successing
     ) : (
       \assoc\keyExists($output, 'return:code') 
       ? (
         // intermediate action - therefore for await (-1) shoud be good (0)
-        (int) $output['return:code'] === 0
+        (int) \assoc\getValue($output, 'return:code') === 0
         ? -1
         : 0
-      ) : (
         // NB! strange and danger
         // It is like inheritance
         //TODO: something another
-        \assoc\keyExists($input, 'success') 
-        ? (int) $input['success']
-        : 0
-      )
+      ) : \assoc\getValue($input, 'success', 0)         
     );
     return [
       'id' => $input['id'],
