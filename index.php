@@ -72,8 +72,8 @@ $ConfigDir = __DIR__.'/../configs';
 $steps = json_decode(file_get_contents(join('/', [
   $ConfigDir, 'processes', $processPath.'.json'
 ])), true);
-$strategy = \assoc\keys($steps)[0];
-$steps = $steps[$strategy];
+$strategy = \assoc\getValue(\assoc\keys($steps), 0, "anyOf");
+$steps = \assoc\getValue($steps, $strategy, [$steps]);
 $output = [];
 $filled = [];
 $requestData = [];
@@ -202,7 +202,6 @@ forEach($steps as $step) {
       $responseText = file_get_contents($cachePath);      
       break;
     case 'no_curl':
-      //WTF
       $response['engine']['contentType'] = $request['engine']['method'];
       break;
     default: {
