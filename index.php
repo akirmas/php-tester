@@ -35,7 +35,7 @@ $input = (
   ? (json_decode(preg_replace('/(^"|"$)/i', '', $_SERVER['argv'][1]), true))
   : []
 ) + $input;
-//$input = json_decode(file_get_contents(__DIR__.'/index.test.json'), true)['tranz_instant'][0];
+//$input = json_decode(file_get_contents(__DIR__.'/index.test.json'), true)['marketscap_import_lead'][0];
 
 //NB! HARDCODE
 if (\assoc\keyExists($input, 'cc:number'))
@@ -192,8 +192,11 @@ forEach($steps as $step) {
       $responseText = substr($responseText, $header_size);
       break;
     case 'GET':
-      $request['engine']['gateway'] = \assoc\getValue($request, ['engine', 'gateway'], '').'?'.http_build_query($requestData);
-      $responseText = file_get_contents(\assoc\getValue($request, ['engine', 'gateway'], ''));      
+      $responseText = file_get_contents(
+        \assoc\getValue($request, ['engine', 'gateway'], '')
+        .'?'
+        .http_build_query($requestData)
+      );      
       break;
     case 'useCached':
       $responseText = file_get_contents($cachePath);      
