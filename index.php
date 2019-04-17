@@ -108,10 +108,16 @@ forEach($steps as $step) {
   $event = 'Request';
   $phase = 'Filled';
   
+  
   $filled = fireEvent(
     (\assoc\getValue($request, ['engine', 'history'], false))
     ? \assoc\merge($requestData, $output, $filled)
     : $filled
+  );
+  
+  $filled = fillValues(
+    $filled,
+    $filled
   );
 
   $event = 'Request';
