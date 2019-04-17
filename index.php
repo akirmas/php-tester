@@ -54,7 +54,8 @@ if (empty($processPath)) {
 }
 // The only field to be hardcoded - key 'account' will be used as it in 3rd parties, avoid ambiguity
 unset($input['account']);
-$system['_account'] = $processPath;
+preg_match('%^[^/]+%', $processPath, $system['_account']);
+$system['_account'] = \assoc\getValue($system['_account'], 0);
 $system['process'] = $processPath;
 
 $input = $system + $input;
