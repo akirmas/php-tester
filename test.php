@@ -14,11 +14,16 @@ forEach($scriptPaths as $scriptPath) {
   $report[$scriptPath] = array_map(
     function($name) use ($scriptPath, $tests, &$failedScript) {
       //TODO: set up 'style' of test - CLI, HTTP/GET, HTTP/POST
+      $responseText = file_get_contents("http://localhost/psps/$scriptPath.php?".http_build_query($tests[$name][0]));
       //$response = json_decode(callTest($scriptPath, $tests[$name][0])[0], true);
-      $response = json_decode(file_get_contents("http://localhost/psps/$scriptPath.php?".http_build_query($tests[$name][0])), true);
       //$response = json_decode(file_get_contents("https://payment.gobemark.info/apis/master/$scriptPath.php?".http_build_query($tests[$name][0])), true);
+
+      $response = json_decode($responseText, true);
+      if (is_null($response))
+        $response = $responseText;
+
       $expected = $tests[$name][1];
-      $failedTest = $expected != array_intersect_assoc($response, $expected);
+      $failedTest = !isSubset($response, $expected);
       $failedScript = $failedScript || $failedTest;
       return array($name =>
         !$failedTest ? true
@@ -44,4 +49,10 @@ function callTest($php, $params) {
   $output;
   exec("php $php ".escapeshellarg($params), $output);
   return $output;
+}
+
+function isSubset($set, $sub) {
+  return is_array($set) && is_array($sub)
+  ? $sub = array_intersect_assoc($set, $sub)
+  : $set === $sub;
 }

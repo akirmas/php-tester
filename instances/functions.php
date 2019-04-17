@@ -1,12 +1,10 @@
 <?php
-function redsysSignature($data) {
-  $baseRoot = 8;
+function redsysSignature(&$data, $baseRoot = 8, $cryptLength = 8) {
+  $key = $data['account:key'];
+  foreach(['account:key', 'version', '$output'] as $redudantKey)
+    unset($data[$redudantKey]);
 
-  $key = $data['key'];
-  unset($data['key']);
-  $orderId = $data['orderId'];
-  unset($data['orderId']);
-  
+  $orderId = $data['DS_MERCHANT_ORDER'];
   $len = strlen($orderId);
   $l = ceil($len / $baseRoot) * $baseRoot;
   return base64_encode(
@@ -23,7 +21,7 @@ function redsysSignature($data) {
           str_repeat("\0", $baseRoot)
         ),
         0,
-        $baseRoot
+        $cryptLength
       ),
       true
     )

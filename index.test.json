@@ -47,29 +47,6 @@
       "success": 0
     }    
   ], 
-  "cascade": [
-    {
-      "amount": 10,
-      "name:full": "First Lastname",
-      "entity:id": "test_cascade1111",
-      "cc:cvv": "123",
-      "cc:expire:date": "0120",
-      "cc:number": "4242424242424242",
-      "cc:system": "None",
-      "company": "cascade",
-      "currency": "USD",
-      "description": "test",
-      "email": "test@test.gbm",
-      "entity": "lead",
-      "account": "test",
-      "process": "cascade",
-      "id": "test1",
-      "phone": "987654321"
-    },
-    {
-      "success": 0
-    }    
-  ], 
   "isra_frame_good": [
     {
       "amount": 10,
@@ -120,7 +97,6 @@
   "tranz_instant": [
     {
       "amount": "10",
-      "verify": 0,
       "cc:cvv": "123",
       "cc:expire:date": "0120",
       "cc:number": "12312312",
@@ -166,5 +142,26 @@
       "return:code": "301",
       "return:message": "No currency authorization - delegated permission"      
     }
-  ]
+  ],
+  "redsys_dev" : [
+    {
+      "amount": "10",
+      "verify": "0",
+      "cc:cvv": "000",
+      "cc:expire:date": "0115",
+      "cc:number": "4580000000000000",
+      "cc:system": "None",
+      "company": "redsys_dev",
+      "currency": "EUR",
+      "description": "test",
+      "email": "test@test.gbm",
+      "entity": "lead",
+      "entity:id": "test_redsys_11111",
+      "process": "test/Redsys",
+      "full_name": "AndriiTEST ShykovTEST",
+      "phone": "987654321",
+      "orderId": "#H1201"
+    },
+    "<form id=\"form\" action=\"https://sis-t.redsys.es:25443/sis/realizarPago\" method=\"POST\" target=\"_blank\"><input type=\"text\" name=\"Ds_SignatureVersion\" value=\"HMAC_SHA256_V1>\"/><input type=\"text\" name=\"Ds_MerchantParameters\" value=\"eyJEU18gTUVSQ0hBTlRfTUVSQ0hBTlRDT0RFIjoiMzM3MDkxNDMzIiwiRFNfTUVSQ0hBTlRfVFJBTlNBQ1RJT05UWVBFIjpudWxsLCJEU19NRVJDSEFOVF9URVJNSU5BTCI6IjAwMSIsIkRTX01FUkNIQU5UX1VSTEtPIjoiaHR0cHM6XC9cL3BheW1lbnQuZ29iZW1hcmsuaW5mb1wvYXBpc1wvbWFzdGVyXC9pbmRleC5waHBcL1JlZHN5c05vdGlmeVwvdGVzdCIsIkRTX01FUkNIQU5UX1VSTE9LIjoiaHR0cHM6XC9cL3BheW1lbnQuZ29iZW1hcmsuaW5mb1wvYXBpc1wvbWFzdGVyXC9pbmRleC5waHBcL1JlZHN5c05vdGlmeVwvdGVzdCIsIkRTX01FUkNIQU5UX01FUkNIQU5UVVJMIjoiaHR0cHM6XC9cL3BheW1lbnQuZ29iZW1hcmsuaW5mb1wvYXBpc1wvbWFzdGVyXC9pbmRleC5waHBcL1JlZHN5c05vdGlmeVwvdGVzdCIsIkRTX01FUkNIQU5UX0FNT1VOVCI6IjEwIiwiRFNfTUVSQ0hBTlRfQ1VSUkVOQ1kiOiI5NzgiLCJEU19NRVJDSEFOVF9QUk9EVUNUREVTQ1JJUFRJT04iOiJ0ZXN0IiwiRFNfTUVSQ0hBTlRfT1JERVIiOiIjSDEyMDEiLCJnYXRld2F5IjoiaHR0cHM6XC9cL3Npcy10LnJlZHN5cy5lczoyNTQ0M1wvc2lzXC9yZWFsaXphclBhZ28ifQ==>\"/><input type=\"text\" name=\"Ds_Signature\" value=\"<KeJodFOKhHJzxEyZ8GNjWQBnsFX3MxVouZJIfYdS9LI=>\"/><input type=\"submit\"></form><script>document.querySelector('#form').submit()</script>"
+  ]  
 }

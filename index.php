@@ -35,7 +35,7 @@ $input = (
   ? (json_decode(preg_replace('/(^"|"$)/i', '', $_SERVER['argv'][1]), true))
   : []
 ) + $input;
-//$input = json_decode(file_get_contents(__DIR__.'/index.test.json'), true)['marketscap_import_lead'][0];
+//$input = json_decode(file_get_contents(__DIR__.'/index.test.json'), true)['redsys_dev'][0];
 
 //NB! HARDCODE
 if (\assoc\keyExists($input, 'cc:number'))
