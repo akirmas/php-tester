@@ -257,7 +257,8 @@ forEach($steps as $step) {
 
   $output = $system
   + ['processor' => $processor]
-  + fillValues(
+  + $output;
+  $output = fillValues(
     $output,
     \assoc\merge($output, $filled)
   );
