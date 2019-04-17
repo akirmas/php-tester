@@ -278,7 +278,19 @@ forEach($steps as $step) {
     break;
 }
 
-echo json_encode($output, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+$responseContentType = \assoc\getValue($response, ['output', 'contentType'], 'application/json');
+header("Content-Type: {$responseContentType}; charset=utf-8");
+
+switch($responseContentType) {
+  case 'text/html': 
+    echo \assoc\getValue($output, \assoc\getValue($response, ['output', 'contentFrom']));
+    break;
+  case 'application/json': 
+    echo json_encode($output, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+    break;
+  default:
+}
+
 
 function fireEvent(...$data) {
   global $event, $phase, $handler, $logDir, $processDir, $commonHandler, $step;
