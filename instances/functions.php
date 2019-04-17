@@ -1,6 +1,8 @@
 <?php
+require_once(__DIR__.'/../utils/assoc.php');
+
 function redsysSignature($key, $data, $baseRoot = 8, $cryptLength = 8) {
-  $orderId = $data['DS_MERCHANT_ORDER'];
+  $orderId = \assoc\getValue($data, 'DS_MERCHANT_ORDER', urldecode(\assoc\getValue($data, 'Ds_Order')));
   $len = strlen($orderId);
   $l = ceil($len / $baseRoot) * $baseRoot;
   return base64_encode(
