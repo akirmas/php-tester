@@ -1,9 +1,5 @@
 <?php
-function redsysSignature(&$data, $baseRoot = 8, $cryptLength = 8) {
-  $key = $data['account:key'];
-  foreach(['account:key', 'version', '$output'] as $redudantKey)
-    unset($data[$redudantKey]);
-
+function redsysSignature($key, $data, $baseRoot = 8, $cryptLength = 8) {
   $orderId = $data['DS_MERCHANT_ORDER'];
   $len = strlen($orderId);
   $l = ceil($len / $baseRoot) * $baseRoot;
