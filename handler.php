@@ -57,12 +57,14 @@ class CommonHandler extends CycleHandler {
       }
     }
     //</Amount and currency>
+
     //<Absolute identifier>
-    $idAbsolute = join('/', [
+    $idAbsolute = \assoc\join2('/', [
       $input['_account'],
-      !\assoc\keyExists($input, 'id') ? '' : $input['id']
+      \assoc\getValue($input, 'id', '')
     ]);
     //</Absolute identifier>
+
     return [
       'cc:expire:date' => $date,
       'name:full' => $name_full,
