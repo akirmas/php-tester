@@ -301,6 +301,7 @@ switch($responseContentType) {
 
 function fireEvent(...$data) {
   global $event, $phase, $handler, $logDir, $processDir, $commonHandler, $step;
+  // TODO: Step is env object, not string
   $data[0] = \assoc\merge(
     call_user_func(
       ["\\$commonHandler", "on$event$phase"],
