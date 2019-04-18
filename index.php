@@ -9,6 +9,7 @@ header('Access-Control-Allow-Headers: origin, x-requested-with, Content-Type, Da
 
 require_once(__DIR__.'/utils/assoc.php');
 require_once(__DIR__.'/handler.php');
+require_once(__DIR__.'/instances/functions.php');
 
 $commonHandler = 'CommonHandler';
 
@@ -109,6 +110,10 @@ forEach($steps as $step) {
   $event = 'Request';
   $phase = 'Filled';
   
+  if(\assoc\keyExists($request, ['engine', 'autoincrement'])) {
+    $incrementKey = \assoc\getValue($request, ['engine', 'autoincrement']);
+    $filled['autoincrement'] = autoincrement($incrementKey);
+  }
   
   $filled = fireEvent(
     (\assoc\getValue($request, ['engine', 'history'], false))
