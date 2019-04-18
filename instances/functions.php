@@ -27,9 +27,16 @@ function redsysSignature($key, $data, $baseRoot = 8, $cryptLength = 8) {
 }
 
 function autoincrement($key) {
-  $incrementorDir = mkdir2(__DIR__.'/../../increments');
-  $incrementorFile = "$incrementorDir/$key";
-  $value = 1 + intval(file_get_contents($incrementorFile));
-  file_put_contents($incrementorFile, $value);
+  $incrementorDir = mkdir2(__DIR__, '..', '..', 'incrementors');
+  $incrementorFile = "{$incrementorDir}/{$key}";
+  mkdir2(...array_slice(
+    explode('/', $incrementorFile),
+    0,
+    -1
+  ));
+  $value = !file_exists($incrementorFile) 
+  ? 1
+  : 1 + intval(file_get_contents($incrementorFile));
+  file_put_contents($incrementorFile, $value, LOCK_EX);
   return $value;
 }
