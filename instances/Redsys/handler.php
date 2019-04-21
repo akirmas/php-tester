@@ -7,28 +7,25 @@ require_once(__DIR__.'/../../utils/stringmath.php');
 class Redsys extends CycleHandler {
   static function onRequestFilled($env, $request) {
     $orderId = baseChangeString(
-      //TODO: pick from env
-      '()*+,./-0123456789:;?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[]^_abcdefghijklmnopqrstuvwxyz{|}~',
-      '0123456789',
+      \assoc\getValue($env, ['engine', 'alphabet', 'output']),
+      \assoc\getValue($env, ['engine', 'alphabet', 'input']),
       \assoc\getValue($request, 'autoincrement')
     );
 
     return [
       'orderId' => baseChangeString(
-        //TODO: pick from env
-        '()*+,./0123456789:;?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[]^_abcdefghijklmnopqrstuvwxyz{|}~',
-        '0123456789',
+        \assoc\getValue($env, ['engine', 'alphabet', 'output']),
+        \assoc\getValue($env, ['engine', 'alphabet', 'input']),
         \assoc\getValue($request, 'autoincrement')
       )
     ];
   }
   static function onResponseRaw($env, $response, $request) {
-    $key = $response['account:key'];
     //TODO: pick from env
-    foreach(['account:key', 'version', '$output', 'gateway'] as $redudantKey)
+    foreach(['$output'] as $redudantKey)
       unset($response[$redudantKey]);
     return [
-      'signature' => redsysSignature($key, $response),
+      'signature' => redsysSignature(\assoc\getValue($env, ['engine', 'account:key']), $response),
       'data' => base64_encode(json_encode($response))
     ];
   }

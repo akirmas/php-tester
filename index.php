@@ -123,7 +123,10 @@ forEach($steps as $step) {
   
   $filled = fillValues(
     $filled,
-    $filled
+    \assoc\merge(
+      $filled,
+      \assoc\getValue($request, 'engine')
+    )
   );
 
   $event = 'Request';
@@ -272,7 +275,7 @@ forEach($steps as $step) {
   + $output;
   $output = fillValues(
     $output,
-    \assoc\merge($output, $filled)
+    \assoc\merge($output, $filled, \assoc\getValue($response, 'engine'))
   );
 
   $event = 'Response';
@@ -305,7 +308,14 @@ switch($responseContentType) {
 
 
 function fireEvent(...$data) {
-  global $event, $phase, $handler, $logDir, $processDir, $commonHandler, $step;
+  global $event, $phase, $handler, $logDir, $processDir, $commonHandler, $request, $response;
+  $step = $event === 'Request'
+  ? $request
+  : (
+    $event === 'Response'
+    ? $response
+    : []
+  );
   // TODO: Step is env object, not string
   $data[0] = \assoc\merge(
     call_user_func(
