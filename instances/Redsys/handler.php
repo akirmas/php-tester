@@ -6,18 +6,16 @@ require_once(__DIR__.'/../../utils/stringmath.php');
 
 class Redsys extends CycleHandler {
   static function onRequestFilled($env, $request) {
-    $orderId = baseChangeString(
-      \assoc\getValue($env, ['engine', 'alphabet', 'output']),
-      \assoc\getValue($env, ['engine', 'alphabet', 'input']),
-      \assoc\getValue($request, 'autoincrement')
-    );
-
-    return [
-      'orderId' => baseChangeString(
+    $orderId = \assoc\getValue($request, 'orderId',
+      baseChangeString(
         \assoc\getValue($env, ['engine', 'alphabet', 'output']),
         \assoc\getValue($env, ['engine', 'alphabet', 'input']),
         \assoc\getValue($request, 'autoincrement')
       )
+    );
+
+    return [
+      'orderId' => $orderId
     ];
   }
   static function onResponseRaw($env, $response, $request) {
