@@ -22,7 +22,7 @@ class Redsys extends CycleHandler {
   }
   static function onResponseRaw($env, $response, $request) {
     //TODO: pick from env
-    foreach(['$output'] as $redudantKey)
+    foreach(['$output', 'iframe:HTML'] as $redudantKey)
       unset($response[$redudantKey]);
     return [
       'signature' => redsysSignature(\assoc\getValue($env, ['engine', 'account:key']), $response),
