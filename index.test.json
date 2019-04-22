@@ -24,29 +24,6 @@
       "return:message": "email already exists"
     }
   ],
-  "immi_cascade": [
-    {
-      "amount": 10,
-      "name:full": "First Lastname",
-      "cc:cvv": "123",
-      "entity:id": "test_cascade_11111",
-      "cc:expire:date": "0120",
-      "cc:number": "4242 4242 4242 4242",
-      "cc:system": "None",
-      "company": "immi_cascade",
-      "currency": "USD",
-      "description": "test",
-      "email": "andrii@gobe-mark.com",
-      "entity": "lead",
-      "account": "immigration",
-      "process": "cascade",
-      "id": "test1",
-      "phone": "987654321"
-    },
-    {
-      "success": 0
-    }    
-  ], 
   "isra_frame_good": [
     {
       "amount": 10,
@@ -68,7 +45,7 @@
     },
     {
       "success": "-1",
-      "amountInt": 1000
+      "amountInt": "1000"
     }    
   ],
   "isra_frame_bad": [
@@ -91,7 +68,7 @@
     },    
     {
       "return:message:0": "Invalid price, out of min-max bounds",
-      "return:message:1": 10
+      "return:message:1": "10"
     }
   ],
   "tranz_instant": [
@@ -116,79 +93,8 @@
     {
       "return:code": "000",
       "success": 1,
-      "processor": "Tranzila/accounts/test"
-    }
-  ],
-  "tranz_instant_1" : [
-    {
-      "amount": "10",
-      "verify": 0,
-      "cc:cvv": "000",
-      "cc:expire:date": "0115",
-      "cc:number": "4580000000000000",
-      "cc:system": "None",
-      "company": "tranz_instant_1",
-      "currency": "EUR",
-      "description": "test",
-      "email": "test@test.gbm",
-      "entity": "lead",
-      "account": "express-canada.com",
-      "entity:id": "test_cascade_11111",
-      "process": "payment/en",
-      "full_name": "AndriiTEST ShykovTEST",
-      "phone": "987654321"
-    },
-    {
-      "return:code": "301",
-      "return:message": "No currency authorization - delegated permission"      
-    }
-  ],
-  "redsys_dev" : [
-    {
-      "amount": "5.53",
-      "orderId": "test1246",
-      "currency": "EUR",
-      "description": "Many products are here described",
-      "email": "test@test.gbm",
-      "entity": "lead",
-      "entity:id": "test_redsys_11111",
-      "process": "immigration/Redsys",
-      "full_name": "AndriiTEST ShykovTEST",
-      "phone": "987654321",
-      "account:name": "Any name will be here",
-      "id": "123"
-    },
-    {
-      "iframe:HTML": "<form id=\"form\" action=\"https://sis.redsys.es/sis/realizarPago\" method=\"POST\"><input type=\"text\" name=\"Ds_SignatureVersion\" value=\"HMAC_SHA256_V1\"/><input type=\"text\" name=\"Ds_MerchantParameters\" value=\"eyJEU19NRVJDSEFOVF9PUkRFUiI6InRlc3QxMjQ2IiwiRFNfTUVSQ0hBTlRfQU1PVU5UIjoiNTUzIiwiRFNfTUVSQ0hBTlRfVEVSTUlOQUwiOiIwMDEiLCJEU19NRVJDSEFOVF9UUkFOU0FDVElPTlRZUEUiOiIwIiwiRFNfTUVSQ0hBTlRfTUVSQ0hBTlRDT0RFIjoiMzM3MDkxNDMzIiwiRFNfTUVSQ0hBTlRfQ09OU1VNRVJMQU5HVUFHRSI6IjAwMiIsIkRTX01FUkNIQU5UX1VSTEtPIjoiaHR0cHM6XC9cL3BheW1lbnQuZ29iZW1hcmsuaW5mb1wvYXBpc1wvbWFzdGVyXC9pbmRleC5waHBcL1JlZHN5c05vdGlmeVwvdGVzdD9pZDphYnNvbHV0ZT1pbW1pZ3JhdGlvblwvMTIzJnN1Y2Nlc3M9MCYiLCJEU19NRVJDSEFOVF9VUkxPSyI6Imh0dHBzOlwvXC9wYXltZW50LmdvYmVtYXJrLmluZm9cL2FwaXNcL21hc3RlclwvaW5kZXgucGhwXC9SZWRzeXNOb3RpZnlcL3Rlc3Q/aWQ6YWJzb2x1dGU9aW1taWdyYXRpb25cLzEyMyZpZD0xMjMmc3VjY2Vzcz0xJiIsIkRTX01FUkNIQU5UX01FUkNIQU5UVVJMIjoiaHR0cHM6XC9cL3BheW1lbnQuZ29iZW1hcmsuaW5mb1wvYXBpc1wvbWFzdGVyXC9pbmRleC5waHBcL1JlZHN5c05vdGlmeVwvdGVzdD9pZDphYnNvbHV0ZT1pbW1pZ3JhdGlvblwvMTIzJmlkPTEyMzEyMyZzdWM9LTEmIiwiRFNfTUVSQ0hBTlRfQ1VSUkVOQ1kiOiI5NzgiLCJEU19NRVJDSEFOVF9QUk9EVUNUREVTQ1JJUFRJT04iOiJNYW55IHByb2R1Y3RzIGFyZSBoZXJlIGRlc2NyaWJlZCIsIkRTX01FUkNIQU5UX01FUkNIQU5UTkFNRSI6IkFueSBuYW1lIHdpbGwgYmUgaGVyZSJ9\"/><input type=\"text\" name=\"Ds_Signature\" value=\"reIDwoPiSlW3TdWVyzBygziHnQkGRUhknYh4sciGBDM=\"/><input type=\"submit\"></form>",
-      "success": -1
-    }
-  ],
-  "redsys_dev_inline" : [
-    {
-      "amount": "5.53",
-      "orderId": "test1246",
-      "currency": "EUR",
-      "description": "Many products are here described",
-      "email": "test@test.gbm",
-      "entity": "lead",
-      "entity:id": "test_redsys_11111",
-      "process": "immigration/Redsys_inline",
-      "full_name": "AndriiTEST ShykovTEST",
-      "phone": "987654321",
-      "account:name": "Any name will be here",
-      "id": "123"
-    },
-    "<form id=\"form\" action=\"https://sis.redsys.es/sis/realizarPago\" method=\"POST\" target=\"_blank\"><input type=\"text\" name=\"Ds_SignatureVersion\" value=\"HMAC_SHA256_V1\"/><input type=\"text\" name=\"Ds_MerchantParameters\" value=\"eyJEU19NRVJDSEFOVF9PUkRFUiI6InRlc3QxMjQ2IiwiRFNfTUVSQ0hBTlRfQU1PVU5UIjoiNTUzIiwiRFNfTUVSQ0hBTlRfVEVSTUlOQUwiOiIwMDEiLCJEU19NRVJDSEFOVF9UUkFOU0FDVElPTlRZUEUiOiIwIiwiRFNfTUVSQ0hBTlRfTUVSQ0hBTlRDT0RFIjoiMzM3MDkxNDMzIiwiRFNfTUVSQ0hBTlRfQ09OU1VNRVJMQU5HVUFHRSI6IjAwMiIsIkRTX01FUkNIQU5UX0NVUlJFTkNZIjoiOTc4IiwiRFNfTUVSQ0hBTlRfUFJPRFVDVERFU0NSSVBUSU9OIjoiTWFueSBwcm9kdWN0cyBhcmUgaGVyZSBkZXNjcmliZWQiLCJEU19NRVJDSEFOVF9NRVJDSEFOVE5BTUUiOiJBbnkgbmFtZSB3aWxsIGJlIGhlcmUifQ==\"/><input type=\"text\" name=\"Ds_Signature\" value=\"PtofqG+0z95gFKu+HZOUu2dnI5B3t5SeAR7BYRyV02U=\"/><input type=\"submit\"></form>"
-  ],  
-  "redsys_notify_dev": [
-    {
-    "process": "RedsysNotify/test",
-    "id:absolute": "immigration/test123",
-    "Ds_MerchantParameters": "eyJEc19EYXRlIjoiMTclMkYwNCUyRjIwMTkiLCJEc19Ib3VyIjoiMTclM0EwNyIsIkRzX1NlY3VyZVBheW1lbnQiOiIwIiwiRHNfQ2FyZF9Db3VudHJ5IjoiMzc2IiwiRHNfQW1vdW50IjoiMTAwIiwiRHNfQ3VycmVuY3kiOiI5NzgiLCJEc19PcmRlciI6IiU3RUgxNzA5MDgiLCJEc19NZXJjaGFudENvZGUiOiIzMzcwOTE0MzMiLCJEc19UZXJtaW5hbCI6IjAwMSIsIkRzX1Jlc3BvbnNlIjoiMDEwNCIsIkRzX01lcmNoYW50RGF0YSI6IiIsIkRzX1RyYW5zYWN0aW9uVHlwZSI6IjAiLCJEc19Db25zdW1lckxhbmd1YWdlIjoiMiIsIkRzX0Vycm9yQ29kZSI6IlNJUzAyODIiLCJEc19BdXRob3Jpc2F0aW9uQ29kZSI6IisrKysrKyJ9",
-    "Ds_Signature": "Z5EZ0_H0TgGnpsbd-k9WK_rxjUQxQxKVjqjGiYdS6As="
-    },
-    {
-      "success": 0
+      "processor": "Tranzila/accounts/test",
+      "return:message": "Transaction approved"
     }
   ]
 }  

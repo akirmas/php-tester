@@ -53,6 +53,6 @@ function callTest($php, $params) {
 
 function isSubset($set, $sub) {
   return is_array($set) && is_array($sub)
-  ? $sub = array_intersect_assoc($set, $sub)
+  ? $sub === array_intersect_assoc($sub, $set)
   : $set === $sub;
 }
