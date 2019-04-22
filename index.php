@@ -36,7 +36,7 @@ $input = (
   ? (json_decode(preg_replace('/(^"|"$)/i', '', $_SERVER['argv'][1]), true))
   : []
 ) + $input;
-//$input = json_decode(file_get_contents(__DIR__.'/index.test.json'), true)['redsys_dev'][0];
+//$input = json_decode(file_get_contents(__DIR__.'/index.test.json'), true)['tranz_instant'][0];
 
 //NB! HARDCODE
 if (\assoc\keyExists($input, 'cc:number'))
@@ -138,6 +138,7 @@ forEach($steps as $step) {
     \assoc\mapKeys(
       $filled,
       \assoc\flip(\assoc\getValue($request, 'fields', [])),
+      false,
       false
     ),
     \assoc\getValue($request, 'values', []),
@@ -149,6 +150,7 @@ forEach($steps as $step) {
       true
     ),
     \assoc\getValue($request, 'fields', []),
+    false,
     false
   );
 
@@ -261,9 +263,8 @@ forEach($steps as $step) {
   $output = \assoc\mapValues(
     \assoc\mapKeys(
       $output,    
-      \assoc\flip(
-        \assoc\getValue($response, 'fields', [])
-      ),
+      \assoc\getValue($response, 'fields', []),
+      true,
       false
     ),
     \assoc\getValue($response, 'values', []),
