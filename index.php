@@ -36,7 +36,7 @@ $input = (
   ? (json_decode(preg_replace('/(^"|"$)/i', '', $_SERVER['argv'][1]), true))
   : []
 ) + $input;
-//$input = json_decode(file_get_contents(__DIR__.'/index.test.json'), true)['tranz_instant'][0];
+//$input = json_decode(file_get_contents(__DIR__.'/index.test.json'), true)['paypal_andrain'][0];
 
 //NB! HARDCODE
 if (\assoc\keyExists($input, 'cc:number'))
@@ -249,14 +249,14 @@ forEach($steps as $step) {
       $responseData = ['response' => $responseText];
   }
 
-  $event = 'Response';
-  $phase = 'Raw';
-  
   $output = \assoc\merge(
     \assoc\getValue($response, 'defaults', []),
     $responseData,
     \assoc\getValue($response, 'overrides', [])
   );
+
+  $event = 'Response';
+  $phase = 'Raw';
 
   $output = fireEvent($output, $output);
 
