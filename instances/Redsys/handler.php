@@ -20,8 +20,15 @@ class Redsys extends CycleHandler {
   }
   static function onResponseRaw($env, $response, $request) {
     //TODO: pick from env
-    foreach(['$output', 'iframe:HTML', 'success', 'success:ing'] as $redudantKey)
-      unset($response[$redudantKey]);
+    $redundantKeys = ['$output', 'form:action', 'form:method', 'form:target', "form:inputs", 'success', 'success:ing'];
+    $response = array_filter(
+      $response,
+      function ($key) use ($redundantKeys) {
+        return !in_array($key, $redundantKeys);
+      },
+        ARRAY_FILTER_USE_KEY
+    );
+
     return [
       'signature' => redsysSignature(\assoc\getValue($env, ['engine', 'account:key']), $response),
       'data' => base64_encode(json_encode($response))
