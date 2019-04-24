@@ -96,5 +96,19 @@
       "processor": "Tranzila/accounts/test",
       "return:message": "Transaction approved"
     }
+  ],
+  "paypal_andrain": [
+    {
+      "amount": "10",
+      "currency": "USD",
+      "email": "andrain.kirmas-buyer@gmail.com",
+      "process": "test/paypal/andrain",
+      "name:full": "andrii test",
+      "id": "test111",
+      "description": "many products"
+    },
+    {
+      "form:inputs": "{\"first_name\":\"andrii\",\"last_name\":\"test\",\"amount\":\"10\",\"currency_code\":\"USD\",\"payer_email\":\"andrain.kirmas-buyer@gmail.com\",\"custom\":\"test111\",\"item_name\":\"many products\",\"business\":\"andrain.kirmas@gmail.com\",\"no_note\":\"1\",\"lc\":\"UK\",\"bn\":\"PP-BuyNowBF:btn_buynow_LG.gif:NonHostedGuest\",\"cmd\":\"_xclick\",\"item_number\":\"123456\",\"notify_url\":\"https:\/\/payment.gobemark.info\/apis\/master\/index.php\/PaypalNotify\/test?id:absolute=test\/test111&id=test111&\",\"return\":\"https:\/\/payment.gobemark.info\/apis\/master\/\",\"cancel_return\":\"https:\/\/payment.gobemark.info\/apis\/master\/\"}"
+    }
   ]
 }  
