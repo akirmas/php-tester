@@ -1,6 +1,4 @@
 #!/bin/sh
-cd ..
-
 STASH_NAME="pre-commit-$(date +%s)"
 git stash save -q --keep-index --include-untracked $STASH_NAME
 
