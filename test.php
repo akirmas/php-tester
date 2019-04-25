@@ -39,8 +39,9 @@ forEach($scriptPaths as $scriptPath) {
 }
 
 if ($failedProject)
-  exit("0\n".json_encode($report, JSON_PRETTY_PRINT, JSON_UNESCAPED_SLASHES)."\n");
-else echo 0;
+  exit("1\n".json_encode($report, JSON_PRETTY_PRINT, JSON_UNESCAPED_SLASHES)."\n");
+else
+  echo 0;
 exit;
 
 function callTest($php, $params) {
