@@ -141,5 +141,23 @@
       "success": -1,
       "form:inputs": "{\"Ds_SignatureVersion\": \"HMAC_SHA256_V1\", \"Ds_MerchantParameters\": \"eyJEU19NRVJDSEFOVF9PUkRFUiI6InRlc3QxMjQ2IiwiRFNfTUVSQ0hBTlRfQU1PVU5UIjoiNTUzIiwiRFNfTUVSQ0hBTlRfVEVSTUlOQUwiOiIwMDEiLCJEU19NRVJDSEFOVF9UUkFOU0FDVElPTlRZUEUiOiIwIiwiRFNfTUVSQ0hBTlRfTUVSQ0hBTlRDT0RFIjoiMzM3MDkxNDMzIiwiRFNfTUVSQ0hBTlRfQ09OU1VNRVJMQU5HVUFHRSI6IjAwMiIsIkRTX01FUkNIQU5UX01FUkNIQU5UVVJMIjoiaHR0cHM6XC9cL3BheW1lbnQuZ29iZW1hcmsuaW5mb1wvYXBpc1wvbWFzdGVyXC9pbmRleC5waHBcL1JlZHN5c05vdGlmeVwvdGVzdD9pZDphYnNvbHV0ZT10ZXN0XC8xMjMmaWQ9MTIzJiIsIkRTX01FUkNIQU5UX1VSTEtPIjoiXC9wYXltZW50XC9zdWNjZXNzXC8wIiwiRFNfTUVSQ0hBTlRfVVJMT0siOiJcL3BheW1lbnRcL3N1Y2Nlc3NcLzEiLCJEU19NRVJDSEFOVF9DVVJSRU5DWSI6Ijk3OCIsIkRTX01FUkNIQU5UX1BST0RVQ1RERVNDUklQVElPTiI6Ik1hbnkgcHJvZHVjdHMgYXJlIGhlcmUgZGVzY3JpYmVkIiwiRFNfTUVSQ0hBTlRfTUVSQ0hBTlROQU1FIjoiQW55IG5hbWUgd2lsbCBiZSBoZXJlIn0=\", \"Ds_Signature\": \"kq4LeEOMEeQgJc4uDTEqCN2Bm5BIYmIpwOONRndqdFQ=\"}"      
     }
-  ]    
+  ],
+  "oneOf/first": [
+    {
+      "process": "test/oneOf/first"
+    },
+    {
+      "success": "1",
+      "processor": "test\/success\/1"
+    }
+  ],
+  "oneOf/second": [
+    {
+      "process": "test/oneOf/second"
+    },
+    {
+      "success": "1",
+      "processor": "test\/success\/1"
+    }
+  ]  
 }  

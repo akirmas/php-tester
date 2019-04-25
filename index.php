@@ -282,13 +282,15 @@ forEach($steps as $step) {
   $event = 'Response';
   $phase = 'Formed';
   $output = fireEvent($output, $filled);
+
+  $success = assoc\getValue($output, 'success');
   if (
     // until first TRUE
     in_array($strategy, ['anyOf', 'oneOf'])
-    && \assoc\getValue($output, 'success') === 1
+    && in_array($success, [1, '1'])
     // until first FALSE
-    || $strategy === 'allOf'
-    && \assoc\getValue($output, 'success') === 0
+    || in_array($strategy, ['allOf'])
+    && in_array($success, [0, '0'])
     // 'just do it' is 'anyOf' - and any value of $strategy (even 'Nike')
   )
     break;
