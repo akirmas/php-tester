@@ -286,11 +286,11 @@ forEach($steps as $step) {
   $success = assoc\getValue($output, 'success');
   if (
     // until first TRUE
-    in_array($strategy, ['anyOf', 'oneOf'])
-    && in_array($success, [1, '1'])
+    in_array($strategy, ['anyOf', 'oneOf'], true)
+    && in_array($success, [1, '1'], true)
     // until first FALSE
-    || in_array($strategy, ['allOf'])
-    && in_array($success, [0, '0'])
+    || in_array($strategy, ['allOf'], true)
+    && in_array($success, [0, '0'], true)
     // 'just do it' is 'anyOf' - and any value of $strategy (even 'Nike')
   )
     break;
