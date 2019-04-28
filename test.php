@@ -1,22 +1,24 @@
 <?php
 $failedProject = false;
 $report = [];
-$scriptPaths = sizeof($_SERVER['argv']) > 1
-? [$_SERVER['argv'][1]]
-: json_decode(file_get_contents(preg_replace('/\.php/i', '.json', __FILE__)), true);
+$opts = getopt('', ['url:', 'script:', 'all']);
+$opts['all'] = array_key_exists('all', $opts);
+$opts['script'] = array_key_exists('script', $opts) ? $opts['script'] : 'index';
+$opts['url'] = array_key_exists('url', $opts) ? $opts['url'] : null;
+
+$scriptPaths = [$opts['script']];
 forEach($scriptPaths as $scriptPath) {
   $testPath = __DIR__.'/'.preg_replace('/\.php$/i', '', $scriptPath).'.test.json';
   $tests = json_decode(file_get_contents($testPath), true);
   $failedScript = false;
-  $testNames = sizeof($_SERVER['argv']) > 2
-  ? [$_SERVER['argv'][2]]
-  : array_keys($tests);
+  $testNames = array_keys($tests);
   $report[$scriptPath] = array_map(
-    function($name) use ($scriptPath, $tests, &$failedScript) {
+    function($name) use ($scriptPath, $tests, &$failedScript, $opts) {
       //TODO: set up 'style' of test - CLI, HTTP/GET, HTTP/POST
-      $responseText = file_get_contents("http://localhost/psps/$scriptPath.php?".http_build_query($tests[$name][0]));
-      //$response = json_decode(callTest($scriptPath, $tests[$name][0])[0], true);
-      //$response = json_decode(file_get_contents("https://payment.gobemark.info/apis/master/$scriptPath.php?".http_build_query($tests[$name][0])), true);
+
+      $responseText = is_null($opts['url'])
+      ? callTest($scriptPath, $tests[$name][0])[0]
+      : file_get_contents($opts['url']."$scriptPath.php?".http_build_query($tests[$name][0]));
 
       $response = json_decode($responseText, true);
       if (is_null($response))
@@ -25,30 +27,38 @@ forEach($scriptPaths as $scriptPath) {
       $expected = $tests[$name][1];
       $failedTest = !isSubset($response, $expected);
       $failedScript = $failedScript || $failedTest;
-      return array($name =>
-        !$failedTest ? true
+      $output = [$name =>
+        !$failedTest
+        ? true
         : array(
           "response" => $response,
           "expected" => $expected
         )
-      );
+      ];
+      if (!$opts['all'] && $failedTest)
+        exiting($failedTest, $output);
+      return $output;
     },
     $testNames
   );
   $failedProject = $failedProject || $failedScript;
 }
 
-if ($failedProject)
-  exit("1\n".json_encode($report, JSON_PRETTY_PRINT, JSON_UNESCAPED_SLASHES)."\n");
-else
+exiting($failedProject, $report);
+
+function exiting($failed, $report = []) {
+  if ($failed)
+    exit("1\n".json_encode($report, JSON_PRETTY_PRINT, JSON_UNESCAPED_SLASHES)."\n");
   echo 0;
-exit;
+  exit;
+}
 
 function callTest($php, $params) {
-  $params = preg_replace('/(")/', '\\\\$0', json_encode($params));
+  $params = '"'.preg_replace('/["]/', '\\\\$0', json_encode($params)).'"';
+  //$params = escapeshellarg($params);
   $php = preg_replace('/\.php/', '', $php).'.php';
-  $output;
-  exec("php $php ".escapeshellarg($params), $output);
+  $output = null;
+  exec("php $php $params", $output);
   return $output;
 }
 

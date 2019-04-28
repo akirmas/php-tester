@@ -29,13 +29,8 @@ if ($system['referer:method'] === 'OPTIONS')
 $input = json_decode(file_get_contents('php://input'), true);
 if (!is_array($input))
   $input = [];
-$input = (
-  count($_REQUEST) === 0 ? [] : $_REQUEST
-) + (
-  \assoc\keyExists($_SERVER, 'argv') && count($_SERVER['argv']) > 1
-  ? (json_decode(preg_replace('/(^"|"$)/i', '', $_SERVER['argv'][1]), true))
-  : []
-) + $input;
+$argv = json_decode(\assoc\getValue($_SERVER, ['argv', 1], "[]"), true);
+$input = $_REQUEST + $argv + $input;
 //$input = json_decode(file_get_contents(__DIR__.'/index.test.json'), true)['paypal_andrain'][0];
 
 //NB! HARDCODE
