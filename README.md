@@ -1,3 +1,7 @@
+Make [pre-commit](https://github.com/gobemarketing/psps/blob/master/git-hooks/pre-commit) working:
+```console
+git config core.hooksPath git-hooks
+```
 # psps
 
 Middleware for unify 3rd party APIs requests
