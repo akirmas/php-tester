@@ -179,11 +179,7 @@
     {
     "id": "L1426917",
     "success": 0,
-    "scriptPath": "\/local_web\/psps\/index.php",
-    "referer:ip": "127.0.0.1",
-    "referer:port": "80",
     "referer:method": "GET",
-    "referer:host": "psps.local",
     "referer:url": "",
     "_account": "PaypalNotify",
     "process": "PaypalNotify\/PaypalNotify\/test",
