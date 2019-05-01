@@ -234,5 +234,15 @@
       "success": "1",
       "processor": "test\/success\/1"
     }
-  ]  
+  ],
+  "amaya/product/get": [
+    {
+      "process": "amaya/product/get",
+      "name": "Dermineck"
+    },
+    {
+      "name": "Dermineck",
+      "id": "717" 
+    }
+  ]
 }  
