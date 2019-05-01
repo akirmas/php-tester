@@ -245,4 +245,14 @@
       "id": "717" 
     }
   ]
+  ],
+  "oneOf/null": [
+    {
+      "process": "test/oneOf/null"
+    },
+    {
+      "success": null,
+      "processor": "test\/success\/null"
+    }
+  ]
 }  
