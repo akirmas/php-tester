@@ -152,9 +152,9 @@ forEach($steps as $step) {
   $event = 'Request';
   $phase = 'Formed';
 
-  $request['engine']['gateway'] = formatString(formatString(
+  $request['engine']['gateway'] = formatString(
     \assoc\getValue($request, ['engine', 'gateway'], ''),
-    $requestData), $filled
+    $requestData + $filled +  \assoc\getValue($request, ['engine'], [])
   );
 
   $cachePath = '';
