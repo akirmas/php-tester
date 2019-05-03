@@ -1,8 +1,8 @@
 <?php
 require_once(__DIR__.'/../../CycleHandler.php');
-require_once(__DIR__.'/../../utils0/assoc.php');
+require_once(__DIR__.'/../../utils/assoc.php');
 require_once(__DIR__.'/../functions.php');
-require_once(__DIR__.'/../../utils0/stringmath.php');
+require_once(__DIR__.'/../../utils/stringmath.php');
 
 class Redsys extends CycleHandler {
   static function onRequestFilled($env, $request) {
