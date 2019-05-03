@@ -2,7 +2,7 @@
 STASH_NAME="pre-commit-$(date +%s)"
 git stash save -q --keep-index --include-untracked $STASH_NAME
 
-RESULT="$(./run_tests.sh)"
+RESULT="$(./run.sh)"
 
 : '
 STASHES=$(git stash list)

@@ -1,9 +1,0 @@
-{
-  "request": {
-    "overrides": {
-      "account": "venus",
-      "currency:final": "ILS"
-    }
-  },
-  "response": {}
-}

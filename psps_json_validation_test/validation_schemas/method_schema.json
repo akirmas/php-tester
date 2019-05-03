@@ -1,4 +1,0 @@
-{
-    "$id": "http://psps/psps_json_validation_test/validation_schemas/method_schema.json#",
-    "enum": ["GET", "POST"]       
-}
