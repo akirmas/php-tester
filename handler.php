@@ -1,6 +1,6 @@
 <?php
-require_once(__DIR__.'/utils/index.php');
-require_once(__DIR__.'/utils/assoc.php');
+require_once(__DIR__.'/utils0/index.php');
+require_once(__DIR__.'/utils0/assoc.php');
 require_once(__DIR__.'/CycleHandler.php');
 class CommonHandler extends CycleHandler {
   static function onRequestFilled($env, $input) {

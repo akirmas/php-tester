@@ -7,7 +7,7 @@ header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: POST, GET');
 header('Access-Control-Allow-Headers: origin, x-requested-with, Content-Type, Date, Request-Date');
 
-require_once(__DIR__.'/utils/assoc.php');
+require_once(__DIR__.'/utils0/assoc.php');
 require_once(__DIR__.'/handler.php');
 require_once(__DIR__.'/instances/functions.php');
 

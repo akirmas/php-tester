@@ -1,5 +1,5 @@
 <?php
-require_once(__DIR__.'/../utils/assoc.php');
+require_once(__DIR__.'/../utils0/assoc.php');
 use function \assoc\getValue;
 
 function redsysSignature($key, $data, $baseRoot = 8, $cryptLength = 8) {
