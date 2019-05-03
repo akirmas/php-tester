@@ -1,2 +1,2 @@
 #!/bin/sh
-php ./test.php
+php ./index.php
