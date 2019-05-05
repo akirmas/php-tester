@@ -1,0 +1,258 @@
+{
+  "marketscap_autologin_cached": [
+    {
+      "email": "psps@gb,.test",
+      "account": "marketscap",
+      "process": "autologin_test"
+    },
+    {
+      "url:redirect": "https:\/\/www.marketscap.com\/trade.php\/trader\/connection\/autoLogin?key=CppaLlsKKQ1njN7tPF7JaVZXUuPiDYwmyo89QFc3shHLm3g3KjfJh%2Ftk5MkdPZMsLgtYGtZTcfXxas5vrU3YCUpAvM99IbHWE0vbFvBx%2BQFntz%2B%2FNL4GnhIVL%2B2BX1R8&r=%2Ftrade.php%2Fcrypto%2Fdeposit%2F"
+    }
+  ],
+  "marketscap_import_lead": [
+    {
+      "email": "psps@gb,.test",
+      "name:first": "GBMApis",
+      "name:last": "Test",
+      "phone": "987654321",
+      "address:country:ISO": "NT",
+      "account": "marketscap",
+      "process": "importlead_test"
+    },
+    {
+      "return:code": "3",
+      "return:message": "email already exists"
+    }
+  ],
+  "isra_frame_good": [
+    {
+      "amount": 10,
+      "name:full": "First Lastname",
+      "cc:cvv": "123",
+      "cc:expire:date": "0120",
+      "cc:number": "12312312312",
+      "cc:system": "None",
+      "company": "isra_frame_good",
+      "currency": "USD",
+      "description": "test",
+      "email": "test@test.gbm",
+      "entity": "lead",
+      "account": "test",
+      "process": "Isracard3d",
+      "id": "test1",
+      "phone": "987654321",
+      "entity:id": "1426917"
+    },
+    {
+      "success": "-1",
+      "amountInt": "1000"
+    }    
+  ],
+  "isra_frame_bad": [
+    {
+      "amount": 0.1,
+      "cc:cvv": "123",
+      "cc:expire:date": "0120",
+      "cc:number": "12312312312",
+      "cc:system": "None",
+      "company": "company",
+      "currency": "USD",
+      "description": "test",
+      "email": "test@test.gbm",
+      "entity": "lead",
+      "account": "test",
+      "process": "Isracard3d",
+      "name:full": "andrii test",
+      "phone": "987654321",
+      "entity:id": "1426917"
+    },    
+    {
+      "return:message:0": "Invalid price, out of min-max bounds",
+      "return:message:1": "10"
+    }
+  ],
+  "tranz_instant": [
+    {
+      "amount": "10",
+      "cc:cvv": "123",
+      "cc:expire:date": "0120",
+      "cc:number": "12312312",
+      "cc:system": "None",
+      "company": "tranz_instant",
+      "currency": "ILS",
+      "description": "test",
+      "email": "test@test.gbm",
+      "entity": "lead",
+      "entity:id": "test_cascade_11111",
+      "process": "Tranzila_instant_charge",
+      "account": "test",
+      "full_name": "andrii test",
+      "phone": "987654321",
+      "supplier": "exca"
+    },    
+    {
+      "return:code": "000",
+      "success": 1,
+      "processor": "Tranzila/accounts/test",
+      "return:message": "Transaction approved"
+    }
+  ],
+  "paypal_andrain": [
+    {
+      "amount": "10",
+      "currency": "USD",
+      "email": "andrain.kirmas-buyer@gmail.com",
+      "process": "test/paypal/andrain",
+      "name:full": "andrii test",
+      "id": "test111",
+      "description": "many products"
+    },
+    {
+      "form:inputs": "{\"first_name\":\"andrii\",\"last_name\":\"test\",\"amount\":\"10\",\"currency_code\":\"USD\",\"payer_email\":\"andrain.kirmas-buyer@gmail.com\",\"item_name\":\"many products\",\"cmd\":\"_xclick\",\"business\":\"andrain.kirmas-facilitator@gmail.com\",\"notify_url\":\"https:\/\/payment.gobemark.info\/apis\/master\/index.php\/PaypalNotify\/test?id:absolute=test\/test111&id=test111&\",\"return\":\"https:\/\/payment.gobemark.info\/apis\/master\/\",\"cancel_return\":\"https:\/\/payment.gobemark.info\/apis\/master\/\"}"
+    }
+  ],
+  "paypal_notify": [
+    {
+    "account":"PaypalNotify",
+    "process":"PaypalNotify/test",
+    "cc:expire:date":"",
+    "name:full":"1 1",
+    "name:first":"1",
+    "name:last":"1",
+    "amount:final":"0",
+    "amountInt:final":"0",
+    "currency:final":"",
+    "fee:final":"0",
+    "id:absolute":"test\/L1426917",
+    "tmstmp":"20190424-130145_1625900452",
+    "scriptPath":"\/var\/www\/php\/psps\/master\/index.php",
+    "referer:ip":"173.0.82.126",
+    "referer:port":"443",
+    "referer:method":"POST",
+    "referer:host":"payment.gobemark.info",
+    "referer:url":"",
+    "_account":"PaypalNotify",
+    "id":"L1426917",
+    "mc_gross":"10.00",
+    "protection_eligibility":"Eligible",
+    "address_status":"confirmed",
+    "payer_id":"AMGHGHTEA5LUC",
+    "address_street":"1 Main St",
+    "payment_date":"06:01:38 Apr 24, 2019 PDT",
+    "payment_status":"Completed",
+    "charset":"windows-1252",
+    "address_zip":"95131",
+    "first_name":"test",
+    "mc_fee":"0.59",
+    "address_country_code":"US",
+    "address_name":"test buyer",
+    "notify_version":"3.9",
+    "custom":"L1426917",
+    "payer_status":"verified",
+    "business":"andrain.kirmas-facilitator@gmail.com",
+    "address_country":"United States",
+    "address_city":"San Jose",
+    "quantity":"1",
+    "verify_sign":"AOBuwV896CzGg08bcxnfv0.6zVn9AM39eDNuo5oj4eJWP6xLSrms5iAh",
+    "payer_email":"andrain.kirmas-buyer@gmail.com",
+    "txn_id":"10510035LE266104K",
+    "payment_type":"instant",
+    "last_name":"buyer",
+    "address_state":"CA",
+    "receiver_email":"andrain.kirmas-facilitator@gmail.com",
+    "payment_fee":"0.59",
+    "shipping_discount":"0.00",
+    "insurance_amount":"0.00",
+    "receiver_id":"TC6WRJQRKEPCL",
+    "txn_type":"web_accept",
+    "item_name":"123",
+    "discount":"0.00",
+    "mc_currency":"USD",
+    "item_number":"",
+    "residence_country":"US",
+    "test_ipn":"1",
+    "shipping_method":"Default",
+    "transaction_subject":"",
+    "payment_gross":"10.00",
+    "ipn_track_id":"e8f7fb3b31ef1"
+    },
+    {
+    "id": "L1426917",
+    "success": 0,
+    "referer:method": "GET",
+    "referer:url": "",
+    "_account": "PaypalNotify",
+    "process": "PaypalNotify\/PaypalNotify\/test",
+    "processor": "PaypalNotify\/accounts\/test"
+    }
+  ],
+  "redsys_notify_dev": [
+    {
+    "process": "RedsysNotify/test",
+    "id:absolute": "immigration/test123",
+    "Ds_MerchantParameters": "eyJEc19EYXRlIjoiMTclMkYwNCUyRjIwMTkiLCJEc19Ib3VyIjoiMTclM0EwNyIsIkRzX1NlY3VyZVBheW1lbnQiOiIwIiwiRHNfQ2FyZF9Db3VudHJ5IjoiMzc2IiwiRHNfQW1vdW50IjoiMTAwIiwiRHNfQ3VycmVuY3kiOiI5NzgiLCJEc19PcmRlciI6IiU3RUgxNzA5MDgiLCJEc19NZXJjaGFudENvZGUiOiIzMzcwOTE0MzMiLCJEc19UZXJtaW5hbCI6IjAwMSIsIkRzX1Jlc3BvbnNlIjoiMDEwNCIsIkRzX01lcmNoYW50RGF0YSI6IiIsIkRzX1RyYW5zYWN0aW9uVHlwZSI6IjAiLCJEc19Db25zdW1lckxhbmd1YWdlIjoiMiIsIkRzX0Vycm9yQ29kZSI6IlNJUzAyODIiLCJEc19BdXRob3Jpc2F0aW9uQ29kZSI6IisrKysrKyJ9",
+    "Ds_Signature": "Z5EZ0_H0TgGnpsbd-k9WK_rxjUQxQxKVjqjGiYdS6As="
+    },
+    {
+      "success": 0
+    }
+  ],
+  "redsys_dev" : [
+    {
+      "amount": "5.53",
+      "orderId": "test1246",
+      "currency": "EUR",
+      "description": "Many products are here described",
+      "email": "test@test.gbm",
+      "entity": "lead",
+      "entity:id": "test_redsys_11111",
+      "process": "test/Redsys",
+      "full_name": "AndriiTEST ShykovTEST",
+      "phone": "987654321",
+      "account:name": "Any name will be here",
+      "id": "123"
+    },
+    {
+      "success": -1,
+      "form:inputs": "{\"Ds_SignatureVersion\": \"HMAC_SHA256_V1\", \"Ds_MerchantParameters\": \"eyJEU19NRVJDSEFOVF9PUkRFUiI6InRlc3QxMjQ2IiwiRFNfTUVSQ0hBTlRfQU1PVU5UIjoiNTUzIiwiRFNfTUVSQ0hBTlRfVEVSTUlOQUwiOiIwMDEiLCJEU19NRVJDSEFOVF9UUkFOU0FDVElPTlRZUEUiOiIwIiwiRFNfTUVSQ0hBTlRfTUVSQ0hBTlRDT0RFIjoiMzM3MDkxNDMzIiwiRFNfTUVSQ0hBTlRfQ09OU1VNRVJMQU5HVUFHRSI6IjAwMiIsIkRTX01FUkNIQU5UX01FUkNIQU5UVVJMIjoiaHR0cHM6XC9cL3BheW1lbnQuZ29iZW1hcmsuaW5mb1wvYXBpc1wvbWFzdGVyXC9pbmRleC5waHBcL1JlZHN5c05vdGlmeVwvdGVzdD9pZDphYnNvbHV0ZT10ZXN0XC8xMjMmaWQ9MTIzJiIsIkRTX01FUkNIQU5UX1VSTEtPIjoiXC9wYXltZW50XC9zdWNjZXNzXC8wIiwiRFNfTUVSQ0hBTlRfVVJMT0siOiJcL3BheW1lbnRcL3N1Y2Nlc3NcLzEiLCJEU19NRVJDSEFOVF9NRVJDSEFOVE5BTUUiOiJBbnkgbmFtZSB3aWxsIGJlIGhlcmUiLCJEU19NRVJDSEFOVF9DVVJSRU5DWSI6Ijk3OCIsIkRTX01FUkNIQU5UX1BST0RVQ1RERVNDUklQVElPTiI6Ik1hbnkgcHJvZHVjdHMgYXJlIGhlcmUgZGVzY3JpYmVkIn0=\", \"Ds_Signature\": \"nDL4BjGKjXVmi6\/Eb996ZKfWv5t2EuECFpRD9ZIza8U=\"}"      
+    }
+  ],
+  "oneOf/first": [
+    {
+      "process": "test/oneOf/first"
+    },
+    {
+      "success": "1",
+      "processor": "test\/success\/1"
+    }
+  ],
+  "oneOf/second": [
+    {
+      "process": "test/oneOf/second"
+    },
+    {
+      "success": "1",
+      "processor": "test\/success\/1"
+    }
+  ],
+  "amaya/product/get": [
+    {
+      "process": "amaya/product/get",
+      "name": "Dermineck"
+    },
+    {
+      "name": "Dermineck",
+      "id": "717" 
+    }
+  ]
+  ],
+  "oneOf/null": [
+    {
+      "process": "test/oneOf/null"
+    },
+    {
+      "success": null,
+      "processor": "test\/success\/null"
+    }
+  ]
+}  
