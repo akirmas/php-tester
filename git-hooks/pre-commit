@@ -2,7 +2,8 @@
 STASH_NAME="pre-commit-$(date +%s)"
 git stash save -q --keep-index --include-untracked $STASH_NAME
 
-RESULT="$(./run.sh)"
+BASEDIR=$(dirname "$0")
+RESULT="$(php $BASEDIR/../index.php)"
 
 : '
 STASHES=$(git stash list)
@@ -12,7 +13,7 @@ fi
 '
 git stash pop -q --index 0
 
-if [ "$RESULT" = "0" ]; then
+if [ "$RESULT" = "1" ]; then
  exit 0
 fi
 echo $RESULT

@@ -8,7 +8,7 @@ $opts['url'] = array_key_exists('url', $opts) ? $opts['url'] : null;
 
 $scriptPaths = [$opts['script']];
 forEach($scriptPaths as $scriptPath) {
-  $testPath = __DIR__.'/'.preg_replace('/\.php$/i', '', $scriptPath).'.test.json';
+  $testPath = preg_replace('/\.php$/i', '', $scriptPath).'.test.json';
   $tests = json_decode(file_get_contents($testPath), true);
   $failedScript = false;
   $testNames = array_keys($tests);
