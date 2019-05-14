@@ -48,8 +48,8 @@ exiting($failedProject, $report);
 
 function exiting($failed, $report = []) {
   if ($failed)
-    exit("1\n".json_encode($report, JSON_PRETTY_PRINT, JSON_UNESCAPED_SLASHES)."\n");
-  echo 0;
+    exit("0\n".json_encode($report, JSON_PRETTY_PRINT, JSON_UNESCAPED_SLASHES)."\n");
+  echo 1;
   exit;
 }
 
