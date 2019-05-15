@@ -18,7 +18,7 @@ forEach($scriptPaths as $scriptPath) {
 
       $responseText = is_null($opts['url'])
       ? callTest($scriptPath, $tests[$name][0])[0]
-      : file_get_contents($opts['url']."$scriptPath.php?".http_build_query($tests[$name][0]));
+      : curlGet($opts['url']."$scriptPath.php", $tests[$name][0]);
 
       $response = json_decode($responseText, true);
       if (is_null($response))
@@ -66,4 +66,16 @@ function isSubset($set, $sub) {
   return is_array($set) && is_array($sub)
   ? $sub === array_intersect_assoc($sub, $set)
   : $set === $sub;
+}
+
+function curlGet($url, $options = []) {
+  $ch = curl_init("{$url}?".http_build_query($options));
+  curl_setopt_array($ch, [
+    CURLOPT_RETURNTRANSFER => true
+  ]);
+  $response = curl_exec($ch);
+  if ($response === false)
+    $response = curl_error($ch);
+  curl_close($ch);
+  return $response;
 }
