@@ -1,17 +1,18 @@
 <?php
 $failedProject = false;
 $report = [];
-$opts = getopt('', ['url:', 'script:', 'all']);
-$opts['all'] = array_key_exists('all', $opts);
+$opts = getopt('', ['url:', 'script:', 'name:', 'all']);
+$opts['run-all'] = array_key_exists('run-all', $opts);
 $opts['script'] = array_key_exists('script', $opts) ? $opts['script'] : 'index';
 $opts['url'] = array_key_exists('url', $opts) ? $opts['url'] : null;
+$opts['name'] = array_key_exists('name', $opts) ? $opts['name'] : null;
 
 $scriptPaths = [$opts['script']];
 forEach($scriptPaths as $scriptPath) {
   $testPath = preg_replace('/\.php$/i', '', $scriptPath).'.test.json';
   $tests = json_decode(file_get_contents($testPath), true);
   $failedScript = false;
-  $testNames = array_keys($tests);
+  $testNames = is_null($opts['name']) ? array_keys($tests) : [$opts['name']];
   $report[$scriptPath] = array_map(
     function($name) use ($scriptPath, $tests, &$failedScript, $opts) {
       //TODO: set up 'style' of test - CLI, HTTP/GET, HTTP/POST
@@ -35,7 +36,7 @@ forEach($scriptPaths as $scriptPath) {
           "expected" => $expected
         )
       ];
-      if (!$opts['all'] && $failedTest)
+      if (!$opts['run-all'] && $failedTest)
         exiting($failedTest, $output);
       return $output;
     },
