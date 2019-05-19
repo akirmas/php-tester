@@ -10,6 +10,8 @@ $opts['name'] = array_key_exists('name', $opts) ? $opts['name'] : null;
 $scriptPaths = [$opts['script']];
 forEach($scriptPaths as $scriptPath) {
   $testPath = preg_replace('/\.php$/i', '', $scriptPath).'.test.json';
+  if (!file_exists($testPath))
+    break;
   $tests = json_decode(file_get_contents($testPath), true);
   $failedScript = false;
   $testNames = is_null($opts['name']) ? array_keys($tests) : [$opts['name']];
