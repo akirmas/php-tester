@@ -1,7 +1,7 @@
 <?php
 $failedProject = false;
 $report = [];
-$opts = getopt('', ['url:', 'script:', 'name:', 'all']);
+$opts = getopt('', ['url:', 'script:', 'name:', 'run-all']);
 $opts['run-all'] = array_key_exists('run-all', $opts);
 $opts['script'] = array_key_exists('script', $opts) ? $opts['script'] : 'index';
 $opts['url'] = array_key_exists('url', $opts) ? $opts['url'] : null;
