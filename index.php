@@ -1,16 +1,36 @@
 <?php
+
 $failedProject = false;
+$testPattern = '.test.json';
 $report = [];
-$opts = getopt('', ['url:', 'script:', 'name:', 'run-all']);
+$opts = getopt('', ['url:', 'script:', 'name:', 'run-all', 'assert:', 'path:']);
 $opts['run-all'] = array_key_exists('run-all', $opts);
-$opts['script'] = array_key_exists('script', $opts) ? $opts['script'] : 'index';
+$opts['script'] = array_key_exists('script', $opts) ? $opts['script'] : null;
 $opts['url'] = array_key_exists('url', $opts) ? $opts['url'] : null;
 $opts['name'] = array_key_exists('name', $opts) ? $opts['name'] : null;
+$opts['path'] = array_key_exists('path', $opts) ? $opts['path'] : '.';
+$opts['assert'] = array_key_exists('assert', $opts) ? $opts['assert'].'.php' : __DIR__.'/assert/index.php';
 
-$scriptPaths = [$opts['script']];
-forEach($scriptPaths as $scriptPath) {
-  $testPath = preg_replace('/\.php$/i', '', $scriptPath).'.test.json';
-  $scriptPath = preg_replace('/\.php/', '', $scriptPath).'.php';
+require_once($opts['assert']);
+
+$scriptPaths = [];
+if (!empty($opts['script']))
+  $scriptPaths = [$opts['script']];
+else {
+  $it = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($opts['path']));
+  foreach($it as $file) {
+    if (substr($file, -strlen($testPattern)) === $testPattern)
+      array_push($scriptPaths, substr(
+        $file->getPathname(),
+        0,
+        -strlen($testPattern)
+      ));
+  }
+}
+
+foreach($scriptPaths as $scriptPath) {
+  $testPath = "{$scriptPath}{$testPattern}";
+  $scriptPath = "{$scriptPath}.php";
   if (!file_exists($testPath))
     exit("Test '$testPath' not exists");
   if (!file_exists($scriptPath))
@@ -46,7 +66,7 @@ forEach($scriptPaths as $scriptPath) {
         $response = $responseText;
 
       $expected = $tests[$name]['out'];
-      $failedTest = !call_user_func($tests[$name]['assert'], $response, $expected);
+      $failedTest = !call_user_func('\\asserts\\'.$tests[$name]['assert'], $response, $expected);
       $failedScript = $failedScript || $failedTest;
       $output = [$name =>
         !$failedTest
