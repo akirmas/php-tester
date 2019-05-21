@@ -3,7 +3,7 @@ STASH_NAME="pre-commit-$(date +%s)"
 git stash save -q --keep-index --include-untracked $STASH_NAME
 
 BASEDIR=$(dirname "$0")
-RESULT="$(php $BASEDIR/../index.php)"
+RESULT=$(. "$PWD"/run_tests.sh)
 
 : '
 STASHES=$(git stash list)
