@@ -20,14 +20,14 @@ forEach($scriptPaths as $scriptPath) {
       //TODO: set up 'style' of test - CLI, HTTP/GET, HTTP/POST
 
       $responseText = is_null($opts['url'])
-      ? callTest($scriptPath, $tests[$name][0])[0]
-      : curlGet($opts['url']."$scriptPath.php", $tests[$name][0]);
+      ? callTest($scriptPath, $tests[$name]['in'])[0]
+      : curlGet($opts['url']."$scriptPath.php", $tests[$name]['in']);
 
       $response = json_decode($responseText, true);
       if (is_null($response))
         $response = $responseText;
 
-      $expected = $tests[$name][1];
+      $expected = $tests[$name]['out'];
       $failedTest = !isSubset($response, $expected);
       $failedScript = $failedScript || $failedTest;
       $output = [$name =>
