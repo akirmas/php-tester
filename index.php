@@ -10,25 +10,43 @@ $opts['name'] = array_key_exists('name', $opts) ? $opts['name'] : null;
 $scriptPaths = [$opts['script']];
 forEach($scriptPaths as $scriptPath) {
   $testPath = preg_replace('/\.php$/i', '', $scriptPath).'.test.json';
+  $scriptPath = preg_replace('/\.php/', '', $scriptPath).'.php';
   if (!file_exists($testPath))
-    break;
+    exit("Test '$testPath' not exists");
+  if (!file_exists($scriptPath))
+    exit("Script '$scriptPath' not exists");
+
   $tests = json_decode(file_get_contents($testPath), true);
   $failedScript = false;
   $testNames = is_null($opts['name']) ? array_keys($tests) : [$opts['name']];
   $report[$scriptPath] = array_map(
     function($name) use ($scriptPath, $tests, &$failedScript, $opts) {
-      //TODO: set up 'style' of test - CLI, HTTP/GET, HTTP/POST
+      $haveParams = array_key_exists('in', $tests[$name]);
+      $params = @$tests[$name]['in'];
 
-      $responseText = is_null($opts['url'])
-      ? callTest($scriptPath, $tests[$name]['in'])[0]
-      : curlGet($opts['url']."$scriptPath.php", $tests[$name]['in']);
+      if (!empty($tests[$name]['fn'])) {
+        require_once($scriptPath);
+        $fn = $tests[$name]['fn'];
+        $response = !$haveParams
+        ? call_user_func($fn)
+        : call_user_func_array($fn,
+          is_array($params)
+          ? $params
+          : [$params]
+        );
+      } else {
+        $responseText = is_null($opts['url'])
+        ? callTest($scriptPath, $params)[0]
+        // TODO: HTTP/POST
+        : curlGet($opts['url']."$scriptPath.php",  $params);
+        $response = json_decode($responseText, true);
+      }
 
-      $response = json_decode($responseText, true);
       if (is_null($response))
         $response = $responseText;
 
       $expected = $tests[$name]['out'];
-      $failedTest = !isSubset($response, $expected);
+      $failedTest = !call_user_func($tests[$name]['assert'], $response, $expected);
       $failedScript = $failedScript || $failedTest;
       $output = [$name =>
         !$failedTest
@@ -56,23 +74,24 @@ function exiting($failed, $report = []) {
   exit;
 }
 
-function callTest($php, $params) {
-  $params = '"'.preg_replace('/["]/', '\\\\$0', json_encode($params)).'"';
+function callTest($module, $params) {
+  $params = empty($params)
+  ? ''
+  : '"'.preg_replace('/["]/', '\\\\$0', json_encode($params)).'"';
   //$params = escapeshellarg($params);
-  $php = preg_replace('/\.php/', '', $php).'.php';
   $output = null;
-  exec("php $php $params", $output);
+  exec("php $module $params", $output);
   return $output;
 }
 
-function isSubset($set, $sub) {
-  return is_array($set) && is_array($sub)
-  ? $sub === array_intersect_assoc($sub, $set)
-  : $set === $sub;
-}
-
-function curlGet($url, $options = []) {
-  $ch = curl_init("{$url}?".http_build_query($options));
+function curlGet($url, $options = null) {
+  $ch = curl_init($url
+    .(
+      empty($options)
+      ? ''
+      : '?'.http_build_query($options)
+    )
+  );
   curl_setopt_array($ch, [
     CURLOPT_RETURNTRANSFER => true
   ]);
@@ -81,4 +100,8 @@ function curlGet($url, $options = []) {
     $response = curl_error($ch);
   curl_close($ch);
   return $response;
+}
+
+function equalStrict($a, $b) {
+  return $a === $b;
 }
