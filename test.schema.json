@@ -22,7 +22,7 @@
           "type": "string"
         },
         "out": {
-          "description": "Output data will be parsed according to header for HTTP, raw for import, as json for CLI"
+          "description": "Expected output data will be parsed according to header for HTTP, raw for import, as json for CLI"
         },
         "fn": {
           "description": "Unit test. Specific module function will be called",
