@@ -1,0 +1,36 @@
+{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "description": "Schema of config that can be set as opts parameters or with --config as path with default $PWD/test.config.json",
+  "additionalProperties": false,
+  "properties": {
+    "$schema": { "type": "string"},
+    "assert": {
+      "description": "Path to module with assert functions",
+      "type": "string",
+      "format": "uri-reference"
+    },
+    "run-all": {
+      "description": "By default tests will run until first failed",
+      "type": "boolean"
+    },
+    "url": {
+      "description": "Run integration tests with url as cwd",
+      "type": "string",
+      "format": "uri"
+    },
+    "path": {
+      "description": "Folder to recursive lookup for tests if not PWD",
+      "type": "string",
+      "format": "uri-reference"
+    },
+    "script": {
+      "description": "Test particular script, not all founded",
+      "type": "string",
+      "format": "uri-reference"
+    },
+    "name": {
+      "description": "Run only specific test",
+      "type": "string"
+    }
+  }
+}

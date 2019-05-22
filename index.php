@@ -1,18 +1,28 @@
 <?php
-require_once(__DIR__.'/fetch.php');
+require_once(__DIR__.'/import.php');
+import('./fetch', __DIR__);
 
 $failedProject = false;
 $testPattern = '.test.json';
 $report = [];
-$opts = getopt('', ['url:', 'script:', 'name:', 'run-all', 'assert:', 'path:']);
-$opts['run-all'] = array_key_exists('run-all', $opts);
+$opts = getopt('', ['url:', 'script:', 'name:', 'run-all::', 'assert:', 'path:', 'config:']);
+$config = !array_key_exists('config', $opts) 
+? getcwd() . '/test.config.json'
+: $opts['config'];
+$opts['run-all'] = array_key_exists('run-all', $opts) && $opts['run-all'];
 $opts['script'] = array_key_exists('script', $opts) ? $opts['script'] : null;
 $opts['url'] = array_key_exists('url', $opts) ? $opts['url'] : null;
-$opts['name'] = array_key_exists('name', $opts) ? $opts['name'] : null;
 $opts['path'] = array_key_exists('path', $opts) ? $opts['path'] : '.';
-$opts['assert'] = array_key_exists('assert', $opts) ? $opts['assert'].'.php' : __DIR__.'/assert/index.php';
+$opts['assert'] = array_key_exists('assert', $opts) ? $opts['assert'] : 'assert/index.php';
+$opts['name'] = array_key_exists('name', $opts) ? $opts['name'] : null;
 
-require_once(getcwd().'/'.$opts['assert']);
+$config = !file_exists($config)
+? null
+: json_decode($config, true);
+if (is_null($config))
+  $config = [];
+$opts += $config;
+import($opts['assert'], __DIR__);
 
 $scriptPaths = [];
 if (!empty($opts['script']))
@@ -38,6 +48,7 @@ foreach($scriptPaths as $scriptPath) {
     exit("Script '$scriptPath' not exists");
 
   $tests = json_decode(file_get_contents($testPath), true);
+  unset($tests['$schema']);
   $failedScript = false;
   $testNames = is_null($opts['name']) ? array_keys($tests) : [$opts['name']];
   $report[$scriptPath] = array_map(

@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "description": "{script}.php will be tested with data at {script}.test.json",
   "properties": {
-    "$schema": { "type": "string" }
+    "$schema": { "type": "string"}
   },
   "patternProperties": {
     ".*": {
@@ -40,7 +40,8 @@
       "properties": {
         "url": {
           "description": "Overrides --url opt",
-          "type": "string"
+          "type": "string",
+          "format": "uri"
         },
         "method": {
           "type": "string",
