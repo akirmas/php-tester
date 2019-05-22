@@ -1,4 +1,5 @@
 <?php
+require_once(__DIR__.'/fetch.php');
 
 $failedProject = false;
 $testPattern = '.test.json';
@@ -22,7 +23,7 @@ else {
     if (substr($file, -strlen($testPattern)) === $testPattern)
       array_push($scriptPaths, substr(
         $file->getPathname(),
-        0,
+        strlen('./'),
         -strlen($testPattern)
       ));
   }
@@ -41,44 +42,7 @@ foreach($scriptPaths as $scriptPath) {
   $testNames = is_null($opts['name']) ? array_keys($tests) : [$opts['name']];
   $report[$scriptPath] = array_map(
     function($name) use ($scriptPath, $tests, &$failedScript, $opts) {
-      $haveParams = array_key_exists('in', $tests[$name]);
-      $params = @$tests[$name]['in'];
-
-      if (!empty($tests[$name]['fn'])) {
-        require_once($scriptPath);
-        $fn = $tests[$name]['fn'];
-        $response = !$haveParams
-        ? call_user_func($fn)
-        : call_user_func_array($fn,
-          is_array($params)
-          ? $params
-          : [$params]
-        );
-      } else {
-        $responseText = is_null($opts['url'])
-        ? callTest($scriptPath, $params)[0]
-        // TODO: HTTP/POST
-        : curlGet($opts['url']."$scriptPath.php",  $params);
-        $response = json_decode($responseText, true);
-      }
-
-      if (is_null($response))
-        $response = $responseText;
-
-      $expected = $tests[$name]['out'];
-      $failedTest = !call_user_func('\\asserts\\'.$tests[$name]['assert'], $response, $expected);
-      $failedScript = $failedScript || $failedTest;
-      $output = [$name =>
-        !$failedTest
-        ? true
-        : array(
-          "response" => $response,
-          "expected" => $expected
-        )
-      ];
-      if (!$opts['run-all'] && $failedTest)
-        exiting($failedTest, $output);
-      return $output;
+      return runTest($name, $scriptPath, $tests, $failedScript, $opts);
     },
     $testNames
   );
@@ -86,6 +50,58 @@ foreach($scriptPaths as $scriptPath) {
 }
 
 exiting($failedProject, $report);
+
+function runTest($name, $scriptPath, $tests, &$failedScript, $opts) {
+  $haveParams = array_key_exists('in', $tests[$name]);
+  $params = @$tests[$name]['in'];
+
+  if (!empty($tests[$name]['fn'])) {
+    require_once($scriptPath);
+    $fn = $tests[$name]['fn'];
+    $response = !$haveParams
+    ? call_user_func($fn)
+    : call_user_func_array($fn,
+      is_array($params)
+      ? $params
+      : [$params]
+    );
+  } else {
+    $fetchOpts = !array_key_exists('fetch', $tests[$name])
+    ? []
+    : $tests[$name]['fetch'];
+
+    $url = @$fetchOpts['url'];
+    unset($fetchOpts['url']);
+    $url = is_null($url) ? $opts['url'] : $url;
+    $responseText = is_null($url)
+    ? callTest($scriptPath, $params)[0]
+    // TODO: HTTP/POST
+    : fetch("{$url}{$scriptPath}", $fetchOpts + [
+      'data' => $params
+    ])['body'];
+    $response = json_decode($responseText, true);
+  }
+
+  if (is_null($response))
+    $response = $responseText;
+
+  $expected = $tests[$name]['out'];
+  $failedTest = !call_user_func('\\asserts\\'.$tests[$name]['assert'], $response, $expected);
+  $failedScript = $failedScript || $failedTest;
+  $output = [$name =>
+    !$failedTest
+    ? true
+    : array(
+      "response" => $response,
+      "expected" => $expected
+    )
+  ];
+  if (!$opts['run-all'] && $failedTest)
+    exiting($failedTest, [
+      $scriptPath => $output
+    ]);
+  return $output;
+}
 
 function exiting($failed, $report = []) {
   if ($failed)
@@ -102,26 +118,4 @@ function callTest($module, $params) {
   $output = null;
   exec("php $module $params", $output);
   return $output;
-}
-
-function curlGet($url, $options = null) {
-  $ch = curl_init($url
-    .(
-      empty($options)
-      ? ''
-      : '?'.http_build_query($options)
-    )
-  );
-  curl_setopt_array($ch, [
-    CURLOPT_RETURNTRANSFER => true
-  ]);
-  $response = curl_exec($ch);
-  if ($response === false)
-    $response = curl_error($ch);
-  curl_close($ch);
-  return $response;
-}
-
-function equalStrict($a, $b) {
-  return $a === $b;
 }
