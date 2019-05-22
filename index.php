@@ -105,7 +105,7 @@ function runTest($name, $scriptPath, $tests, &$failedScript, $opts) {
 
 function exiting($failed, $report = []) {
   if ($failed)
-    exit("0\n".json_encode($report, JSON_PRETTY_PRINT, JSON_UNESCAPED_SLASHES)."\n");
+    exit(json_encode($report, JSON_PRETTY_PRINT, JSON_UNESCAPED_SLASHES));
   echo 1;
   exit;
 }
