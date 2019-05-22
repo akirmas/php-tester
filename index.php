@@ -100,6 +100,14 @@ function runTest($name, $scriptPath, $tests, &$failedScript, $opts) {
     $response = $responseText;
 
   $expected = $tests[$name]['out'];
+  if (array_key_exists('out_fetch', $tests[$name])) {
+    $outUrl = @$tests[$name]['out_fetch']['url'];
+    if (is_null($outUrl))
+      $outUrl = $url;
+    $outUrl .= $scriptPath;
+    unset($tests[$name]['out_fetch']['url']);
+    $expected = fetch($outUrl, $tests[$name]['out_fetch'] + ['data' => $expected])['data'];
+  }
   $failedTest = !call_user_func('\\asserts\\'.$tests[$name]['assert'], $response, $expected);
   $failedScript = $failedScript || $failedTest;
   $output = [$name =>
