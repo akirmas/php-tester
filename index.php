@@ -12,7 +12,7 @@ $opts['name'] = array_key_exists('name', $opts) ? $opts['name'] : null;
 $opts['path'] = array_key_exists('path', $opts) ? $opts['path'] : '.';
 $opts['assert'] = array_key_exists('assert', $opts) ? $opts['assert'].'.php' : __DIR__.'/assert/index.php';
 
-require_once($opts['assert']);
+require_once(getcwd().'/'.$opts['assert']);
 
 $scriptPaths = [];
 if (!empty($opts['script']))
