@@ -83,10 +83,14 @@ function runTest($name, $scriptPath, $tests, &$failedScript, $opts) {
     $fetchOpts = !array_key_exists('fetch', $tests[$name])
     ? []
     : $tests[$name]['fetch'];
-
-    $url = @$fetchOpts['url'];
-    unset($fetchOpts['url']);
+    
+    $url = null;
+    if (array_key_exists('url', $fetchOpts)) {
+      $url = $fetchOpts['url'];
+      unset($fetchOpts['url']);
+    }
     $url = is_null($url) ? $opts['url'] : $url;
+    
     $responseText = is_null($url)
     ? callTest($scriptPath, $params)[0]
     // TODO: HTTP/POST
