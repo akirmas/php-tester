@@ -119,7 +119,7 @@ function runTest($name, $scriptPath, $tests, &$failedScript, $opts) {
 
 function exiting($failed, $report = []) {
   if ($failed)
-    exit(json_encode($report, JSON_PRETTY_PRINT, JSON_UNESCAPED_SLASHES));
+    exit(json_encode($report, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
   echo 1;
   exit;
 }
