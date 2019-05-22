@@ -1,0 +1,61 @@
+{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "description": "{script}.php will be tested with data at {script}.test.json",
+  "properties": {
+    "$schema": { "type": "string" }
+  },
+  "patternProperties": {
+    ".*": {
+      "description": "Test title as key",
+      "$ref": "#/definitions/test-schema"
+    }
+  },
+  "definitions": {
+    "test-schema": {
+      "additionalProperties": false,
+      "properties": {
+        "in": {
+          "description": "Input data. Avoid this property for call without arguments"
+        },
+        "assert": {
+          "description": "Function name from used assert module",
+          "type": "string"
+        },
+        "out": {
+          "description": "Output data will be parsed according to header for HTTP, raw for import, as json for CLI"
+        },
+        "fn": {
+          "description": "Unit test. Specific module function will be called",
+          "type": "string"
+        },
+        "fetch": {
+          "description": "Interation test with HTTP like JS's fetch()",
+          "$ref": "#/definitions/fetch-schema"
+        }
+      },
+      "required": ["assert", "out"]
+    },
+    "fetch-schema": {
+      "additionalProperties": false,
+      "properties": {
+        "url": {
+          "description": "Overrides --url opt",
+          "type": "string"
+        },
+        "method": {
+          "type": "string",
+          "enum": ["GET", "POST", "PATCH"]
+        },
+        "headers": {
+          "type": "object",
+          "required": ["Content-Type"],
+          "properties": {
+            "Content-Type": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}
