@@ -5,23 +5,26 @@ import('./fetch', __DIR__);
 $failedProject = false;
 $testPattern = '.test.json';
 $report = [];
+
 $opts = getopt('', ['url:', 'script:', 'name:', 'run-all::', 'assert:', 'path:', 'config:']);
 $config = !array_key_exists('config', $opts) 
 ? getcwd() . '/test.config.json'
 : $opts['config'];
-$opts['run-all'] = array_key_exists('run-all', $opts) && $opts['run-all'];
+$config = !file_exists($config)
+? null
+: json_decode(file_get_contents($config), true);
+if (is_null($config))
+  $config = [];
+$opts += $config;
+
+$opts['run-all'] = array_key_exists('run-all', $opts) && $opts['run-all']
+  || array_key_exists('run-all', $config) && $config['run-all'];
 $opts['script'] = array_key_exists('script', $opts) ? $opts['script'] : null;
 $opts['url'] = array_key_exists('url', $opts) ? $opts['url'] : null;
 $opts['path'] = array_key_exists('path', $opts) ? $opts['path'] : '.';
 $opts['assert'] = array_key_exists('assert', $opts) ? $opts['assert'] : 'assert/index.php';
-$opts['name'] = array_key_exists('name', $opts) ? $opts['name'] : null;
+$opts['name'] = array_key_exists('name', $opts) ? $opts['name'] : null;  
 
-$config = !file_exists($config)
-? null
-: json_decode($config, true);
-if (is_null($config))
-  $config = [];
-$opts += $config;
 import($opts['assert'], __DIR__);
 
 $scriptPaths = [];
