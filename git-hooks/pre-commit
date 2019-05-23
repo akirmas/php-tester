@@ -4,7 +4,7 @@ git stash save -q --keep-index --include-untracked $STASH_NAME
 
 BASEDIR=$(dirname "$0")
 RESULT=$(. "$PWD"/run_tests.sh)
-
+STATUS=$?
 : '
 STASHES=$(git stash list)
 if [[ $STASHES == "$STASH_NAME" ]]; then
@@ -12,9 +12,8 @@ if [[ $STASHES == "$STASH_NAME" ]]; then
 fi
 '
 git stash pop -q --index 0
-
-if [ "$RESULT" = "1" ]; then
- exit 0
+echo "status: '$STATUS'"
+if [ "$STATUS" != "0" ]; then
+ echo $RESULT
 fi
-echo $RESULT
-exit 1
+exit $STATUS
