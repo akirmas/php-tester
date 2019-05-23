@@ -1,6 +1,6 @@
 <?php
-require_once(__DIR__.'/import.php');
-import('./fetch', __DIR__);
+require_once(__DIR__.'/utils/import.php');
+import('./utils/fetch', __DIR__);
 
 $failedProject = false;
 $testPattern = '.test.json';
@@ -22,7 +22,7 @@ $opts['run-all'] = array_key_exists('run-all', $opts) && $opts['run-all']
 $opts['script'] = array_key_exists('script', $opts) ? $opts['script'] : null;
 $opts['url'] = array_key_exists('url', $opts) ? $opts['url'] : null;
 $opts['path'] = array_key_exists('path', $opts) ? $opts['path'] : '.';
-$opts['assert'] = array_key_exists('assert', $opts) ? $opts['assert'] : 'assert/index.php';
+$opts['assert'] = array_key_exists('assert', $opts) ? $opts['assert'] : './utils/assert';
 $opts['name'] = array_key_exists('name', $opts) ? $opts['name'] : null;  
 
 import($opts['assert'], __DIR__);
