@@ -17,7 +17,7 @@ if (is_null($config))
   $config = [];
 $opts += $config;
 
-$opts['run-all'] = array_key_exists('run-all', $opts) && $opts['run-all']
+$opts['run-all'] = array_key_exists('run-all', $opts)
   || array_key_exists('run-all', $config) && $config['run-all'];
 $opts['script'] = array_key_exists('script', $opts) ? $opts['script'] : null;
 $opts['url'] = array_key_exists('url', $opts) ? $opts['url'] : null;
@@ -90,6 +90,7 @@ function runTest($name, $scriptPath, $tests, &$failedScript, $opts) {
       unset($fetchOpts['url']);
     }
     $url = is_null($url) ? $opts['url'] : $url;
+
     
     $responseText = is_null($url)
     ? callTest($scriptPath, $params)[0]
