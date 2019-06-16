@@ -70,8 +70,9 @@ function runTest($name, $scriptPath, $tests, &$failedScript, $opts) {
   $params = @$tests[$name]['in'];
 
   if (!empty($tests[$name]['fn'])) {
-    require_once($scriptPath);
     $fn = $tests[$name]['fn'];
+    if (!function_exists($fn))
+      require_once($scriptPath);
     $response = !$haveParams
     ? call_user_func($fn)
     : call_user_func_array($fn,
