@@ -73,13 +73,17 @@ function runTest($name, $scriptPath, $tests, &$failedScript, $opts) {
     $fn = $tests[$name]['fn'];
     if (!function_exists($fn))
       require_once($scriptPath);
-    $response = !$haveParams
-    ? call_user_func($fn)
-    : call_user_func_array($fn,
-      is_array($params)
-      ? $params
-      : [$params]
-    );
+    try {
+      $response = !$haveParams
+      ? call_user_func($fn)
+      : call_user_func_array($fn,
+        is_array($params)
+        ? $params
+        : [$params]
+      );
+    } catch (Exception $e) {
+      $response = $e;
+    }
   } else {
     $fetchOpts = !array_key_exists('fetch', $tests[$name])
     ? []
