@@ -1,6 +1,7 @@
 <?php
 require_once(__DIR__.'/utils/import.php');
 import('./utils/fetch', __DIR__);
+import('./utils/process', __DIR__);
 
 $failedProject = false;
 $testPattern = '.test.json';
@@ -98,7 +99,7 @@ function runTest($name, $scriptPath, $tests, &$failedScript, $opts) {
 
     
     $responseText = is_null($url)
-    ? callTest($scriptPath, $params)[0]
+    ? callTest($scriptPath, $params)
     // TODO: HTTP/POST
     : fetch("{$url}{$scriptPath}", $fetchOpts + [
       'data' => $params
@@ -134,11 +135,9 @@ function exiting($failed, $report = []) {
 }
 
 function callTest($module, $params) {
-  $params = empty($params)
-  ? ''
-  : '"'.preg_replace('/["]/', '\\\\$0', json_encode($params)).'"';
-  //$params = escapeshellarg($params);
-  $output = null;
-  exec("php $module $params", $output);
-  return $output;
+  extract(process("php $module", ['body' => json_encode($params)]));
+  if ($status)
+    return $body;
+  else 
+    return 'null';
 }
